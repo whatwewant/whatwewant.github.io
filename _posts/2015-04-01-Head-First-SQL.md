@@ -22,6 +22,9 @@ tags: [sql, mysql, note]
 * 5. 列出某表的所有字段详细情况: DESC tableName; 
   * DESC　是 DESCRIBE 的缩写
 * 6. 删除表: DROP TABLE tableName;
+* 7. 补充:
+    * 显示mysql中的所有数据库: show databases;
+    * 显示某个数据库中的所有表: show tables;
 
 ## 2. SQL 数据处理篇
 * 1. 插入数据:
