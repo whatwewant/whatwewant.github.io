@@ -83,3 +83,4 @@ phpinfo();
             * enabled ----> available: ln -s 命令 建立软连接
 * 3. Mysql 配置 (/etc/Mysql/my.conf):
     * 1. 
+* 4. Php 配置 (/etc/php5/apache2/php.ini)
