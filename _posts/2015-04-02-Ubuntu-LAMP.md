@@ -13,7 +13,7 @@ tags: [php, server, lamp]
 ## 2. INSTALLATION
 * 1. Apache:
     * sudo apt-get install apache2
-    * 查看版本: apache2 -v
+    * 查看版本: apache2 -v # 这里已经上 2.4版本，和2.2不同
 * 2. Php :
     * sudo apt-get install php5
     * 查看是否被加载: cat /etc/apache2/mods-enabled/php5.load 证明被加载
@@ -81,6 +81,49 @@ phpinfo();
         * 1. available 可用; enabled 已经启用.
         * 2. (创建需要启用的mod, 软连接available到enabled) :
             * enabled ----> available: ln -s 命令 建立软连接
+    * 4, 虚拟主机配置(Virtual-Host):
+        * 1. 客户端模拟DNS解析, 配置DNS, 即修改客户端hosts(Linux: /etc/hosts)文件:
+            * 192.168.1.106 video.cc.com
+            * 192.168.1.106 bbs.cc.com
+            * 192.168.1.106 oa.cc.com
+        * 2. 在服务器创建三个目录，分别用于三个url:
+            * 1. cd /
+            * 2. sudo mkdir -p /wwwroot/{video,bbs,oa} # 注意: shell 不要随便空格, big problem.
+            * 3. 分别在三个子目录创建index.html, 内容仅作标识 , 例如 Here is xx Directory.
+        * 3. Apache2 中配置虚拟主机:
+            * 1. 配置文件: cd /etc/apache2/sites-available/000-default.conf
+            * 2. 复制三个配置文件(最好以.conf结尾):
+                * cp 000-default.conf video.conf
+                * cp 000-default.conf bbs.conf
+                * cp 000-default.conf oa.conf
+            * 3. 分别配置(例video.conf):
+                * 1. 设置服务器根目录: DocumentRoot 目录: 将DocumentRoot /var/www/html 改为 DocumentRoot /wwwroot/video
+                * 2. 设置ServerName对应域名, 让Apache服务器自动区分域名: ServerName video.cc.com
+                * 3. 配置Directory, 拒绝403Forbidden: <Directory /var/www/> 改为 <Directory /wwwroot/video/> , 可能添加以下代码
+
+```bash
+<Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Dorectory>
+
+    <Directory /wwwroot/video/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        # Order allow, deny # Apache2 2.2
+        # allow from all
+        Require all granted # Apache2 2.4 
+        # 详情查看: [Apache2 2.4 升级变化](http://httpd.apache.org/docs/2.4/upgrading.html)
+    </Directory>
+```
+
+                * 4. 启用site配置: ln 软连接sites-available到sites-enabled:
+                    * cd sites-enabled; sudo ln -s ../sites-available/video video.conf 
+                    * > 注意：这里必须是.conf结尾的文件，否则服务器可能不识别
+                * 5. 在/etc/apache2/apache2.conf配置文件中添加 ServerName cc.com, 否则可能警告没有全局ServerName
+                * 6. 在/etc/apache2/apache2.conf配置文件中注释<Directory >相关
+                * 7. 注意如果访问域名不存在，默认不一定是default.conf文件，而是按顺序，在/etc/apache2/sites-enabled文件夹中的第一个配置文件，所以就是为什么sites-available有000-default.conf了，所以在ln到sites-enabled时注意default配置文件应该数字字母排在第一个,例如 ln -s ../sites-available/000-default.conf 000-default.conf
+
 * 3. Mysql 配置 (/etc/Mysql/my.conf):
     * 1. 
 * 4. Php 配置 (/etc/php5/apache2/php.ini)
