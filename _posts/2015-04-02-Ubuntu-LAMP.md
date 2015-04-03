@@ -150,6 +150,13 @@ phpinfo();
 ```
             * 8. 重启 apparmor 服务: sudo service apparmor reload:
                 * ubuntu 14.10 上报错: reload: Unknown instance:,是软件本身bug=-=, 重启系统也行
-            * 9. 重启 mysql 服务: sudo service mysql restart
+            * 9. 重启 mysql 服务: sudo service mysql start
+            * 10. 测试数据迁移是否成功:
+                * 1. mysql创建新的数据库时会在datadir目录下创建同名文件夹
+                * 2. mysql -uroot -p
+                * 3. create database cole;
+                * 4. show database cole;
+                * 5. quit
+                * 6. 查看 /mysqldata下有没有创建新目录cole
 
 * 4. Php 配置 (/etc/php5/apache2/php.ini)
