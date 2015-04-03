@@ -126,5 +126,27 @@ phpinfo();
                 * 8. 重启Apache服务器, 就可以访问 video.cc.com了: sudo service apache2 restart
 
 * 3. Mysql 配置 (/etc/Mysql/my.conf):
-    * 1. 
+    * 1. Mysql数据存储目录迁移:
+        * 1. 先停止MySQL服务，杜绝数据迁移产生的不良后果: sudo service mysql stop
+        * 2. 创建数据迁移的目标文件夹(注意权限和默认配置要一直), MySQL默认数据存储目录在/var/lib/mysql中: 
+            * 1. cd /
+            * 2. sudo mkidir /mysqldata
+            * 3. 修改用户组和所属用户为mysql: sudo chown -vR mysql:mysql /mysqldata
+            * 4. 修改权限为700: sudo chmod -vR 700 /mysqldata
+            * 5. 迁移数据，即复制/var/lib/mysql到/mysqldata:
+                * sudo su
+                * cp -av /var/lib/mysql /mysqldata # -a表示保存原文件权限等
+            * 6. 修改MySQL配置文件/etc/mysql/my.cnf: 
+                * 修改datadir(指定数据存储目录)的值: /var/lib/mysql 改为 /mysqldata
+            * 7. 这步很重要: 修改apparmor对mysql的保护配置:
+                * 1. sudo vim /etc/apparmor.d/usr.sbin.mysqld
+                * 2. 修改有关/var/lib/mysql的配置:
+
+```bash
+# /var/log/mysql/ r,
+# /var/log/mysql/* rwk,
+/mysqldata/ r,
+/mysqldata/* rwk,
+```
+
 * 4. Php 配置 (/etc/php5/apache2/php.ini)
