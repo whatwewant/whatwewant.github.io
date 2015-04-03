@@ -144,9 +144,12 @@ phpinfo();
 
 ```bash
 # /var/log/mysql/ r,
-# /var/log/mysql/* rwk,
+# /var/log/mysql/** rwk,
 /mysqldata/ r,
-/mysqldata/* rwk,
+/mysqldata/** rwk,
 ```
+            * 8. 重启 apparmor 服务: sudo service apparmor reload:
+                * ubuntu 14.10 上报错: reload: Unknown instance:,是软件本身bug=-=, 重启系统也行
+            * 9. 重启 mysql 服务: sudo service mysql restart
 
 * 4. Php 配置 (/etc/php5/apache2/php.ini)
