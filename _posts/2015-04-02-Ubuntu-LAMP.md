@@ -123,6 +123,7 @@ phpinfo();
                 * 5. 在/etc/apache2/apache2.conf配置文件中添加 ServerName cc.com, 否则可能警告没有全局ServerName
                 * 6. 在/etc/apache2/apache2.conf配置文件中注释<Directory >相关
                 * 7. 注意如果访问域名不存在，默认不一定是default.conf文件，而是按顺序，在/etc/apache2/sites-enabled文件夹中的第一个配置文件，所以就是为什么sites-available有000-default.conf了，所以在ln到sites-enabled时注意default配置文件应该数字字母排在第一个,例如 ln -s ../sites-available/000-default.conf 000-default.conf
+                * 8. 重启Apache服务器, 就可以访问 video.cc.com了: sudo service apache2 restart
 
 * 3. Mysql 配置 (/etc/Mysql/my.conf):
     * 1. 
