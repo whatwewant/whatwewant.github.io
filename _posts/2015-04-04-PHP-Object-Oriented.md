@@ -1,4 +1,5 @@
 ---
+layout: post
 title: PHP 面向对象
 category: php
 tags: [php, Object-Oriented, OO, 面向对象]
