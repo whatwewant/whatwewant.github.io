@@ -160,3 +160,21 @@ phpinfo();
                 * 6. 查看 /mysqldata下有没有创建新目录cole
 
 * 4. Php 配置 (/etc/php5/apache2/php.ini)
+  * 1. PHPMyAdmin的安装:
+      * 1. sudo apt-get install phpmyadmin
+      * 2. 看安装过程说明，配置
+      * 3. 不一定必要: sudo ln -s /usr/share/phpmyadmin/ /var/www/pma ()
+      * 4. 访问: 192.168.1.106/phpmyadmin
+  * 2. 开启MySQL的remote access:
+      * 1. 修改配置: sudo vim /etc/mysql/my.cnf
+      * 2. 找到 bind-address, 注释掉 或者 修改为 0.0.0.0
+      * 3. 在数据库名为mysql的user表单中添加一个公网可以访问的用户, 终端打开或者phpmyadmin打开添加均可
+      * 4. Insert 一条数据: (如果看不懂英文, PHPMyAdmin可以选择中文)
+          * Host : %  // % 代表任意IP
+          * User : remote
+          * Password : 123456
+          * 权限自己看情况选择开启: 默认全关闭
+      * 5. 重启mysql: sudo service mysql restart 
+
+* 5. 了解一种简单的LAMP集群:
+    * 1. 负载均衡Nginx + Apache + PHP + MySQL
