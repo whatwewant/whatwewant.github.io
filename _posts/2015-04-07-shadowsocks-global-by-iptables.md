@@ -6,7 +6,7 @@ tags: [linux, ubuntu, shadowsocks, iptables]
 ---
 {% include JB/setup %}
 
-# Linux用 iptables + ss-redir 为 Shadowsocks 全局代理 [下载地址](https://gitcafe.com/whatwewant/whatwewant/raw/gitcafe-pages/scripts/linux-shdowsocks-global.sh)
+# Linux用 iptables + ss-redir 为 Shadowsocks 全局代理 [Shell脚本下载地址](https://gitcafe.com/whatwewant/whatwewant/raw/gitcafe-pages/scripts/linux-shdowsocks-global.sh)
 
 ## 1. create new chain on nat table
 * iptables -t nat -N SHADOWSOCKS
