@@ -152,19 +152,131 @@ echo "\$james 将被已经被结束";
 ```
 
 ### 2. 高级实践
-* 1. 对象的继承:
+* 1. 对象的继承(extends):
     * 1. 共同属性和方法，继承同一个基类
     * 2. 不必再重复定义属性和方法
     * 3. 直接调用父类的方法和属性
     * 4. 子类可以修改和挑战父类定义的类成员: `重写(Overwrite)`
-* 2. 对象的访问控制
-* 3. Static(静态)关键字
+    * 5. 注意: protected 主要用于继承，子类可见，类外不可见
+    * 6. 只能单继承，不支持多继承
+
+```php
+class Human {
+    protected $name;
+    ...
+}
+// 子类继承父类是，可以直接访问父类public和protected属性和方法
+class NbaPlayer extends Human {
+    ...
+}
+```
+
+* 2. 对象的访问控制:
+    * public : 公有的类成员，可以在任何地方被访问:
+        * 定义该成员的类(自身)、该类的子类、其他类
+    * protected : 受保护的类成员，可以被自身及其子类访问
+    * private : 私有的类成员，职能被自身访问
+* 3. Static(静态)关键字: public static $president="Me";
+    * 1. 静态属性用于保存类的公有数据
+    * 2. 静态方法里面只能访问静态属性
+    * 3. 静态成员不需要实例化对象就可以访问
+    * 4. 类的内部可以通过self或者static关键字访问
+    * 5. 可以通过parent关键字访问父类静态属性和方法
+    * 6. 可以通过类名在外部访问类的静态成员
+
+```php
+class NbaPlayer extends Human {
+    public static $president = "David";
+
+    public static function changePresident($newPresident) {
+        // 注意，如果类内想访问静态成员属性
+        //    1. 声明静态方法
+        //    2. self::静态变量
+        self::$president = $newPresident;
+        // 访问父类静态成员
+        parent::$humanStatic = $newPresident;
+    }
+}
+// 调用静态方法
+NbaPlayer::changePresident("Adam");
+echo NbaPlayer::$president."<br />";
+```
+
 * 4. 重写
-* 5. Final 关键字
-* 6. 数据访问补充
-* 7. 接口
-* 8. 多态
-* 9. 抽象类
+* 5. Final 关键字: public final 成员变量; 
+    * 1. 相当于声明常量，一经定义不允许修改
+    * 2. 方法支持缺省参数
+    * 3. 重写Overwrite, 只要方法名一样即可，参数随意
+    * 4. final class ClassName: 不允许被继承
+* 6. 数据访问补充:
+    * 1. parent 关键字可以访问父类中被重写的成员变量
+    * 2. self关键字可以用于访问类自身的成员方法，也可以用于访问自己的静态成员和类常量；不能用于访问类自身的属性;使用常量的时候不需要在常量(const CONST-VALUE = "A";)前面添加$符号
+    * 3. static 关键字用于访问类自身的静态成员，访问静态属性时需要在属性前面添加$符号;
+    * const CONST\_VALUE =  "ABC";
+    * self::CONST\_VALUE;
+    * static::$staticValue;
+* 7. 接口:
+    * 接口就是把不同类的共同行为进行定义，然后在不同的类里面实现不同的功能
+    * 2. interface -- implements
+
+```php 
+<?php
+// interface 关键字用于定义接口
+interface ICanEat {
+    // 接口只包含方法的声明，不包含其他
+    public  function eat ($food);
+}
+
+// implements关键字用于表示类实现某个接口
+class Human implements ICanEat {
+    // 实现某个接口之后，必须对接口中的所有方法定义
+    public function eat($food)
+    {
+        // TODO: Implement eat() method.
+        echo "Human is eating ".$food."<br />";
+    }
+}
+
+$obj = new Human();
+$obj->eat("Banana");
+?>
+```
+
+  * 3. var\_dump($obj instanceof ICanEat) :
+      * `可以用instanceof关键字来判断某个对象是否实现了某个接`
+  * 4. interface ICanPee extends ICanEat {} : 接口可以继承接口
+      * 类实现接口时，要实现接口的所有方法，包括接口继承的接口
+
+* 8. 多态:
+    * 不用类对接口的同一方的具体实现是不同的，这叫`多态`
+* 9. 抽象类 abstract class:
+    * 1. 接口里面的方法是没有实现的，二类里面的方法都是有实现的, 抽象类: 只有一部分要实现
+    * 2. 比较:
+        * abstract 用于定义抽象类，在方法前加abstract关键字，则该方法不需要实现
+        * 在抽象类中可以包含普通方法
+        * 继承抽象类: extends
+
+```php
+abstract class ACanEat {
+    abstract public function eat($food);
+
+    public function breath() {
+        echo "Breath air<br />";
+    }
+}
+class Human extends ACanEat {
+    public function eat($food)
+    {
+        echo "Human eats ".$food."<br />";
+    }
+}
+
+class Animal extends ACanEat {
+    public function eat ($food) {
+        echo "Animal eats ".$food."<br />";
+    }
+}
+```
 
 ### 3. 特殊实践
 
