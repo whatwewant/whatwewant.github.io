@@ -12,7 +12,7 @@ tags: [linux, ubuntu, shadowsocks, iptables]
 * iptables -t nat -N SHADOWSOCKS
 
 ## 2. Ignore shdowsocks's address, avoid loop
-* iptables -t nat SHADOWSOCKS -d YOUR-SERVER-IP -j RETURN
+* iptables -t nat -A SHADOWSOCKS -d YOUR-SERVER-IP -j RETURN
 
 ## 3. Ignore LANs and any other addresses you'd like to bypass the proxy
 * iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
@@ -32,6 +32,9 @@ tags: [linux, ubuntu, shadowsocks, iptables]
 
 ## 6. Start the shadowsocks-redir
 * ss-redir -c /etc/config/shadowsocks.json -f /var/run/shadowsocks.pid
+
+## 7 已经写好的shell脚本
+* [下载地址]({{ site.url }}/scripts/linux-shdowsocks-global.sh)
 
 ### 参考: [shadowsocks-openwrt](https://github.com/haohaolee/shadowsocks-openwrt)
 
