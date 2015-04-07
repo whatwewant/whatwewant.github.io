@@ -5,6 +5,7 @@ category: linux
 tags: [linux, ubuntu, shadowsocks, iptables]
 ---
 {% include JB/setup %}
+
 # Linux用 iptables + ss-redir 为 Shadowsocks 全局代理
 
 ## 1. create new chain on nat table
