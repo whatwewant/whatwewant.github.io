@@ -6,8 +6,6 @@ tags: [linux, ubuntu, shadowsocks, iptables]
 ---
 {% include JB/setup %}
 
-### 参考: [shadowsocks-openwrt](https://github.com/haohaolee/shadowsocks-openwrt)
-
 ## 1. create new chain on nat table
 * iptables -t nat -N SHADOWSOCKS
 
@@ -32,3 +30,6 @@ tags: [linux, ubuntu, shadowsocks, iptables]
 
 ## 6. Start the shadowsocks-redir
 * ss-redir -c /etc/config/shadowsocks.json -f /var/run/shadowsocks.pid
+
+### 参考: [shadowsocks-openwrt](https://github.com/haohaolee/shadowsocks-openwrt)
+
