@@ -278,5 +278,27 @@ class Animal extends ACanEat {
 }
 ```
 
-### 3. 特殊实践
+### 3. 特殊实践: PHP的魔术方法
+* 1. \_\_construct(), \_\_destruct()
+* 2. \_\_tostring():
+    * 当对象被当做String使用时，这个方法被自动调用.
+    * echo $obj;
+* 3. \_\_invoke($var):
+    * 当对象被当初方法方法调用是，这个方法被自动调用
+    * $obj(4);
+* 4. \_\_call(), \_\_callStatic(): 这两个方法可以被重载(overloading is not overriding)
+    * \_\_call($funcName, $funcArgumentsArray):
+        * 当对象访问不存在的方法是被自动调用
+        * implode(", ", $arrayVar): 把数组用","合并成字符串
+    * static \_\_callStatic($funcName, $funcArgumentsArray):
+        * 当对象访问不存在的静态方法时被自动调用
+* 5. \_\_get($name), \_\_set($name, $value), \_\_isset($obj->attributeName), \_\_unset():
+    * 在给不可访问属性`赋值`是，\_\_set()会被调用
+    * `读取`不可访问属性的值是，\_\_get()会被调用
+    * 当对不可访问属性调用`isset()`或`empty()`是，\_\_isset()被调用
+    * 当对不可访问属性调用`unset()`是, \_\_unset()被调用
+    * 所谓不可访问属性，实际上就是在调用某个属性时发现没被定义
+    * 这几个方法称为`属性重载`的魔术方法
+* 6. \_\_clone():
+    * 
 
