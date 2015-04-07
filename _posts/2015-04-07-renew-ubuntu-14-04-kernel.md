@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 为 ubuntu 14.04 上4.0 kernel
+title: 为 ubuntu 14.04 上 4.0 kernel
 category: linux
 tags: [linux, ubuntu, ubuntu14.04, kernel]
 ---
@@ -19,3 +19,5 @@ tags: [linux, ubuntu, ubuntu14.04, kernel]
 
 ### 3. 更新启动项，理论上在上一步会自动更新:
 * sudo update-grub
+
+### 4. reboot 即可
