@@ -77,3 +77,9 @@ tags: [linux, ubuntu, iptables, command]
     * 不允许: iptables -P INPUT allowed
 * 11. -E, --rename-chain:为链重命名:
     * iptables -E ChainOldName ChainNewName
+
+### Four IPTABLES OPTIONS (选项)
+* 1. 
+  * Option: -v, --version
+  * Commands: --list, --append, --insert, --delete, --replace
+* 3. 

@@ -10,6 +10,13 @@ SS_METHOD=ase-256-cfb
 SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks.json
 CHAIN_NAME=SHADOWSOCKS
 
+# root
+if [ "$UID" != "0" ]; then
+    echo "You must use root priviledge!";
+    exit -1;
+fi
+
+
 _cleanup() {
     trap "" SIGINT
     trap "" SIGUSR1
@@ -85,12 +92,6 @@ echo "local_port: $SS_LOCAL_PORT"
 echo "password: ***********"
 echo "method: $SS_METHOD"
 fi
-
-# root
-# if [ "$UID" != "0" ]; then
-#    echo "You must use root priviledge!";
-#    exit -1;
-# fi
 
 # iptables
 which iptables >> /dev/null;
