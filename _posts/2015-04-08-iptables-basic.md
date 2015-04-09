@@ -70,4 +70,10 @@ tags: [linux, ubuntu, iptables, command]
 * 9. -X, --delete-chain: 从表上删除指定的链, `删除链前，必须清空链的规则`.
     * iptables -X allowed
     * 只能删除用户自定义的链
-* 10. -P, --policy:
+* 10. -P, --policy: 为链配置默认的target(值为ACCEPT或DROP), 这个target称为策略:
+    * iptables -P INPUT DROP
+    * 默认使用这个target(策略), 只有符合特定规则的采用特定方式.
+    * 只有内建的链才可以使用规则.但内建的链和用户自定义的链都不能用作策略
+    * 不允许: iptables -P INPUT allowed
+* 11. -E, --rename-chain:为链重命名:
+    * iptables -E ChainOldName ChainNewName
