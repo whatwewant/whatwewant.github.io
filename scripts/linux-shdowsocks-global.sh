@@ -107,7 +107,7 @@ if [ "$?" != "0" ]; then
 fi 
 
 # iptables
-sudo iptables -t nat -L $CHAIN_NAME >> /dev/null
+sudo iptables -t nat -L $CHAIN_NAME >> /dev/null 2&>1
 if [ "$?" != "0" ]; then
     sudo iptables -t nat -N $CHAIN_NAME
     sleep 3
