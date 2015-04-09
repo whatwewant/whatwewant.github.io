@@ -234,3 +234,69 @@ tags: [linux, ubuntu, iptables, command]
 * Match: --to offset:
     * 设置偏移从它开始寻找任何匹配。如果没有通过，默认为数据包的大小。
 
+## 3. IPTABLES 的动作(targets)和跳转(jumps)
+
+### One. 跳转到自定义链
+* 1. iptables -N tcp-packets
+* 2. iptables -A INPUT -p tcp -j tcp-packets
+
+### Two. Accept target
+* 一旦满足，直接ACCEPT
+
+### Three. DNAT target
+* 用来做目的地址转换, 也就是重写报文的目的地址;
+* 如果一个报文匹配了这个规则，而且这个规则的target是DNAT, 那么这个报文以及这条连接上的所有后续报文都会被转换地址.
+* `注意: DNAT只能在 NAT 表里面的PREROUTING 和 OUTPUT链上有效，或者是被这两条链调用的链里.`
+* `注意2: 包括DNAT target的链不能被除此之外的其他链调用, 如 POSTROUTING`
+* 1. Target: --to-destination :
+    * iptables -t nat -A PREROUTING -p tcp -d 15.45.23.67 --dport 80 -j DNAT --to-destination 192.168.1.1-192.168.10
+    * 指定要写入IP头的地址.上面离职就是把所有发往地址15.45.23.67的包都转发到一段LAN使用的私有地址，即192.168.1.1到192.168.10.在这种情况下，每个流都会被随机分配一个要转发到的地址，但同一个流总是使用同一个地址.
+    * 也可以只指定唯一一个IP地址或端口或端口范围:
+        * --to-destination 192.168.1.1:80
+        * --to-destination 192.168.1.1:80-100
+        * 注意只有-p指定TCP或UDP协议才可以使用端口
+
+### FOur, SNAT target: 源地址转换
+* --to-source
+* 只能用于nat表的POSTROUTING链
+
+### Five. DROP target
+
+### Six. MASQUERADE target
+* 这个target和SNAT target的作用是一样的，区别是它不需要指定--to-source
+* 只能用于nat表的POSTROUTING链，而且它只有一个选项(不是必须的)
+* Options:
+    * --to-ports :
+        * iptables -t nat -A POSTROUTING -p tcp -j MASQUERADE --to-ports 1024-31000
+        * 在指定TCP或UDP的前提下，设置外出包能使用的端口，方式是单端口, 如--to-ports 1025, 或者端口范围, --to-ports 1024-4000.
+        * 注意，范围用连字符.
+
+### Seven. REDIRECT target: 在防火墙所在的机子内部转发包或流到另一个端口
+* 例如，可以把所有去往端口HTTP的包REDIRECT到HTTP proxy（例如squid）,当然这都发生在自己主机的内部.
+* `注意, 它只能在nat表的PREROUTING、OUTPUT链和被它们调用的自定义里.`
+* Options: --to-ports :
+    * Example: iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
+    * 在指定TCP或UDP协议的前提下，定义目的端口:
+        * 1. 不使用这个选项，目的端口不会改变
+        * 2. 指定一个端口, --to-ports 8080
+        * 3. 指定端口范围, --to-ports 8080-8090
+
+### Eight. REJECT target
+* REJECT 和 DROP 基本一样,区别在于它出了阻塞包之外，还向发送者返回错误信息.
+* 只能用于 INPUT、FORWARD、OUTPUT和它们的子链(自定义链)
+* Option: --reject-with:
+    * Example: iptables -A FORWARD -p TCP --dport 22 -j REJECT --reject-with tcp-reset
+    * 返回的信息类型:
+        * 1. icmp-net-unreachable
+        * 2. icmp-host-unreachable
+        * 3. icmp-port-prohibited
+        * 4. icmp-proto-unreachable
+        * 5. icmp-bet-prohibited
+        * 6. icmp-host-prohibited
+        * 7. echo-reply
+        * 8. tcp-reset # 主要用来阻塞身份识别探针
+
+### NINE. RETURN target: 返回上一层
+* 规则的顺序: 子链 --> 父链 --> 缺省的策略:
+    * 即 若包在子链上遇到了RETURN, 则返回父链的下一条规则继续进行比较;
+    * 若在父链(主链，如INPUT)遇到了RETURN, 则使用缺省的策略(一般是ACCEPT或DROP).
