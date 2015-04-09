@@ -82,7 +82,7 @@ echo "Use Old Config in $SS_CONFIG_FILE:"
 echo "server: $SS_IP"
 echo "server_port: $SS_PORT"
 echo "local_port: $SS_LOCAL_PORT"
-echo "password: $SS_PASSWORD"
+echo "password: ***********"
 echo "method: $SS_METHOD"
 fi
 
@@ -145,7 +145,7 @@ if [ ! -d "$HOME/.config/shadowsocks" ]; then
     mkdir -p $HOME/.config/shadowsocks;
 fi
 
-# catch ctrl+c
+# catch ctrl+c to start clean_exit function
 trap "clean_exit" SIGINT
 trap "clean_exit" SIGUSR1
 
@@ -156,8 +156,4 @@ if [ "$1" == "-d" ]; then
 else 
     echo "Start shadowsocks redirect ..."
     $SS -c $SS_CONFIG_FILE
-
-    # exit flush all rules
-    # catch signal: ctrl + c
-    # trap 'echo "Cleaning Fire Rules...";sudo iptables -t nat -F $CHAIN_NAME;sudo iptables -t nat -X $CHAIN_NAME;echo "Cleaning end.";exit -1;' SIGINT
 fi
