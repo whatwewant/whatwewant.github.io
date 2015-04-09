@@ -100,7 +100,7 @@ sudo iptables -t nat -A $CHAIN_NAME -d 10.0.0.0/8 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 127.0.0.0/8 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 169.254.0.0/16 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 172.16.0.0/12 -j RETURN
-sudo iptables -t nat -A $CHAIN_NAME -d 192.168.0.0/16 -j RETURN
+# sudo iptables -t nat -A $CHAIN_NAME -d 192.168.0.0/16 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 224.0.0.0/4 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 240.0.0.0/4 -j RETURN
 
