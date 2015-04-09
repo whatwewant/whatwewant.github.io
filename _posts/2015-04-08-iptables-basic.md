@@ -8,6 +8,11 @@ tags: [linux, ubuntu, iptables, command]
 ---
 {% include JB/setup %}
 
+## 参考
+* [Man Page](http://linux.die.net/man/8/iptables)
+* [Arch Wiki](https://wiki.archlinux.org/index.php/Iptables)
+
+
 ## 1. IPTABLES 命令的基础
 
 ### One IPTABLES 规则的基本格式:
@@ -203,6 +208,29 @@ tags: [linux, ubuntu, iptables, command]
 * Match : --port : 同端口多端口匹配，意思是它匹配的是那种源端口和目的端口是同一个端口的包, 比如: 端口80到端口80的包:
     * iptable -A INPUT -p tcp -m multiport --port 22,53,80
 
-#### Five 4. 数组匹配器(macth)
-* 
+#### Five 4. 属主匹配器(macth)
+* 基于包的生成者(也就是所有者，或称作拥有者, owner)的ID来匹配包, owner可以是启动进程的用户的ID，或用户所在的组的ID或进程的ID或会话的ID.
+* 注意: 这个扩展只能用在OUTPUT中，原因显而易见:我们几乎不可能得到发送端程序的ID的任何信息，或者在去往真正目的地哪儿有路由.
+* Match: --cmd-owner : 匹配命令的数组，也就是发送这个报文的进程名称:
+    * iptables -A OUTPUT -m owner --cmd-owner httpd
+* Match: --uid-owner : 按生成包的用户的ID(UID)来匹配外出的包:
+    * iptables -A OUTPUT -m owner --uid-owner 500
+* Match: --gid-owner : 组ID(GID):
+    * iptables -A OUTPUT -m owner --gid-owner 0
+* Match: --pid-owner : 进程ID(PID):
+    * iptables -A OUTPUT -m owner --pid-owner 78
+* Match: --sid-owner : 会话ID(SID, session id)
+    * iptables -A OUTPUT -m owner --sid-owner 100
+
+#### Five 5. 字符匹配器(match)
+* Match: --string pattern: 指定字符串:
+    * --string "baidu.com" 
+    * Example: iptables -A INPUT -m string --string "baidu.com" --algo bm -j DROP
+    * 匹配给定字符, 必须指定--algo bm或kmp算法
+* Match: --algo bm/kmp : 指定匹配算法(bm 或 kmp):
+    * Example: 同上
+* Match: --from offset :
+    * 设置偏移从它开始寻找任何匹配。如果没有通过，默认为0。
+* Match: --to offset:
+    * 设置偏移从它开始寻找任何匹配。如果没有通过，默认为数据包的大小。
 
