@@ -10,6 +10,29 @@ SS_METHOD=ase-256-cfb
 SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks.json
 CHAIN_NAME=SHADOWSOCKS
 
+_cleanup() {
+    trap "" SIGINT
+    trap "" SIGUSR1
+
+    sudo iptables -t nat -F $CHAIN_NAME
+    sleep 2
+    sudo iptables -t nat -D OUTPUT -j $CHAIN_NAME
+    sleep 2
+    sudo iptables -t nat -X $CHAIN_NAME
+}
+
+cleanup() {
+    echo 
+    echo "Cleaning iptables config..."
+    _cleanup > /dev/null 2>&1
+    echo "Clean done."
+}
+
+clean_exit() {
+    cleanup
+    exit 0
+}
+
 # enumerate random
 function random ()
 {
@@ -121,6 +144,10 @@ sudo iptables-save >> /dev/null
 if [ ! -d "$HOME/.config/shadowsocks" ]; then
     mkdir -p $HOME/.config/shadowsocks;
 fi
+
+# catch ctrl+c
+trap "clean_exit" SIGINT
+trap "clean_exit" SIGUSR1
 
 # Start the shadowsocks-redir
 if [ "$1" == "-d" ]; then
