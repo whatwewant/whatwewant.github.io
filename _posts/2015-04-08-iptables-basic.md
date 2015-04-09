@@ -8,7 +8,7 @@ tags: [linux, ubuntu, iptables, command]
 ---
 {% include JB/setup %}
 
-## IPTABLES 命令的基础
+## 1. IPTABLES 命令的基础
 
 ### One IPTABLES 规则的基本格式:
 > iptables [-t table] command [match] [target/jump]
@@ -79,7 +79,130 @@ tags: [linux, ubuntu, iptables, command]
     * iptables -E ChainOldName ChainNewName
 
 ### Four IPTABLES OPTIONS (选项)
-* 1. 
+* 1. iptables -Lv
   * Option: -v, --version
   * Commands: --list, --append, --insert, --delete, --replace
-* 3. 
+  * Such as: iptables -Lv
+  * Explanation:
+      * 
+* 2. iptables -Lx :
+    * Option: -x, --exact # 将输出中的计数器显示准确的数字，必须和--list连用
+    * Commands: -L, --list
+    * Explanation:
+        * 
+* 3. iptables -Ln or iptables -Lvn:
+    * Option: -n, --numeric # 使输出的IP地址和端口以数值的形式显示, 而不是默认名字，如主机名，网络名，程序名等
+    * Commands: -L, --list
+    * Explanation:
+* 4. iptables -L --line-numbers:
+    * Option: --line-numbers # 显示规则的行号
+    * Commands: -L, --list # 列出规则
+    * Explanation:
+* 5. iptables -I INPUT -c 20 4000:
+    * Option: -c, --set-counters # 设置字节或者报文的计数值
+    * Commands: -I, -A, -R
+    * Explanation
+* 6. ...:
+    * Option: --modprobe # iptables 探测并装在要使用的模块.
+    * Commands: All
+    * Explanation:
+
+## 2. IPTABLES 的匹配(matches)
+
+### One. 通用匹配: 可以在任何规则里
+* 1. Match: -p, --protocol : 主要用来检查特定协议(TCP/UDP/ICMP等)
+    * Example: iptables -A INPUT -p tcp
+    * 1. 指定协议的名称，必须在/etc/protocols里面定义，否则报错
+    * 2. 可以指定一个整数值, 例如ICMP是1, TCP是6, UDP是17
+    * 3. 另外，可以指定为ALL, ALL表示仅匹配ICMP/TCP/UDP协议，这个是默认配置,数值为0:
+        * iptables -A INPUT -p all -j ACCEPT
+* 2. Match: -s, --src, --source : 主要用来匹配报文的源地址,单个IP或IP地址段(一个主机或一个网络):
+    * Example: iptables -A INPUT -s 192.168.1.1
+    * 1. 单个地址: -s 192.168.1.1
+    * 2. 一个网络: -s 192.168.0.0/24
+    * 3. 缺省表示所有地址
+* 3. Match: -d, --dst, --destination: 匹配报文的目的地址, 用法和源地址一致
+* 4. Match: -i, --in-interface : 以包进入本地所使用的网络接口来匹配包.`注意:只能用于INPUT, FORWARD, PREROUTING链.`
+    * Example: iptables -A INPUT -i eth0
+    * 1. 指定接口名称
+    * 2. 使用通配符, 即英文加号, 表示匹配所有包, 不考虑来自哪个接口, 这是不指定接口的默认行为:
+        * iptables -I INPUT -i +
+* 5. Match: -o, --out-interface: 以包离开本地所使用的网络接口的匹配包, 和 -i 一样
+* 6. Match: -f, --fragment : ....
+* 集合例子: iptables -t nat -A OUTPUT -s 10.1.0.0/24 -d 111.112.113.114 -p tcp -j ACCEPT
+
+### Two. 只能用于TCP的TCP matches
+* 1. Match: --sport, --source-port : 基于TCP包的源端口来匹配包:
+    * Example: iptables -A INPUT -p tcp --sport 22
+    * 1. 不指定此项，暗指所有端口.
+    * 2. 使用服务名或端口号, 但名字必须在/ect/services中定义, 因为iptables从这个文件查找想要的端口号.
+    * 3. 可以使用连续的端口: -p tcp --sport 22:80, 从22到80的所有端口, 包括22和80
+    * 4. 连续端口可以省略第一个端口号，即从0号端口开始: -p tcp --sport :80
+    * 5. 连续端口省略第二个端口号,即到65535端口为止: -p tcp --sport 22:
+* 2. Match: --dport, --destination-port: 目的端口, 和--sport用法一样
+* 3. Match: --tcp-flags :　匹配指定的TCP标记:
+    * Example: iptables -A INPUT -p tcp --tcp-flag SYN,FIN,ACK SYN
+    * 有两个参数，它们都是列表(以,隔开), 这两个列表以空格隔开
+    * 第一个参数指定要检查的标记; 第二个标记指定"在第一个列表中出现过且必须被设为1(即状态打开)"的标记(第一个表的其他标记必须置零).
+    * 也就是，第一个参数提供检查范围，第二个参数提供被设置的条件(即哪些可以置1)
+    * 标记有: SYN, ACK, FIN, RST, URG, PSH, 还有ALL和NONE
+    * 1. 表示匹配哪些SYN标记被设置而FIN和ACK标记没有设置的包: iptables -p tcp --tcp-flags SYN,FIN,ACK SYN
+    * 2. --tcp-flags ALL NONE 匹配所有标记都未置1的包
+* 4. Match: --tcp-option : 根据选项匹配包:
+    * Example: iptables -p tcp --tcp-option 16
+    * TCP选项是TCP头中的特殊部分，有三个不同的部分:
+        * 1. 第一个8位组标书选项的类型
+        * 2. 第二个8位组标书选项的长度(这个长度是整个选项的长度，但不包含填充部分所占的字节，而且要注意不是每个TCP选项都有这一部分)
+        * 3. 第三个8位组标书选项的内容
+
+
+### Three. 能够用于UDP的UDP matches:
+* UDP是一种无连接协议，所以它在打开、关闭连接以及发送数据时没有多少标记要设置，它也不需要任何类型的确认.
+* 1. Match: --sport, --source-port 和 TCP 一样
+* 2. Match: --dport, --destination-port 和 TCP 一样
+
+### Four. 只能用于ICMP的ICMP matches
+* 和UDP一样是无连接协议, 但是生存时间更短
+* ICMP协议主要用来错误报告和连接控制等
+* ICMP不是IP的子协议，而是和IP并列的一个协议，它主要用来增强IP功能和帮助IP进行错误处理.
+* Match: --icmp-type : 根据ICMP类型匹配包:
+    * Example: iptables -A INPUT -p icmp --icmp-type 8
+    * 帮助: iptables -p icmp --help
+    * icmp 类型 ....
+
+### Four. 1 SCTP匹配(matches):
+* 流控制传输协议(SCTP), 是一个箱单新的协议，查看问
+
+### Five 显示匹配(Explicit matches):
+
+### Five. 一些特殊匹配, 例如基于状态(state), 所有者(owner)或者限制(limit)等
+* 显示匹配必须用-m或--match装载, 比如使用状态匹配就必须使用 -m state
+
+#### Five 1. 限速匹配器(match)
+* 对指定的规则的日志数量加以限制
+* 减少Dos syn flood攻击的影响
+* -m --limit --limit 5/s: 限制每秒5个package，其他丢弃(每个package 1480字节); 也就是在数量超过限定后，所有的包都会被匹配.
+* 1. -m limit --limit 5/s --limit-burst 10/s:
+    * limit-burst令牌首先被初始化为10, 每一条满足这条规则的报文都会消耗一个令牌
+* 2. ...
+
+#### Five 2. MAC地址匹配器(match)
+* 能够根据报文的MAC地址匹配报文，到目前只能根据报文的源MAC进行匹配
+* -m mac 
+* Match: --mac-source : 基于包的MAC源地址匹配包，地址格式XX:XX:XX:XX:XX:XX :
+    * iptables -A INPUT -m mac --mac-source 00:11:22:33:44:55
+    * 注意: 因为MAC address 只能用于 Ethernet 类型的网络,所以这个match只能用于Ethernet接口, 而且，　它还只能在PREROUTING, FORWARD 和 INPUT链里使用.
+
+#### Five 3. 多端口匹配器(match):
+* 不能把标准匹配和多端口匹配混用: --sport 1024:65535 -m multiport --dport 21,23,80
+* Match : --source-port :源端口
+    * iptables -A INPUT -p tcp -m multiport --source-port 22,53,80,110
+    * 最多能匹配15个不连续端口，前提-p tcp 或 -p udp才有端口
+* Match : --destination-port :目的端口
+    * iptables -A INPUT -p tcp -m multiport --destination-port 22,53,80
+* Match : --port : 同端口多端口匹配，意思是它匹配的是那种源端口和目的端口是同一个端口的包, 比如: 端口80到端口80的包:
+    * iptable -A INPUT -p tcp -m multiport --port 22,53,80
+
+#### Five 4. 数组匹配器(macth)
+* 
+
