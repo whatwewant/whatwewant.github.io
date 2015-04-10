@@ -19,6 +19,7 @@ tags: [linux, ubuntu, network]
 ## 2. IP 别名
 >   Linux 支持在一个物理网卡上配置多个IP地址
 > 用来实现类是子接口之类的功能，也就是IP别名
+
 * 1. 禁用网卡管理: (CentOS or RHEL):
     * service NetworkManager stop
     * chkconfig NetworkManager off
