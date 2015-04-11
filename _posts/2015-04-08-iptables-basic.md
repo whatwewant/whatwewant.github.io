@@ -280,6 +280,11 @@ tags: [linux, ubuntu, iptables, command]
         * 1. 不使用这个选项，目的端口不会改变
         * 2. 指定一个端口, --to-ports 8080
         * 3. 指定端口范围, --to-ports 8080-8090
+* 举栗子:
+    * 将外网访问本地端口8022转发到本地端口22:
+        * iptables -t nat -A PREROUTING -p tcp --dport 8022 -j REDIRECT --to-ports 22
+    * 将内网访问本地端口8022转发到22端口:
+        * iptables -t nat -A OUTPUT -p tcp --dport 8022 -j REDIRECT --to-ports 22
 
 ### Eight. REJECT target
 * REJECT 和 DROP 基本一样,区别在于它出了阻塞包之外，还向发送者返回错误信息.
