@@ -146,6 +146,7 @@ sudo iptables -t nat -A $CHAIN_NAME -d 240.0.0.0/4 -j RETURN
 ## Anything else should be redirected to shadowsocks's local port
 sudo iptables -t nat -A $CHAIN_NAME -p tcp -j REDIRECT --to-ports $SS_LOCAL_PORT
 sudo iptables -t nat -A $CHAIN_NAME -p udp -j REDIRECT --to-ports $SS_LOCAL_PORT
+sudo iptables -t nat -A $CHAIN_NAME -p icmp -j REDIRECT --to-ports $SS_LOCAL_PORT
 
 # Apply the rules
 sudo iptables -t nat -L OUTPUT | grep $CHAIN_NAME >> /dev/null
