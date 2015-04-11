@@ -147,6 +147,7 @@ class Model_Name extends CI_Model {
             * $this->db->select(字段);
             * $query = $this->db->get(表名);
             * return $query->result();
+            * `var_dump($query->result);` 输出一个对象的。。。
         * 5. 删除数据:
             * $this->db->where(字段名, 字段值);
             * $query->db->delete(表名);
