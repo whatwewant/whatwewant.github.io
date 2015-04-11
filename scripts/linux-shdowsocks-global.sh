@@ -67,6 +67,12 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     read SS_PASSWORD
     echo -n "Server Method (Default: aes-256-cfb): "
     read SS_METHOD
+
+    # config shadowsocks
+    if [ ! -d "$HOME/.config/shadowsocks" ]; then
+        mkdir -p $HOME/.config/shadowsocks;
+    fi
+
     # save config to $SS_CONFIG_FILE
     echo "{" > $SS_CONFIG_FILE
     echo "  \"server\": \"$SS_IP\"," >> $SS_CONFIG_FILE
@@ -140,11 +146,6 @@ fi
 
 ## SAVE iptables config
 sudo iptables-save >> /dev/null
-
-# config shadowsocks
-if [ ! -d "$HOME/.config/shadowsocks" ]; then
-    mkdir -p $HOME/.config/shadowsocks;
-fi
 
 # catch ctrl+c to start clean_exit function
 trap "clean_exit" SIGINT
