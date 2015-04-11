@@ -18,6 +18,11 @@ tags: [php, server, lamp]
     * sudo apt-get install php5
     * 查看是否被加载: cat /etc/apache2/mods-enabled/php5.load 证明被加载
     * 查看版本: php5 -v
+    * 如果未被加载, 可使用 sudo a2enmod php5
+    * 如果/etc/apache2/mod-available/下没有php5相关mod:
+        * sudo apt-get install libapache2-mod-php5
+        * sudo a2enmod php5
+        * sudo service apache2 restart 即可
 * 3. Mysql:
     * sudo apt-get install mysql-server
     * 查看mysql是否被php加载: cat /etc/php5/conf.d/mysql.ini :
