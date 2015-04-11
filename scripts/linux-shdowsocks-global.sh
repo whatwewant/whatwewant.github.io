@@ -9,6 +9,7 @@ SS_PASSWORD=password
 SS_METHOD=ase-256-cfb
 SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks.json
 CHAIN_NAME=SHADOWSOCKS
+VERSION=1.0.1
 
 # root
 if [ "$UID" != "0" ]; then
@@ -16,6 +17,17 @@ if [ "$UID" != "0" ]; then
     exit -1;
 fi
 
+help() {
+    echo "Shadowsocks Global Script"
+    echo "         -- Author : Cole Smith"
+    echo "         -- Email  : tobewhatwewant@gmail.com"
+    echo ""
+    echo "Options:"
+    echo "   -f, --configfile ConfigFilePath    Load Specific Configure File Path."
+    echo "   -g, --global                       Load Vps Shadowsocks Configure File"
+    echo "   -h, --help                         Get Help"
+    echo "   -v, --version                      Get Script Version"
+}
 
 _cleanup() {
     trap "" SIGINT
@@ -54,6 +66,25 @@ function random ()
 
 # random SS_PORT
 # random;
+case $1 in
+    -f|--configfile)
+        SS_CONFIG_FILE=$2
+        ;;
+    -g|--global)
+        SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks-vps.json
+        ;;
+    -h|--help)
+        help
+        exit 0
+        ;;
+    -v|--version)
+        echo $VERSION
+        exit 0
+        ;;
+    *)
+        ;;
+esac
+
 
 if [ ! -f $SS_CONFIG_FILE ]; then
     echo "First Use, Please Config Shadowsocks:"
