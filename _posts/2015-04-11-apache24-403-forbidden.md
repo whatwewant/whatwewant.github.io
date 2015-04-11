@@ -9,8 +9,8 @@ tags: [linux, php, apache2]
 {% include JB/setup %}
 
 ## 1. 檢查權限
-* 1. 用戶和組的配置:
-```php
+* 1. 用戶和組的配置
+```bash
    sudo vim /etc/apache2/apache2.conf 找到 User 和 Group
 发现配置用户和组的文件在/etc/apache2/envvars
     1. 第一种强制方法就是将User ${APACHE_RUN_USER}改为 User ubuntu, 将Group ${APACHE_RUN_GROUP}改为Group ubuntu (其中ubuntu是web根目录(DocumentRoot)权限用户)
