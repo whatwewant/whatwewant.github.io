@@ -1,0 +1,452 @@
+#!/bin/bash
+# Program:
+#	Configure Ubuntu
+#
+#	Conditions:
+#	   Ubuntu, Kubuntu, Lubuntu, Xubuntu, and other OSes based on ubuntu
+#
+# History:
+#     2014/04/10 Potter  Version 1.1
+
+# set -e
+
+# Root
+# if [ "$UID" -ne "0" ]
+# if [ "$(id -u)" != "0" ]
+#then
+#    echo "Sorry, this program must be running by Root."
+#    exit
+#fi
+
+BASEPATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=.:$BASEPATH
+
+configFile=$(pwd)
+logfile=/var/log/ConfigureUbuntu.log
+logDir=/tmp/ConfigureUbuntu
+
+if [ -d "$logDir" ]
+then
+	echo "Destroy Old Log Dir: $logDir"
+	rm -rf $logDir
+fi
+mkdir $logDir
+
+cd $logDir
+if [ "$?" != "0" ]; then
+    cd /tmp
+fi
+
+# Log File
+if [ -f "$logfile" ]; then
+	echo "Destroy Old Log File: $logfile"
+	rm -rf $logfile
+    echo ""
+fi
+sudo touch $logfile
+sudo chmod 666 $logfile
+
+# backup sources.list
+if [ ! -f /etc/apt/sources.list.old ]
+then
+    sudo cp /etc/apt/sources.list /etc/apt/sources.list.old
+fi
+sudo apt-get update
+
+download_log() {
+    # 使用前修复依赖
+    sudo apt-get -f -y install
+
+    for argv in "$@"
+    do
+	sudo apt-get install -y $argv && echo "Succeed in installing --> $argv" >> $logfile || echo "ERROR: Failed to install $argv" >> $logfile
+    done
+}
+
+dpkg_log() {
+    # 使用前修复依赖
+    sudo apt-get -f -y install
+
+    for argv in "$@"
+    do
+        sudo dpkg -i $argv && echo "(DPKG)Succeed in installing --> $argv" >> $logfile || echo "(DPKG)ERROR: Failed to install $argv" >> $logfile
+    done
+}
+
+pip_log() {
+    for argv in "$@"
+    do
+        sudo pip install $argv && echo "(PIP)Succeed in installing --> $argv" >> $logfile || echo "(PIP)ERROR: Failed to install $argv" >> $logfile
+    done
+}
+
+pip3_log() {
+    for argv in "$@"
+    do
+        sudo pip3 install $argv && echo "(PIP)Succeed in installing --> $argv" >> $logfile || echo "(PIP)ERROR: Failed to install $argv" >> $logfile
+    done
+}
+
+easy_install_log() {
+    for argv in "$@"
+    do
+        sudo easy_install $argv && echo "(Easy_install)Succeed in installing --> $argv" >> $logfile || echo "(Easy_install)ERROR: Failed to install $argv" >> $logfile
+    done
+}
+
+wget_copy() {
+    # wget_copy url rename path
+    # Eg: wget https://xxxx kuwo /usr/bin
+    url=$1
+    newname=$2
+    path=$3
+    wget -T 20 --tries 2 $url -O $newname && \
+    chmod 755 $newname && \
+    sudo cp -v $newname $path && \
+    echo "Succeeding in wget_copy --> $newname" >> $logfile || \
+        echo "ERROR: failed to wget_copy --> $url" >> $logfile
+}
+
+make_log() {
+    make_dir=$1
+    cd $make_dir
+    make clean
+    make && sudo make install \
+        && echo "(make)Succeed in installing --> $make_dir" >> $logfile || echo \
+        "ERROR: Failed to install $make_dir" >> $logfile
+}
+
+cmake_log() {
+    cmake_dir=$1
+    cd $cmake_dir
+    mkdir build
+    cd build
+    cmake ..
+    make && sudo make install \
+        && echo "(cmake)Succeed in installing --> $cmake_dir" >> $logfile || echo 
+"ERROR: Failed to install $cmake_dir" >> $logfile
+}
+
+pip2_setup_log() {
+    git_dir=$1
+    cd $git_dir
+    sudo python2 setup.py install \
+        && echo "(pip3)Succeed in installing --> $git_dir" >> $logfile || echo "
+ERROR: Failed to install $git_dir" >> $logfile
+}
+
+pip3_setup_log() {
+    git_dir=$1
+    cd $git_dir
+    sudo python3 setup.py install \
+        && echo "(pip3)Succeed in installing --> $git_dir" >> $logfile || echo "
+ERROR: Failed to install $git_dir" >> $logfile
+}
+
+git_log() {
+    url=$1
+    name=$2
+    cd $logDir
+    git clone $url $name \
+        && echo "(Git)Succeed in cloning --> $name" >> $logfile || echo "ERROR: Failed to clone $name" >> $logfile
+}
+
+bash_log() {
+    dir=$1
+    script=$2
+    cd $dir
+    bash $script \
+        && echo "(pip3)Succeed in installing --> $dir/$script" >> $logfile || echo "ERROR: Failed to install $dir/$script" >> $logfile
+}
+
+git_pip() {
+    url=$1
+    name=$2
+    git_log $url $name
+    pip3_setup_log $logDir/$name
+}
+
+git_make() {
+    url=$1
+    name=$2
+    git_log $url $name
+    make_log $logDir/$name
+}
+
+git_cmake() {
+    url=$1
+    name=$2
+    git_log $url $name
+    cmake_log $logDir/$name
+}
+
+git_bash() {
+    url=$1
+    name=$2
+    script=$3
+    git_log $url $name
+    bash_log $logDir/$name $script
+}
+
+# Bradcom 802.11 Linux STA 无线网卡驱动
+# apt-get install -y bcmwl-kernel-source && \
+# apt-get install -y broadcom-sta-common && \
+# apt-get install -y broadcom-sta-common && \
+# apt-get install -y broadcom-sta-source && \
+# Broad 43xx 固件提取工具
+# apt-get install -y b43-fwcutter && \
+# apt-get install -y firmware-b43-installer && \
+# 激活无线网卡
+# modprobe -r b43 ssb && \
+# modprobe b43  || echo "error: 无线网卡安装失败." >> $logfile
+
+# 调教Nvidia驱动
+# http://wiki.ubuntu.org.cn/NVIDIA
+# https://github.com/Bumblebee-Project/Bumblebee
+# https://launchpad.net/~bumblebee/+archive/stable
+#add-apt-repository ppa:bumblebee/stable && \
+#apt-get update && \
+#apt-get install -y bumblebee bumblebee-nvidia  
+#add-apt-repository ppa:ubuntu-x-swat/x-updates && \
+#apt-get update && \
+#apt-get install -y nvidia-current nvidia-settings && \
+# 从事GPU开发的可能还需要装上cuda和openCL库的支持
+#apt-get install -y nvidia-current-dev || echo "error: 安装Nvidia drivers failed." >> $logfile
+# "Need reboot
+# "The Follow to See how Nvidia Run
+# sudo optirun nvidia-settings -c :8
+# "To run program using Nvidia
+# sudo optirun + program_name
+#
+#
+# add following to /etc/apt/sourcelist
+# 12.04 and Me (kernel 3.8)
+#	deb http://ppa.launchpad.net/bumblebee/stable/ubuntu precise main 
+#	deb-src http://ppa.launchpad.net/bumblebee/stable/ubuntu precise main 
+# 
+# 13.10:
+#	deb http://ppa.launchpad.net/bumblebee/stable/ubuntu saucy main 
+#	deb-src http://ppa.launchpad.net/bumblebee/stable/ubuntu saucy main 
+#
+# 14.04:
+#       deb http://ppa.launchpad.net/bumblebee/stable/ubuntu trusty main 
+#	deb-src http://ppa.launchpad.net/bumblebee/stable/ubuntu trusty main 
+#
+# 14.04
+download_log bumblebee
+
+# 安装需要的程序
+# Program:
+# vim and tools
+download_log vim tig
+
+# git
+download_log git gitk subversion 
+
+# c/c++
+download_log gcc g++
+# cmake
+download_log cmake
+# IDE
+download_log codeblocks geany
+
+# java
+
+# python
+download_log python python-setuptools python-virtualenv python-pip python-django-south ipython
+pip_log requests 
+# python3
+download_log python3-setuptools python3-pip
+# gns3
+# download_log gns3
+# download_log python3-sig python3-pyqt4
+###### gns3 use pip3
+# pip3_log gns3
+# pip3_log gns3-server
+###### gns3 need i386 libcrypto.so.4
+#sudo dpkg --add-architecture i386
+#sudo apt-get update
+#sudo apt-get install -y libc6:i386 libstdc++6:i386
+#sudo apt-get install -y libssl1.0.0:i386
+#sudo ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /lib/i386-linux-gnu/libcrypto.so.4
+git_bash https://github.com/whatwewant/gns3_auto_config gns3_u gns3_config_ubuntu14.04.sh
+
+# BeautifulSoup
+pip_log BeautifulSoup4
+
+# django-1.5.5
+pip_log django==1.5.5
+if [ "$?" != "0" ]
+then
+    # git clone https://github.com/django/django.git
+    wget -O Django-1.5.5.tar.gz https://www.djangoproject.com/m/releases/1.5/Django-1.5.5.tar.gz && \
+    tar -zxvf Django-1.5.5.tar.gz && \
+    cd Django-1.5.5 && \
+    sudo python setup.py install && \
+    cd .. && \
+    echo "Succeed in installing --> Django" >> $logfile || echo "ERROR: Failed to install Django-1.5.5" >> $logfile
+fi
+
+# django-debug-toolbar
+# version 0.8.5
+git clone https://gitcafe.com/Potter/django-debug-toolbar django-debug && \
+# Django-debug-toolbar Latest Version 1.2
+# git clone https://github.com/django-debug-toolbar/django-debug-toolbar django-debug && \
+cd django-debug && \
+sudo python setup.py install && \
+cd .. || echo "ERROR: Failed to install django-debug-toolbar" >> $logfile
+
+# Database
+download_log sqlite3
+# mysql-server
+#download_log mysql-server
+# mysql-client
+download_log mysql-client python-mysqldb
+
+# Life flash smplayer
+download_log apcalc smplayer flashplugin-installer
+
+# FTP Client
+# download_log filezilla
+# FTP Server
+# download_log vsftpd
+
+# ssh Client
+download_log openssh-client
+# ssh Server
+# download_log openssh-server openssh-sftp-server
+
+# virtualbox
+download_log virtualbox
+# VBoxGuestAdditions
+# 	http://download.virtualbox.org/virtualbox
+
+# 编码(code)
+download_log convmv
+
+# go through dirs
+download_log tree
+
+# uncompress tool
+download_log unrar
+
+# input method
+download_log fcitx fcitx-googlepinyin
+
+# fonts
+download_log ttf-wqy-zenhei
+
+# OpenGL
+download_log freeglut3*
+
+# For android studio 
+download_log lib32z1
+
+# python-setuptools --> easy_install
+# 利用easy_install 安装virtualenv
+# easy_install virtualenv
+
+# Install Goagent
+# https://wiki.archlinux.org/index.php/GoAgent_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+git clone https://github.com/goagent/goagent /usr/share/goagent
+wget_copy http://git.oschina.net/sunnypotter/goagent/raw/master/server/uploader.sh uploader.sh /usr/share/goagent/server
+
+# Straight Download binary file: njit-clinet
+#
+#wget -O /usr/bin/njit-client https://gitcafe.com/Potter/Softwares/raw/master/Njit-client/njit-client && \
+#chmod +x /usr/bin/njit-client && echo "Succeed in installing --> njit-client" >> $logfile
+
+
+wget_copy https://raw.githubusercontent.com/ma6174/vim/master/setup.sh config_vim.sh /tmp
+bash /tmp/config_vim.sh
+
+
+# SchoolNet
+download_log tesseract-ocr
+wget_copy https://raw.githubusercontent.com/whatwewant/schoolnet/master/SchoolNet.py SchoolNet /usr/bin
+
+# Portal
+wget_copy https://raw.githubusercontent.com/whatwewant/portal/master/portal.py portal /usr/bin
+
+# BaiduyunCloudTool: pcs
+download_log libcurl4-openssl-dev
+git_make https://github.com/GangZhuo/baidupcs.git baidupcs
+
+# shadowsocks
+download_log python-m2crypto
+easy_install_log shadowsocks
+
+# 安装 chrome
+# wget https://gitcafe.com/Potter/Softwares/raw/master/google-chrome-stable_current_amd64.deb && \
+#dpkg -i google-chrome-stable_current_amd64.deb && \
+# echo "Succeeding in installing --> google-chrome"|| echo "error: failed to install google-chrome" >> $logfile
+
+# 安装mac主题
+download_log unity-tweak-tool
+# docky
+download_log docky
+# 添加mac主题源 www.noobslab.com
+sudo add-apt-repository -y ppa:noobslab/themes
+sudo apt-get update
+# 安装mac主题, unity-tweak-tool 选择 Theme(主题) 选择Mbutun-x
+download_log mac-ithemes-v3
+echo "unity-tweak-tool 选择 Theme(主题) 选择Mbutun-x" >> $logfile
+# 安装mac主题图标, unity-tweak-tool 选择 Icons(图标) 选择Mbuntu-sl
+download_log mac-icons-v3
+echo "unity-tweak-tool 选择 Icons(图标) 选择Mbuntu-sl" >> $logfile
+# Apply MBuntu Splash
+download_log mbuntu-bscreen-v3
+# Install MacBuntu theme for LightDM
+download_log mbuntu-lightdm-v3
+
+# 安装 webkit kuwo and kugou
+download_log python-webkit
+wget_copy https://raw.githubusercontent.com/whatwewant/online-music/master/kugou kugou /usr/bin
+wget_copy https://raw.githubusercontent.com/whatwewant/online-music/master/kuwo kuwo /usr/bin
+if [ ! -d "/usr/share/icons" ]; then
+    mkdir -p /usr/share/icons
+fi
+wget_copy https://raw.githubusercontent.com/hzy199411/online-music/master/kugou.png kugou.png /usr/share/icons
+wget_copy https://raw.githubusercontent.com/hzy199411/online-music/master/kuwo.png kuwo.png /usr/share/icons
+
+# zsh
+download_log zsh
+# oh-my-zsh
+wget_copy https://raw.githubusercontent.com/whatwewant/oh-my-zsh/master/tools/config_zsh.sh config_zsh.sh /tmp
+bash /tmp/config_zsh.sh
+
+# openjdk
+download_log openjdk-7-jdk
+
+# stardict
+download_log stardict
+
+# sogou input method
+wget_copy http://download.ime.sogou.com/1408440412/sogou_pinyin_linux_1.1.0.0037_amd64.deb sogou.deb /tmp
+dpkg_log /tmp/sogou.deb
+
+# background
+sudo wget_copy https://gitcafe.com/Potter/wallpaper/raw/master/wallpaper.jpg warty-final-ubuntu.png /usr/share/backgrounds
+
+# 安装Brackets.io , html, js
+# http://brackets.io
+wget_copy https://github.com/adobe/brackets/releases/download/release-0.44/Brackets.Release.0.44.64-bit.deb Brackets.deb /tmp
+dpkg_log /tmp/Brackets.deb
+
+# Log Report:
+cat $logfile
+#rm -rf $logDir
+rm -rf $configFile
+echo "More detail, please look at $logfile"
+# rm -rf $logfile*
+
+echo "Reboot 10 seconds later..."
+sleep 10
+
+# reboot 
+read -p "Are you sure to reboot ?(Y/N)" answer
+if [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+	reboot
+fi
+
+exit 
