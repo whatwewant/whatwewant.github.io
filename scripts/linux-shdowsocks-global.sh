@@ -67,6 +67,9 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     read SS_PASSWORD
     echo -n "Server Method (Default: aes-256-cfb): "
     read SS_METHOD
+    if [ "$SS_METHOD" = "" ]; then
+        SS_METHOD=aes-256-cfb
+    fi
 
     # config shadowsocks
     if [ ! -d "$HOME/.config/shadowsocks" ]; then
