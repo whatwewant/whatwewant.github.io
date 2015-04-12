@@ -2,10 +2,10 @@
 
 # extern variables
 SS=ss-redir
-SS_IP=$1
-SS_PORT=$2
-SS_LOCAL_PORT=$3
-SS_PASSWORD=$4
+SS_IP=127.0.0.1
+SS_PORT=1080
+SS_LOCAL_PORT=1081
+SS_PASSWORD=password
 SS_METHOD=ase-256-cfb
 SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks.json
 CHAIN_NAME=SHADOWSOCKS
@@ -30,7 +30,7 @@ _cleanup() {
 
 cleanup() {
     echo 
-    echo "Cleaning iptables config..."
+    echo "Cleaning Config..."
     _cleanup > /dev/null 2>&1
     echo "Clean done."
 }
@@ -109,9 +109,15 @@ fi
 # shadowsocks
 which $SS >> /dev/null
 if [ "$?" != "0" ]; then
-    echo "Please install shadowsocks first."
+    echo "Please install shadowsocks-libev first."
+    echo "What we need is ss-redir"
     exit
 fi 
+
+# catch ctrl+c to start clean_exit function
+trap "clean_exit" SIGINT
+trap "clean_exit" SIGUSR1
+
 
 # iptables
 sudo iptables -t nat -L $CHAIN_NAME >> /dev/null 2>&1
@@ -146,10 +152,6 @@ fi
 
 ## SAVE iptables config
 sudo iptables-save >> /dev/null
-
-# catch ctrl+c to start clean_exit function
-trap "clean_exit" SIGINT
-trap "clean_exit" SIGUSR1
 
 # Start the shadowsocks-redir
 if [ "$1" == "-d" ]; then
