@@ -7,7 +7,8 @@ SS_PORT=1080
 SS_LOCAL_PORT=1081
 SS_PASSWORD=password
 SS_METHOD=ase-256-cfb
-SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks.json
+SS_CONFIG_DIR=/etc/shadowsocks
+SS_CONFIG_FILE=${SS_CONFIG_DIR}/shadowsocks.json
 CHAIN_NAME=SHADOWSOCKS
 VERSION=1.0.1
 
@@ -71,7 +72,7 @@ case $1 in
         SS_CONFIG_FILE=$2
         ;;
     -g|--global)
-        SS_CONFIG_FILE=$HOME/.config/shadowsocks/shadowsocks-vps.json
+        SS_CONFIG_FILE=${SS_CONFIG_DIR}/shadowsocks-vps.json
         ;;
     -h|--help)
         help
@@ -103,8 +104,8 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     fi
 
     # config shadowsocks
-    if [ ! -d "$HOME/.config/shadowsocks" ]; then
-        mkdir -p $HOME/.config/shadowsocks;
+    if [ ! -d "$SS_CONFIG_DIR" ]; then
+        mkdir -p $SS_CONFIG_DIR;
     fi
 
     # save config to $SS_CONFIG_FILE
@@ -189,10 +190,10 @@ fi
 sudo iptables-save >> /dev/null
 
 # Start the shadowsocks-redir
-if [ "$1" == "-d" ]; then
-    echo "Shadowsocks Daemon Now."
-    $SS -c $SS_CONFIG_FILE -f /tmp/shadowsocks.pid
-else 
-    echo "Start shadowsocks redirect ..."
-    $SS -c $SS_CONFIG_FILE
-fi
+# if [ "$1" == "-d" ]; then
+#    echo "Shadowsocks Daemon Now."
+#    $SS -c $SS_CONFIG_FILE -f /tmp/shadowsocks.pid
+#else 
+echo "Start shadowsocks redirect ..."
+$SS -c $SS_CONFIG_FILE
+#fi
