@@ -152,7 +152,7 @@ class Model_Name extends CI_Model {
             * $this->db->where(字段名, 字段值);
             * $query->db->delete(表名);
 * 5. 在Controller中载入模型:
-    * $this->load->model(模型名);
+    * $this->load->model(模型名)
     * $this->模型名->方法
 
 ## Course 4 CI快捷类库
