@@ -197,6 +197,7 @@ class Model_Name extends CI_Model {
           * $config['remove_spaces'] = TRUE;
           * // 是否重命名文件，将文件名重命名为随机的加密字符串
           * $config['encrypt_name'] = TRUE;
+
     * 2. 现成类库: system/libraries: Upload.php
     * 3. 调用CI的上传通用类，并执行上传:
         * // upload为调用的类名，全小写
