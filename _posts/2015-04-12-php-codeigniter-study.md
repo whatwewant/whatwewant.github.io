@@ -174,8 +174,7 @@ class Model_Name extends CI_Model {
     * 4. 上传:
         * move_uploaded_file(oldfile, newfile);
         * 例如: move_uploaded_file($_FILES['tmp_name'], './upload/'.$_FILES['name'])
-
-*2. 如何利用CI提供的类库实现便捷上传:
+* 2. 如何利用CI提供的类库实现便捷上传:
     * 1. 定义一个数组，设置一些与上传相关的参数:
         * 必须参数(3个):
           * // 设置上传目录, 这里写./, 目录要建在网站根目录，就是和application同级
