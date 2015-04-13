@@ -154,3 +154,58 @@ class Model_Name extends CI_Model {
 * 5. 在Controller中载入模型:
     * $this->load->model(模型名);
     * $this->模型名->方法
+
+## Course 4 CI快捷类库
+* 1. PHP的文件上传如何实现:
+    * 1. 提交上传:
+        * enctype="multipart/form-data":
+            * `<form action="/index.php/upload/up" method="post" enctype="multipart/form-data">`
+        * type="file"
+    * 2. 接收信息:
+        * $_FILES : var_dump($_FILES);
+        * 原文件名
+        * 临时文件名
+        * 大小
+        * 文件编码格式
+        * 报错信息
+    * 3. 判断:
+        * 文件大小
+        * 文件格式
+    * 4. 上传:
+        * move_uploaded_file(oldfile, newfile);
+        * 例如: move_uploaded_file($_FILES['tmp_name'], './upload/'.$_FILES['name']);
+
+*2. 如何利用CI提供的类库实现便捷上传:
+    * 1. 定义一个数组，设置一些与上传相关的参数:
+        * 必须参数(3个):
+          * // 设置上传目录, 这里写./, 目录要建在网站根目录，就是和application同级
+          * // 如果你要在application目录下，可以使用系统定义的路劲常量APPPATH
+          * // 例如: APPPATH.'uploads/';
+          * $config['upload_path'] = './uploads/';
+          * // 设置允许上传的类型
+          * $config['allowed_types'] = 'gif|jpg|png';
+          * $config['max_size'] = '100';
+        * 可选参数: 
+          * // 如果是图片还还能设置最大高度和宽度
+          * $config['max_width'] = '1024';
+          * $config['max_height'] = '768';
+          * // 要使用的文件名
+          * $config['file_name'] = 'xxx'; 
+          * // 是否覆盖
+          * $config['override'] = FALSE; // 默认
+          * // 是否将文件名中的空格替换为下划线
+          * $config['remove_spaces'] = TRUE;
+          * // 是否重命名文件，将文件名重命名为随机的加密字符串
+          * $config['encrypt_name'] = TRUE;
+    * 2. 现成类库: system/libraries: Upload.php
+    * 3. 调用CI的上传通用类，并执行上传:
+        * // upload为调用的类名，全小写
+        * $this->load->library('upload', $config);
+        * // 如果上传框的name写的是userfile, 那就不用传参数，如果不是，把name的值传进去
+        * $this->upload->do_upload('上传框的name'):
+            * 该函数返回值为boolean, 成功为TRUE
+    * 4. 接收出错信息或成功信息:
+        * 出错信息:
+            * $error = array('error' => $this->upload->display_errors());
+        * 成功信息，会把上传后的文件信息返回来:
+            * $data = array('upload_data' => $this->upload->data());
