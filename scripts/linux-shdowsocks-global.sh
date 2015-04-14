@@ -95,6 +95,12 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     read SS_PORT
     echo -n "LOCAL_PORT: "
     read SS_LOCAL_PORT
+    while [ "$SS_PORT" = "$SS_LOCAL_PORT" ]; 
+    do
+        echo "Server Port cannot be the same as SS_LOCAL_PORT. Try Again."
+        echo -n "LOCAL_PORT: "
+        read SS_LOCAL_PORT
+    done
     echo -n "Server Password: "
     read SS_PASSWORD
     echo -n "Server Method (Default: aes-256-cfb): "
