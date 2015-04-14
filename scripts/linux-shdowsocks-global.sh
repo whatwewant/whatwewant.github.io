@@ -10,6 +10,7 @@ SS_PASSWORD=password
 SS_METHOD=ase-256-cfb
 SS_CONFIG_DIR=/etc/shadowsocks
 SS_CONFIG_FILE=${SS_CONFIG_DIR}/shadowsocks.json
+SS_OPTIONAL_ARGS=""
 CHAIN_NAME=SHADOWSOCKS
 VERSION=1.0.1
 
@@ -25,12 +26,14 @@ help() {
     echo "         -- Email  : tobewhatwewant@gmail.com"
     echo ""
     echo "Options:"
+    echo "   -c, --clear                        Clear Network Configure."
     echo "   -f, --configfile ConfigFilePath    Load Specific Configure File Path."
-    echo "   -g, --global                       Load Vps Shadowsocks Configure File"
-    echo "   -h, --help                         Get Help"
+    echo "   -g, --global                       Load Vps Shadowsocks Configure File."
+    echo "   -h, --help                         Get Help."
+    echo "   -l, --log                          Stdout Log Infomation."
     echo "   -r, --remove                       Remove Old Config."
     echo "   -u, --update                       Update Lastest Version."
-    echo "   -v, --version                      Get Script Version"
+    echo "   -v, --version                      Get Script Version."
 }
 
 _cleanup() {
@@ -80,6 +83,10 @@ function random ()
 case $1 in
     "")
         ;;
+    -c|--clear)
+        cleanup
+        exit 0
+        ;;
     -f|--configfile)
         SS_CONFIG_FILE=$2
         ;;
@@ -90,8 +97,11 @@ case $1 in
         help
         exit 0
         ;;
+    -l|--log)
+        SS_OPTIONAL_ARGS=$SS_OPTIONAL_ARGS" -v"
+        ;;
     -r|--remove)
-        rm -rf $SS_CONFIG_FILE > /dev/null 2&>1
+        rm -rf $SS_CONFIG_FILE > /dev/null 2>&1
         echo "Succeed in removing the Old Config File."
         echo ""
         ;;
@@ -115,18 +125,23 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     echo "First Use, Please Config Shadowsocks:"
     echo -n "Server IP: "
     read SS_IP
+
     echo -n "Server_PORT: "
     read SS_PORT
-    echo -n "LOCAL_PORT: "
+
+    echo -n "LOCAL_PORT(Default: 1503): "
     read SS_LOCAL_PORT
+    SS_LOCAL_PORT=${SS_LOCAL_PORT:-1503}
     while [ "$SS_PORT" = "$SS_LOCAL_PORT" ]; 
     do
         echo "Server Port cannot be the same as SS_LOCAL_PORT. Try Again."
         echo -n "LOCAL_PORT: "
         read SS_LOCAL_PORT
     done
+
     echo -n "Server Password: "
     read SS_PASSWORD
+
     echo -n "Server Method (Default: aes-256-cfb): "
     read SS_METHOD
     SS_METHOD=${SS_METHOD:-"aes-256-cfb"}
@@ -234,5 +249,5 @@ sudo iptables-save >> /dev/null
 #    $SS -c $SS_CONFIG_FILE -f /tmp/shadowsocks.pid
 #else 
 echo "Start shadowsocks redirect ..."
-$SS -c $SS_CONFIG_FILE
+$SS -c $SS_CONFIG_FILE $SS_OPTIONAL_ARGS
 #fi
