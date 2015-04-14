@@ -62,7 +62,7 @@ tags: [php, session]
     * 4. 输出分页链接:
         * echo $this->pagination->create\_links();
     * 5. 查询部分数据(limit):
-        * $this->db->limit($end, $start);
+        * $this->db->limit($length, $start);
 * 3. 其他:
     * 1. count($array); // 数组的长度
 
