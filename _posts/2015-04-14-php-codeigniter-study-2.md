@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "php codeigniter study 2"
+title: "PHP CodeIgniter Framework Study 2"
 keywords: ""
 description: ""
 category: php
