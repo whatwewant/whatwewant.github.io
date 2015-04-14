@@ -27,6 +27,7 @@ help() {
     echo "   -f, --configfile ConfigFilePath    Load Specific Configure File Path."
     echo "   -g, --global                       Load Vps Shadowsocks Configure File"
     echo "   -h, --help                         Get Help"
+    echo "   -r, --remove                       Remove Old Config."
     echo "   -v, --version                      Get Script Version"
 }
 
@@ -78,6 +79,11 @@ case $1 in
         help
         exit 0
         ;;
+    -r|--remove)
+        rm -rf $SS_CONFIG_FILE > /dev/null 2&>1
+        echo "Succeed in removing the Old Config File."
+        echo ""
+        ;;
     -v|--version)
         echo $VERSION
         exit 0
@@ -109,6 +115,14 @@ if [ ! -f $SS_CONFIG_FILE ]; then
     # if [ "$SS_METHOD" = "" ]; then
     #     SS_METHOD=aes-256-cfb
     # fi
+
+    [[ $SS_IP && $SS_PORT && $SS_LOCAL_PORT && \
+        $SS_PASSWORD && $SS_METHOD ]] || \
+        (
+            echo "" && echo "Error:" && \
+            echo "    Each Variables mustn't be Empty Value." && \
+            exit -1
+        )
 
     # config shadowsocks
     if [ ! -d "$SS_CONFIG_DIR" ]; then
