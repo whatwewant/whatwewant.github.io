@@ -78,6 +78,8 @@ function random ()
 # random SS_PORT
 # random;
 case $1 in
+    "")
+        ;;
     -f|--configfile)
         SS_CONFIG_FILE=$2
         ;;
@@ -102,6 +104,9 @@ case $1 in
         exit 0
         ;;
     *)
+        echo "Error:"
+        echo "    Unknown Arguments. -h Or --help For Help."
+        exit
         ;;
 esac
 
