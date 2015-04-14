@@ -143,8 +143,8 @@ fi
 # iptables
 which iptables >> /dev/null;
 if [ "$?" != "0" ]; then
-    echo "Please install iptables first.";
-    exit;
+    echo "Please install iptables first."
+    exit -1
 fi
 
 # shadowsocks
@@ -152,7 +152,7 @@ which $SS >> /dev/null
 if [ "$?" != "0" ]; then
     echo "Please install shadowsocks-libev first."
     echo "What we need is ss-redir"
-    exit
+    exit -1
 fi 
 
 # catch ctrl+c to start clean_exit function
