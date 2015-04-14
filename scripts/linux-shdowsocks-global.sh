@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # extern variables
+SCRIPT_FULL_NAME=$0
 SS=ss-redir
 SS_IP=127.0.0.1
 SS_PORT=1080
@@ -28,6 +29,7 @@ help() {
     echo "   -g, --global                       Load Vps Shadowsocks Configure File"
     echo "   -h, --help                         Get Help"
     echo "   -r, --remove                       Remove Old Config."
+    echo "   -u, --update                       Update Lastest Version."
     echo "   -v, --version                      Get Script Version"
 }
 
@@ -52,6 +54,13 @@ cleanup() {
 clean_exit() {
     cleanup
     exit 0
+}
+
+update_lastest_version() {
+    ADDR="https://raw.githubusercontent.com/whatwewant/whatwewant.github.io/master/scripts/linux-shdowsocks-global.sh"
+    wget $ADDR -O $SCRIPT_FULL_NAME && \
+    echo "Succeed in update to the lastest version" || \
+    echo "Update Error."
 }
 
 # enumerate random
@@ -83,6 +92,10 @@ case $1 in
         rm -rf $SS_CONFIG_FILE > /dev/null 2&>1
         echo "Succeed in removing the Old Config File."
         echo ""
+        ;;
+    -u|--update)
+        update_lastest_version
+        exit 0
         ;;
     -v|--version)
         echo $VERSION
