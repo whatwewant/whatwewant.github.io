@@ -2,6 +2,8 @@
 
 # extern variables
 SCRIPT_FULL_NAME=$0
+SCRIPT_PID=$$
+SCRIPT_PID_FILE=/tmp/shadowsocks_ss.pid
 SS=ss-redir
 SS_IP=127.0.0.1
 SS_PORT=1080
@@ -24,6 +26,8 @@ help() {
     echo "Shadowsocks Global Script"
     echo "         -- Author : Cole Smith"
     echo "         -- Email  : tobewhatwewant@gmail.com"
+    echo "Usage:"
+    echo "  $0 start|stop|restart"
     echo ""
     echo "Options:"
     echo "   -c, --clear                        Clear Network Configure."
@@ -36,6 +40,22 @@ help() {
     echo "   -v, --version                      Get Script Version."
 }
 
+initialize_check() {
+    if [ -f "$SCRIPT_PID_FILE" ]; then
+        echo "Error:"
+        echo "    Already start Shadowsocks Global Agent."
+        echo "(You can restart it by option restart)"
+    fi
+}
+
+initialize() {
+    # check first
+    initialize_check
+
+    # create pid file
+    echo $SCRIPT_PID > $SCRIPT_PID_FILE
+}
+
 _cleanup() {
     trap "" SIGINT
     trap "" SIGUSR1
@@ -45,6 +65,9 @@ _cleanup() {
     sudo iptables -t nat -D OUTPUT -j $CHAIN_NAME
     sleep 2
     sudo iptables -t nat -X $CHAIN_NAME
+
+    # delete pid file
+    rm -rf $SCRIPT_PID_FILE
 }
 
 cleanup() {
@@ -80,7 +103,38 @@ function random ()
 
 # random SS_PORT
 # random;
+
 case $1 in
+    -h|--help)
+        help
+        exit 0
+        ;;
+    start)
+        ;;
+    stop)
+        echo "stop now ..."
+        if [ ! -f "$SCRIPT_PID_FILE" ]; then
+            echo "Shadowsocks Global Agent Never Starts."
+            exit -1
+        fi
+        X_PID=$(echo $SCRIPT_PID_FILE)
+        kill $X_PID;
+        echo "Stop Successfully."
+        exit 0
+        ;;
+    restart)
+        echo "restart now ..."
+        kill $(echo $SCRIPT_PID_FILE) >> /dev/null 2>&1
+        ;;
+    *)
+        echo "Unknown Arguments."
+        echo "Option -h For help."
+        exit -1
+        ;;
+esac
+
+# Options
+case $2 in
     "")
         ;;
     -c|--clear)
@@ -88,7 +142,7 @@ case $1 in
         exit 0
         ;;
     -f|--configfile)
-        SS_CONFIG_FILE=$2
+        SS_CONFIG_FILE=$3
         ;;
     -g|--global)
         SS_CONFIG_FILE=${SS_CONFIG_DIR}/shadowsocks-vps.json
@@ -207,6 +261,8 @@ fi
 trap "clean_exit" SIGINT
 trap "clean_exit" SIGUSR1
 
+# initialize data
+initialize
 
 # iptables
 sudo iptables -t nat -L $CHAIN_NAME >> /dev/null 2>&1
