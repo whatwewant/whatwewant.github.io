@@ -137,7 +137,8 @@ case $1 in
             exit -1
         fi
         X_PID=$(cat $SCRIPT_PID_FILE)
-        kill $X_PID;
+        kill $X_PID > /dev/null 2>&1
+        killall ss-redir > /dev/null 2>&1
         cleanup
         echo "Stop Successfully."
         exit 0
@@ -146,6 +147,7 @@ case $1 in
         echo "restart now ..."
         rm -rf $SCRIPT_PID_FILE
         kill $(cat $SCRIPT_PID_FILE) >> /dev/null 2>&1
+        killall ss-redir > /dev/null 2>&1
         ;;
     *)
         echo "Unknown Arguments."
