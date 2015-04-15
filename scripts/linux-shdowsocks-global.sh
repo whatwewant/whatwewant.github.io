@@ -138,6 +138,7 @@ case $1 in
         fi
         X_PID=$(cat $SCRIPT_PID_FILE)
         kill $X_PID;
+        cleanup
         echo "Stop Successfully."
         exit 0
         ;;
