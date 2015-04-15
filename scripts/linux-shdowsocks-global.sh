@@ -145,7 +145,7 @@ case $1 in
         ;;
     restart)
         echo "restart now ..."
-        rm -rf $SCRIPT_PID_FILE
+        rm -rf $SCRIPT_PID_FILE >> /dev/null
         kill $(cat $SCRIPT_PID_FILE) >> /dev/null 2>&1
         killall ss-redir > /dev/null 2>&1
         ;;
