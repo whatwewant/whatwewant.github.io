@@ -106,9 +106,26 @@ function random ()
 # random;
 
 case $1 in
+    -c|--clear)
+        cleanup
+        exit 0
+        ;;
     -h|--help)
         help
         exit 0
+        ;;
+    -u|--update)
+        update_lastest_version
+        exit 0
+        ;;
+    -v|--version)
+        echo $VERSION
+        exit 0
+        ;;
+    -r|--remove)
+        rm -rf $SS_CONFIG_FILE > /dev/null 2>&1
+        echo "Succeed in removing the Old Config File."
+        echo ""
         ;;
     start)
         ;;
