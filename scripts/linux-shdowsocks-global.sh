@@ -45,6 +45,7 @@ initialize_check() {
         echo "Error:"
         echo "    Already start Shadowsocks Global Agent."
         echo "(You can restart it by option restart)"
+        exit -1
     fi
 }
 
