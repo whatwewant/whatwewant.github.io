@@ -143,7 +143,8 @@ case $1 in
         ;;
     restart)
         echo "restart now ..."
-        kill $(echo $SCRIPT_PID_FILE) >> /dev/null 2>&1
+        rm -rf $SCRIPT_PID_FILE
+        kill $(cat $SCRIPT_PID_FILE) >> /dev/null 2>&1
         ;;
     *)
         echo "Unknown Arguments."
