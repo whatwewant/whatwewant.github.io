@@ -40,7 +40,7 @@ help() {
     echo "   -v, --version                      Get Script Version."
 }
 
-initialize_check() {
+check_state() {
     if [ -f "$SCRIPT_PID_FILE" ]; then
         echo "Error:"
         echo "    Already start Shadowsocks Global Agent."
@@ -51,7 +51,7 @@ initialize_check() {
 
 initialize() {
     # check first
-    initialize_check
+    # initialize_check
 
     # create pid file
     echo $SCRIPT_PID > $SCRIPT_PID_FILE
@@ -128,6 +128,7 @@ case $1 in
         echo ""
         ;;
     start)
+        check_state
         ;;
     stop)
         echo "stop now ..."
@@ -135,7 +136,7 @@ case $1 in
             echo "Shadowsocks Global Agent Never Starts."
             exit -1
         fi
-        X_PID=$(echo $SCRIPT_PID_FILE)
+        X_PID=$(cat $SCRIPT_PID_FILE)
         kill $X_PID;
         echo "Stop Successfully."
         exit 0
