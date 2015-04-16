@@ -6,6 +6,9 @@ echo "安装将花费一定时间，请耐心等待直到安装完成^_^"
 # sudo mv ~/.vimrc ~/.vim >> /dev/null 2>&1
 # sudo mv ~/.vim ~/.vim_backup-$(date +%Y-%m-%d) >> /dev/null 2>&1
 # fi
+mkdir ~/.backup >> /dev/null 2>&1
+cp ~/.vimrc ~/.vim >> /dev/null 2>&1
+tar -zcvf ~/.backup/vim-$(date +%Y-%m-%d).tgz ~/.vim >> /dev/null 2>&1
 sudo rm -rf ~/.vim*
 
 # git clone https://github.com/whatwewant/vim.git ~/.vim
