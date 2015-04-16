@@ -35,6 +35,6 @@ echo "正在努力为您安装bundle程序" > potter
 echo "安装完毕将自动退出" >> potter
 echo "请耐心等待" >> potter
 # vim potter -c "PulginInstall" -c "q" -c "q"
-# rm potter
-vim +PluginInstall +qall
+vim potter +PluginInstall +qall
+rm potter
 echo "安装完成"
