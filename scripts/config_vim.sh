@@ -6,31 +6,20 @@ elif which yum >/dev/null; then
 	sudo yum install -y gcc vim git ctags xclip astyle python-setuptools python-devel	
 fi
 
-##Add HomeBrew support on  Mac OS
-if which brew >/dev/null;then
-    echo "You are using HomeBrew tool"
-    brew install vim ctags git astyle
-    ##Fix twisted installation Error in Mac caused by Xcode Version limit
-    sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future easy_install twisted
-fi
-
 sudo easy_install -ZU autopep8 twisted
 
 if [ ! -f "/usr/local/bin/ctags" ]; then
     sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
 fi
 
-if [ -d "~/vim" ]; then
-	mv -f ~/vim ~/vim_old
-fi
-
 if [ -f "~/.vimrc" ] || [ -d "~/.vim" ]; then
-	mv -f ~/.vim ~/.vim_old
-	mv -f ~/.vimrc ~/.vimrc_old
+	mv -f ~/.vimrc ~/.vim >> /dev/null 2>&1
+	mv -f ~/.vim ~/.vim_old >> /dev/null 2>&1
 fi
 
-git clone https://github.com/whatwewant/vim.git ~/.vim
-mv -f ~/.vim/.vimrc ~/
+# git clone https://github.com/whatwewant/vim.git ~/.vim
+# mv -f ~/.vim/.vimrc ~/
+wget http://whatwewant.github.io/confs/vimrc -O ~.vimrc
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
