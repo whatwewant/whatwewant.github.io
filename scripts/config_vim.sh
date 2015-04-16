@@ -19,7 +19,7 @@ fi
 
 # git clone https://github.com/whatwewant/vim.git ~/.vim
 # mv -f ~/.vim/.vimrc ~/
-wget http://whatwewant.github.io/confs/vimrc -O ~.vimrc
+wget http://whatwewant.github.io/confs/vimrc -O ~/.vimrc
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
