@@ -28,12 +28,12 @@ if [ "$?" != "0" ]; then
 fi
 
 # Backup
-echo "Backup Tmux Configure to $HOME/.backup ..."
 [[ ! -d ~/.backup ]] && mkdir ~/.backup
-if [ -f "~/.tmux.conf" ]; then
+if [ -f ~/.tmux.conf ]; then
+    echo "Backup Tmux Configure to $HOME/.backup ..."
     [[ ! -d ~/.tmux ]] && mkdir ~/.tmux
-    mv ~/.tmux.conf ~/.tmux && \
-    tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d-at-%H-%m).tgz  ~/.tmux >> /dev/null 2>&1
+    mv ~/.tmux.conf ~/.tmux
+    tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d-at-%H-%M).tgz  ~/.tmux >> /dev/null 2>&1
 fi
 rm -rf ~/.tmux* >> /dev/null 2>&1
 
