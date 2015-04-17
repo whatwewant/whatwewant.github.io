@@ -300,7 +300,7 @@ sudo iptables -t nat -A $CHAIN_NAME -d $SS_IP -j RETURN
 
 ## Ignore LANs and any other addresses you'd like to bypass the proxy
 sudo iptables -t nat -A $CHAIN_NAME -d 0.0.0.0/8 -j RETURN
-sudo iptables -t nat -A $CHAIN_NAME -d 10.0.0.0/8 -j RETURN
+# sudo iptables -t nat -A $CHAIN_NAME -d 10.0.0.0/8 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 127.0.0.0/8 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 169.254.0.0/16 -j RETURN
 sudo iptables -t nat -A $CHAIN_NAME -d 172.16.0.0/12 -j RETURN
