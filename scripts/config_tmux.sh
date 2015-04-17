@@ -32,9 +32,11 @@ echo "Cloning $PROGRAM_NAME to $DESTINATION ..."
 git clone $URL $DESTINATION
 
 # Config file .tmux.conf
-echo "Backup $HOME/.tmux.conf to $HOME/.backup/tmux.conf ..."
+echo "Backup Tmux Configure to $HOME/.backup ..."
 mkdir ~/.backup >> /dev/null 2>&1
-mv ~/.tmux.conf ~/.backup/tmux.conf 2&>1
+[[ ! -d ~/.tmux ]] && mkdir ~/.tmux
+mv ~/.tmux.conf ~/.tmux >> /dev/null 2>&1
+tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d).tgz  ~/.tmux >> /dev/null 2&>1
 echo "Get new .tmux.conf ..."
 wget https://whatwewant.github.io/confs/tmux.conf -O ~/.tmux.conf
 
