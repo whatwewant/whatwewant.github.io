@@ -1,16 +1,16 @@
 #!/bin/bash
 
-set -e
+# set -e
 
 PROGRAM_NAME=tmux
 DESTINATION=~/.tmux/plugins/tpm
-URL="https://github.com/ThomasAdam/tmux.git"
+URL="https://github.com/tmux-plugins/tpm.git"
 
 bash_url() {
     echo "Install $PROGRAM_NAME ..."
-    url=$1
+    script_url=$1
     script_name=bscript
-    wget $url -O /tmp/$script_name && \
+    wget $script_url -O /tmp/$script_name && \
         bash /tmp/$script_name && \
         echo "Successed in installing $PROGRAM_NAME" || \
         echo "Failed to install $PROGRAM_NAME"
@@ -22,24 +22,32 @@ if [ "$?" != "0" ]; then
     bash_url https://whatwewant.github.io/scripts/install_tmux.sh
 fi
 
-tmux -V | grep -i 2
+tmux -V | grep -i 2 >> /dev/null
 if [ "$?" != "0" ]; then
     bash_url https://whatwewant.github.io/scripts/install_tmux.sh
 fi
+
+# Backup
+echo "Backup Tmux Configure to $HOME/.backup ..."
+[[ ! -d ~/.backup ]] && mkdir ~/.backup
+if [ -f "~/.tmux.conf" ]; then
+    [[ ! -d ~/.tmux ]] && mkdir ~/.tmux
+    mv ~/.tmux.conf ~/.tmux && \
+    tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d-at-%H-%m).tgz  ~/.tmux >> /dev/null 2>&1
+fi
+rm -rf ~/.tmux* >> /dev/null 2>&1
 
 # DESTINATION
 echo "Cloning $PROGRAM_NAME to $DESTINATION ..."
 git clone $URL $DESTINATION
 
 # Config file .tmux.conf
-echo "Backup Tmux Configure to $HOME/.backup ..."
-mkdir ~/.backup >> /dev/null 2>&1
-[[ ! -d ~/.tmux ]] && mkdir ~/.tmux
-mv ~/.tmux.conf ~/.tmux >> /dev/null 2>&1
-tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d).tgz  ~/.tmux >> /dev/null 2&>1
 echo "Get new .tmux.conf ..."
 wget https://whatwewant.github.io/confs/tmux.conf -O ~/.tmux.conf
 
 # Reload TMUX environment so TPM is sourced:
 echo "Reload TMUX environment ..."
 tmux source-file ~/.tmux.conf
+
+# Manual to click prefix + I to download tmux plugins
+echo "Now You need munual to click prefix + I to download plugins"
