@@ -7,10 +7,14 @@ DESTINATION=~/.tmux/plugins/tpm
 URL="https://github.com/ThomasAdam/tmux.git"
 
 bash_url() {
+    echo "Install $PROGRAM_NAME ..."
     url=$1
     script_name=bscript
     wget $url -O /tmp/$script_name && \
-        bash /tmp/$script_name
+        bash /tmp/$script_name && \
+        echo "Successed in installing $PROGRAM_NAME" || \
+        echo "Failed to install $PROGRAM_NAME"
+    echo "Install $PROGRAM_NAME end."
 }
 
 which tmux >> /dev/null
