@@ -19,3 +19,5 @@ tags: [collections]
     * [Gulp中文官网](http://www.gulpjs.com.cn/)
     * [Gulp官网](http://www.gulpjs.com/)
     * [npm模块管理器](http://javascript.ruanyifeng.com/nodejs/npm.html)
+    * [AngularJS
+    * 入门教程](http://xdsnet.gitbooks.io/angular-phonecat-book-zhcn/content/index.html)

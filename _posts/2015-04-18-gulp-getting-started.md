@@ -148,10 +148,90 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('dist/css'));
 });
 gulp.task('auto', function () {
+    // sass/**/*.scss 是 glob 语法, node-glob
     gulp.watch('sass/**/*.scss', ['sass']);
 });
 gulp.task('default', ['sass', 'auto']);
 // 实验七 end
 ```
 
-## 三 使用gulp构建项目
+## 三 [使用gulp构建项目](https://github.com/nimojs/gulp-book/blob/master/chapter7.md)
+* 请看 [npm模块管理器](http://javascript.ruanyifeng.com/nodejs/npm.html)
+* 1. 生成 package.json:
+    * npm init
+* 2. 安装依赖:
+    * npm install gulp --save-dev
+    * (package.json 会多出 devDependencies ... gulp ...)
+    * 其他依赖: 
+        * npm install gulp-uglify gulp-watch-path stream-combiner2
+        * npm install gulp-sourcemaps gulp-minify-css gulp-autoprefixer gulp-less
+        * npm install gulp-ruby-sass gulp-imagemin gulp-util --save-dev
+    * `当你将这份 gulpfile.js 配置分享给你的朋友时，就不需要将 node_modules/　发送给他，他只需在命令行输入`：
+        * npm install 
+* 3. 设计目录结构:
+    * src : 源码目录:
+        * less *.less文件
+        * sass *.scss *.sass文件
+        * css
+        * js
+        * fonts
+        * images
+    * dist : 编译后压缩的版本目录
+* 4. 让命令行输出的文字带颜色
+
+```js
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+
+gulp.task('default', function () {
+    gutil.log('message');
+    gutil.log(gutil.colors.red('error'));
+    gutil.log(gutil.colors.green('message') + 'some');
+});
+```
+
+* 5. 配置JS压缩任务: gulp-uglify
+    * ...
+* 6. gulp-watch-path: 只编辑改动js
+
+```js
+var watchPath = require('gulp-watch-path');
+
+gulp.task('watchjs', function () {
+    gulp.watch('src/js/**/*.js', function (event) {
+        // watchPath(event, search, replace[, distExt])
+        //  eventgulp.watch 回调函数的 event
+        //  search需要被替换的字符串或正则（字符串会被转换为正则 /^src\//）
+        //  replace第三个参数是新的的字符串
+        //  distExt扩展名(非必填)
+        var paths = watchPath(event, 'src/', '/dist');
+        /*
+          paths 
+            {
+                srcPath: 'src/js/log.js',
+                srcDir: 'src/js/',
+                distPath: 'dist/js/',
+                srcFilename: 'log.js',
+                distFilename: 'log.js'
+            }
+        */
+        gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath);
+        gutil.log('Dist ' + paths.distPath);
+
+        gulp.src(path.srcPath)
+            .pipe(uglify())
+            .pipe(gulp.dest(path.distPath));
+    });
+});
+
+gulp.task('default', ['watchjs']);
+```
+
+* 7. stream-combiner2: 用于检测js错误, 一出错, gulp立即终止并报错
+* 8. gulp-sourcemaps:
+    * 压缩后的代码不存在换行符和空白符，导致出错后很难调试，好在我们可以使用sourcemap 帮助调试 
+* 9. 配置CSS任务: gulp-minify-css
+* 10. gulp-autoprifixer: 
+    * autoprefixer 解析 CSS文件并且添加浏览器前缀到CSS规则里
+* 11. 配置 less 任务: gulp-less
+* 12. 
