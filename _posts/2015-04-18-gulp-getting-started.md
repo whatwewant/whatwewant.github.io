@@ -109,5 +109,49 @@ gulp.task('auto', function () {
 // default task
 gulp.task('default', ['auto', 'images']);
 // 实验五 end
+
+// 实验六 编译less begin
+// 获取 gulp-less 模块
+// 安装: npm install gulp-less
+var less = require('gulp-less');
+
+// 启动命令: gulp less
+gulp.task('less', function () {
+    gulp.src('./less/**.less')
+        .pipe(less())
+        .pipe(gulp.dest('./dist/less'));
+});
+
+// 启动命令: gulp auto
+gulp.task('auto', function () {
+    gulp.watch('./less/**.less', ['less']);
+})
+
+// 启动命令: gulp
+gulp.task('default', ['less', 'auto']);
+// 实验六 end
+
+// 实验七 用 glup 编译 Sass begin
+// 用 ruby-sass 编译css
+// 安装: npm install gulp-ruby-sass
+// 注意: 前提得先安装 ruby 和 sass
+// 可参考: https://github.com/nimojs/blog/issues/14
+// 安装 ruby: sudo apt-get intsall ruby-dev
+// 能翻墙直接: gem install sass
+var sass = require('gulp-ruby-sass');
+
+gulp.task('sass', function () {
+    return sass('sass/')
+    .on('error', function (err) {
+        console.error('Error!', err.message);
+    })
+    .pipe(gulp.dest('dist/css'));
+});
+gulp.task('auto', function () {
+    gulp.watch('sass/**/*.scss', ['sass']);
+});
+gulp.task('default', ['sass', 'auto']);
+// 实验七 end
 ```
 
+## 三 使用gulp构建项目
