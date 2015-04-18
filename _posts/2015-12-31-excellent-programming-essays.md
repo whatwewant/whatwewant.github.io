@@ -18,3 +18,4 @@ tags: [collections]
     * [Gulp入门指南--比较全](http://www.html-js.com/article/Nimojs--frontend-development-1)
     * [Gulp中文官网](http://www.gulpjs.com.cn/)
     * [Gulp官网](http://www.gulpjs.com/)
+    * [npm模块管理器](http://javascript.ruanyifeng.com/nodejs/npm.html)
