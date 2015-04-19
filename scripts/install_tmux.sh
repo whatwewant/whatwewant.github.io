@@ -19,6 +19,8 @@ BINARY_DIR=/usr/local/sbin
 #    --with-ipv6
 #"
 
+sudo apt-get install -y automake autoconf
+
 if [ ! -d $PACKAGE_DIR ]; then 
     mkdir -p $SRC_DIR
 else
