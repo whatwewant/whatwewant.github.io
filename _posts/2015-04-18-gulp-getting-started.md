@@ -11,6 +11,7 @@ tags: [gulp, 前端, nodejs]
 ## 参考
 * [不错的入门教程](http://www.html-js.com/article/Nimojs--frontend-development-1)
 * [Gulp API 文档](http://www.gulpjs.com.cn/docs/api/)
+* [Gulp 较完整的配置, 可以直接使用](http://markpop.github.io/2014/09/17/Gulp%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/)
 
 ## 一. 安装: gulp 
 * ([npm 模块管理器安装](http://javascript.ruanyifeng.com/nodejs/npm.html))
