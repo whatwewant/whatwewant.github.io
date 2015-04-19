@@ -19,7 +19,8 @@ BINARY_DIR=/usr/local/sbin
 #    --with-ipv6
 #"
 
-sudo apt-get install -y automake autoconf pkg-config
+sudo apt-get install -y automake autoconf pkg-config \
+    libevent-dev libncurses5-dev
 
 if [ ! -d $PACKAGE_DIR ]; then 
     mkdir -p $SRC_DIR
