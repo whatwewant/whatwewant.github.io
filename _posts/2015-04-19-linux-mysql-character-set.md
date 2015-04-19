@@ -4,7 +4,7 @@ title: "linux mysql5.5 不能显示中文问题解决办法"
 keywords: [""]
 description: ""
 category: linux
-tags: [linux, mysql]
+tags: [linux, mysql, ubuntu]
 ---
 {% include JB/setup %}
 
