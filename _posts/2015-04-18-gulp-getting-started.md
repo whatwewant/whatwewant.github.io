@@ -160,7 +160,7 @@ gulp.task('default', ['sass', 'auto']);
 * 1. 生成 package.json:
     * npm init
 * 2. 安装依赖:
-    * npm install gulp --save-dev
+    * npm install gulp --save-dev (`非常有用`)
     * (package.json 会多出 devDependencies ... gulp ...)
     * 其他依赖: 
         * npm install gulp-uglify gulp-watch-path stream-combiner2
@@ -192,7 +192,17 @@ gulp.task('default', function () {
 
 * 5. 配置JS压缩任务: gulp-uglify
     * ...
-* 6. gulp-watch-path: 只编辑改动js
+* 6. gulp-watch-path: 只编辑改动文件
+    * 通过 event 改变的信息来指定文件, event是自动的
+
+```js
+event {
+    // 发生的类型, 不管是添加, 改变还是删除
+    type: 'changed',
+    // 触发事件路劲:
+    path: '/path/to/src/js/log.js'
+}
+```
 
 ```js
 var watchPath = require('gulp-watch-path');
@@ -234,4 +244,55 @@ gulp.task('default', ['watchjs']);
 * 10. gulp-autoprifixer: 
     * autoprefixer 解析 CSS文件并且添加浏览器前缀到CSS规则里
 * 11. 配置 less 任务: gulp-less
-* 12. 
+* 12. 配置 sass 任务: gulp-sass
+* 13. 配置 image 任务: gulp-imagemin
+* 14. 配置复制文件任务
+
+```js
+gulp.task('watchcopy', function () {
+    gulp.watch('src/fonts/**/*', function (event) {
+        var paths = watchPath(event); 
+
+        gutil.log(gutil.colors.green(event.type) + ' ' + paths.srcPath);
+        gutil.log('dist ' + path.distPath);
+        
+        gulp.src(paths.srcPath)
+            .pipe(gulp.dest(path.distDir));
+    });
+});
+
+gulp.task('copy', function () {
+    gulp.src('src/fonts/**/*')
+        .pipe(gulp.dest('dist/fonts/'));
+});
+
+gulp.task('default', 
+            [
+                'watchjs', 
+                'watchcss', 
+                'watchless',
+                'watchsass',
+                'watchimage',
+                'wacthcopy'
+            ]); 
+```
+
+* `15. 自动刷新浏览器页面，无需F5: gulp-livereload`
+    * [文档](https://github.com/vohof/gulp-livereload)
+    * [也许这也的livereload更简洁](http://markpop.github.io/2014/09/17/Gulp%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/)
+
+```js
+var livereload = require('gulp-livereload');
+
+gulp.task('less', function () {
+    gulp.src('src/less/*.less')
+        .pipe(livereload())
+        .pipe(gulp.dest('dist/less/'))
+        .pipe(livereload());
+});
+
+gulp.task('watch', function () {
+    livereload.listen();
+    gulp.watch('less/*.less', ['less']);
+});
+```
