@@ -46,6 +46,11 @@ set autoindent      " Copy indent from current line when starting a new line
                     " command).
 
 set autoread        " auto read new while file is changed
+
+set autowrite       " auto save file
+
+set nobackup        " never generate temp file
+set noswapfile
  
 set textwidth=79    " Maximum width of text that is being inserted. A longer
                     " line will be broken after white space to get this width.
