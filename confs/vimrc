@@ -44,6 +44,8 @@ set backspace=2     " Influences the working of <BS>, <Del>, CTRL-W
 set autoindent      " Copy indent from current line when starting a new line
                     " (typing <CR> in Insert mode or when using the "o" or "O"
                     " command).
+
+set autoread        " auto read new while file is changed
  
 set textwidth=79    " Maximum width of text that is being inserted. A longer
                     " line will be broken after white space to get this width.
@@ -157,3 +159,11 @@ nnoremap ]b :bn<CR>
 
 " close to tmuxline powerline fonts
 let g:tmuxline_powerline_separators = 0
+
+" remember the position you left the file last time.
+if has("autocmd")
+      autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal g`\"" |
+          \ endif
+endif
