@@ -25,7 +25,7 @@ RUN apt-get -y update
 RUN apt-get install -qqy nginx
 
 # install mysql
-RUN apt-get install -qqy mysql-server
+# RUN apt-get install -qqy mysql-server
 
 # install ruby
 # RUN apt-get -qqy install ruby ruby-dev
