@@ -33,6 +33,11 @@ RUN mkdir /var/run/sshd
 # 安装supervisor
 RUN apt-get install -qqy supervisor
 
+# 清理
+RUN apt-get autoclean \
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
 # 复制supervisord配置
 # 确保当前目录有 supervisord.conf 文件
 # 配置写法，看下边
