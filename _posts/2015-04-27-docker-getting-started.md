@@ -16,12 +16,12 @@ tags: [linux, docker]
 
 ## Getting Started
 
-### 1. Ubuntu 安装 Docker
+### 一 Ubuntu 安装 Docker
 * [方法一](http://letong.gitbooks.io/docker/content/install/ubuntu.html)
 * [方法二](https://docs.docker.com/installation/ubuntulinux/) `推荐`
     * `wget -qO- https://get.docker.com/ | sh`
 
-### 2. [命令集合](http://yeasy.gitbooks.io/docker_practice/content/appendix_command/README.html)
+### 二 [命令集合](http://yeasy.gitbooks.io/docker_practice/content/appendix_command/README.html)
 * 常用命令: docker --help 
     * 1. docker pull [OPTIONS] IMAGENAME[:TAG|@DIGEST] # 拉取名叫IMAGENAME的镜像
         * sudo docker pull ubuntu:14.04 # `:`后面的是标记
@@ -89,7 +89,7 @@ tags: [linux, docker]
     * --name= : 给容器命名, 好处多多的, 代替容器ID
         * sudo docker run --name work -it ubuntu:14.04
 
-## 3. Docker 命令实习:
+## 三 Docker 命令实习:
 * `1. 拉取或创建镜像`:
     * 拉取: sudo docker pull ubuntu:14.04
     * 创建: sudo docker build -t "whatwewant/ubuntu:14.04" --no-cache --rm=true - < Dockerfile # 请确保Dockerfile存在
@@ -117,7 +117,7 @@ tags: [linux, docker]
     * Ex: sudo docker inspect -f {{.DockerVersion}} ubuntu:14.04
     * Ex: sudo docker inspect -f {{.ContainerConfig.Hostname}} ubuntu:14.04
 
-## Dockerfile 的编写，自定义镜像
+## 四 Dockerfile 的编写，自定义镜像
 
 * 常用指令: 每个命令在原基础上新建一个容器, 表现为容器ID
     * 1. FROM 
@@ -224,4 +224,4 @@ command=/usr/sbin/sshd -D
 command=/usr/sbin/nginx start
 ```
 
-## [我的Dockerfile]({{ site.url }}/confs/Dockerfile)
+## 五 [我的Dockerfile]({{ site.url }}/confs/Dockerfile)
