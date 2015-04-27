@@ -28,6 +28,7 @@ RUN apt-get install -qqy openssh-server
 
 # nginx
 RUN apt-get install -qqy nginx
+RUN mkdir /var/run/sshd
 
 # 安装supervisor
 RUN apt-get install -qqy supervisor
