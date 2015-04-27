@@ -188,6 +188,9 @@ RUN apt-get -qqy update
 # 安装ssh
 RUN apt-get install -qqy openssh-server
 
+# 安装nginx
+RUN apt-get install -qqy nginx
+
 # 安装supervisor
 RUN apt-get install -qqy supervisor
 
