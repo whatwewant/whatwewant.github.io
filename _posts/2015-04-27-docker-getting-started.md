@@ -70,4 +70,6 @@ tags: [linux, docker]
     * -w, --workdir= : 指定工作路径, 如果不存在会自动创建
         * sudo docker run -i -t -w /home/xxx/workdir ubuntu:14.04
 
+## Dockerfile 的编写，自定义镜像
+
 ## [我的Dockerfile]({{ site.url }}/confs/Dockerfile)
