@@ -65,6 +65,8 @@ tags: [linux, docker]
         * Ex: sudo docker inspect ubuntu:14.04
         * Ex: sudo docker inspect -f {{.DockerVersion}} ubuntu:14.04
         * Ex: sudo docker inspect -f {{.ContainerConfig.Hostname}} ubuntu:14.04
+    * 15. docker import 
+        * Ex: docker import http://docker.widuu.com/ubuntu.tar 
 
 * 常用选项: 这里针对 docker run
     * -p, --publish=[] : 指定端口映射, 可多次使用
