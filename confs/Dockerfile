@@ -38,6 +38,9 @@ RUN apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+# 创建用户 ubuntu, 密码ubuntu
+RUN export PASS=ubuntu && id -u ubuntu >>/dev/null 2>&1 || useradd --create-home --shell /bin/bash --user-group --groups adm,sudo ubuntu && echo "ubuntu:$PASS" | chpasswd
+
 # 复制supervisord配置
 # 确保当前目录有 supervisord.conf 文件
 # 配置写法，看下边
