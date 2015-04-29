@@ -22,4 +22,6 @@ tags: [collections]
     * [AngularJS 入门教程](http://xdsnet.gitbooks.io/angular-phonecat-book-zhcn/content/index.html)
 * 2015-04-19 [Docker —— 从入门到实践](http://yeasy.gitbooks.io/docker_practice/content/)
 * 2015-04-22 [Zen Coding:一种快速编写HTML/CSS代码的方法](http://www.qianduan.net/zen-coding-a-new-way-to-write-html-code/)
-* 2015-04-29 [【译】JavaScript：40+基本的Web开发工具](http://www.ido321.com/1543.html)
+* 2015-04-29 
+    * [【译】JavaScript：40+基本的Web开发工具](http://www.ido321.com/1543.html)
+    * [android-async-http框架库源码走读](http://blog.csdn.net/yanbober/article/details/45307739)
