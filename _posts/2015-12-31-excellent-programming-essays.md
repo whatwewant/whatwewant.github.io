@@ -26,3 +26,4 @@ tags: [collections]
     * [【译】JavaScript：40+基本的Web开发工具](http://www.ido321.com/1543.html)
     * [android-async-http框架库源码走读](http://blog.csdn.net/yanbober/article/details/45307739)
     * [Android Studio入门到精通](http://blog.csdn.net/yanbober/article/details/45306483)
+    * [git-flow 备忘清单](http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html)
