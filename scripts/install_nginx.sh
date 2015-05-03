@@ -93,5 +93,11 @@ sudo make install
 # sudo ln -s ${PREFIX}/sbin/nginx ${BINARY_DIR}/nginx
 
 # uninstall script
-# sudo bash  -c "echo -e \"sudo rm -rf \"" > $BINARY_DIR/uninstall_nginx
-# sudo chmod a+x uninstall_nginx
+sudo bash  -c "echo -e \" \
+    sudo rm -rf $PREFIX/nginx \n \
+    sudo rm -rf $BINARY_DIR/nginx \n \
+    sudo rm -rf $CONFIG_OPTIONS \n \
+    sudo rm -rf /var/run/nginx \n \
+    sudo rm -rf /var/log/nginx \n \
+    \"" > $BINARY_DIR/uninstall_nginx
+sudo chmod a+x $BINARY_DIR/uninstall_nginx
