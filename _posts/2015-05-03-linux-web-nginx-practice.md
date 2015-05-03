@@ -100,6 +100,7 @@ location / {
     ....
 }
 // 请求"/"实际上将会在第二个location中作为"/index.html"被处理
+```
 
 * 2. `http log 模块`
     * 模块: ngx_http_log_module 配置范例: 例3
