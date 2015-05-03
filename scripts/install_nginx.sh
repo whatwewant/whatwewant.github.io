@@ -23,6 +23,7 @@ CONFIG_OPTIONS="
     --error-log-path=/var/log/nginx/error.log
     --pid-path=/var/run/nginx/nginx.pid
     --with-http_ssl_module
+    --with-poll_module
     --with-http_flv_module
     --with-http_gzip_static_module
     --http-log-path=/var/log/nginx/access.log
