@@ -100,7 +100,7 @@ sudo make install
 sudo bash -c "echo -e \" \
     sudo rm -rf $PREFIX/nginx \n \
     sudo rm -rf $BINARY_DIR/nginx \n \
-    sudo rm -rf $CONFIG_OPTIONS \n \
+    sudo rm -rf $CONF_PATH \n \
     sudo rm -rf /var/run/nginx \n \
     sudo rm -rf /var/log/nginx \n \
     \" > $BINARY_DIR/uninstall_nginx"
