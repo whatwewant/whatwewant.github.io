@@ -11,7 +11,7 @@ NGINX_TAR_GZ=${PACKAGE_DIR}/nginx.tar.gz
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 PREFIX=/usr
 BINARY_DIR=/usr/sbin
-CONF_PATH=/usr/nginx/nginx.conf
+CONF_PATH=/etc/nginx/nginx.conf
 
 # Config Options
 CONFIG_OPTIONS="
@@ -87,7 +87,11 @@ make
 sudo make install
 
 # ln sbin
-if [ -f ${BINARY_DIR}/nginx ]; then
-    sudo rm -rf ${BINARY_DIR}/nginx
-fi
-sudo ln -s ${PREFIX}/sbin/nginx ${BINARY_DIR}/nginx
+# if [ -f ${BINARY_DIR}/nginx ]; then
+#    sudo rm -rf ${BINARY_DIR}/nginx
+# fi
+# sudo ln -s ${PREFIX}/sbin/nginx ${BINARY_DIR}/nginx
+
+# uninstall script
+# sudo bash  -c "echo -e \"sudo rm -rf \"" > $BINARY_DIR/uninstall_nginx
+# sudo chmod a+x uninstall_nginx
