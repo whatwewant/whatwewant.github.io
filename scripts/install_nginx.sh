@@ -5,17 +5,31 @@ set -e
 downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
+
 NGINX_VERSION=1.6.2
 NGINX_TAR_GZ=${PACKAGE_DIR}/nginx.tar.gz
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
-PREFIX=/etc/nginx
-BINARY_DIR=/usr/local/sbin
+PREFIX=/usr
+BINARY_DIR=/usr/sbin
+CONF_PATH=/usr/nginx/nginx.conf
 
 # Config Options
 CONFIG_OPTIONS="
-    --user=$USER
+    --user=nginx
+    --group=nginx
     --prefix=$PREFIX
+    --sbin-path=$BINARY_DIR
+    --conf-path=$CONF_PATH
+    --error-log-path=/var/log/nginx/error.log
+    --pid-path=/var/run/nginx/nginx.pid
     --with-http_ssl_module
+    --with-http_flv_module
+    --with-http_gzip_static_module
+    --http-log-path=/var/log/nginx/access.log
+    --http-client-body-temp-path=/var/tmp/nginx/client
+    --http-proxy-temp-path=/var/tmp/nginx/proxy
+    --http-fastcgi-temp-path=/var/tmp/nginx/fcgi
+    --with-http_stub_status_module
     --with-http_realip_module
     --with-ipv6
 "
@@ -54,6 +68,13 @@ fi
 
 # src
 tar -zxvf ${PACKAGE_DIR}/nginx.tar.gz -C $SRC_DIR
+
+# 建立nginx组
+id nginx >> /dev/null 2>&1
+if [ "$?" != "0" ];
+    sudo groupadd -r nginx
+    sudo useradd -s /sbin/nologin -g nginx -r nginx
+fi
 
 # configure
 cd $SRC_DIR_FINAL
