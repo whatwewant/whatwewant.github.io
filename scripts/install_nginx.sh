@@ -71,7 +71,7 @@ tar -zxvf ${PACKAGE_DIR}/nginx.tar.gz -C $SRC_DIR
 
 # 建立nginx组
 id nginx >> /dev/null 2>&1
-if [ "$?" != "0" ];
+if [ "$?" != "0" ]; then
     sudo groupadd -r nginx
     sudo useradd -s /sbin/nologin -g nginx -r nginx
 fi
