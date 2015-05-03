@@ -72,7 +72,7 @@ tags: [linux, nginx, web, lnmp]
             * sudo service php5-fpm restart
             
 ## `NGINX HTTP 模块`
-* `1. http index 模块`:
+* 1 `http index 模块`:
     * 语法: `index file1 file2 ...`;
     * 作用域: http, server, location
     * 模块功能及注意: 
@@ -102,7 +102,7 @@ location / {
 // 请求"/"实际上将会在第二个location中作为"/index.html"被处理
 ```
 
-* 2. `http log 模块`
+* 2 `http log 模块`
     * 模块: ngx_http_log_module 配置范例: 例3
     * 指令:
         * access_log :
@@ -127,7 +127,7 @@ log_format gzip '$remote_addr-$remote_user[$time_local]'
 access_log /spool/logs/nginx-access.log gzip buffer=32k;
 ```
 
-* 3. `Access模块`
+* 3 `Access模块`
     * 1. 模块: ngx_http_access_module 功能描述:
         * 此模块提供简易的基于主机的访问控制.
         * ngx_http_access_module 模块使有可能对特定的IP客户端进行控制.
@@ -153,7 +153,7 @@ location / {
 // 在上面的例子中，仅允许网段10.1.1.0/16和192.168.1.0/24中除了192.168.1.1之外的ip访问.
 ```
 
-* 4. `Rewrite 模块`:
+* 4 `Rewrite 模块`:
     * 1. 模块: ngx_http_rewrite_module
         * 功能描述: 
             * 执行URL重定向, 允许你去掉带有恶意的URL, 包含多个参数(修改);
@@ -205,7 +205,7 @@ if ($invalid_referer) {
 }
 ```
 
-* 5. `Proxy模块`
+* 5 `Proxy模块`
     * 模块: ngx_http_proxy_module
     * 功能描述:
         * 此模块能代理请求到其他服务器
@@ -232,7 +232,7 @@ if ($invalid_referer) {
                 * 目标服务器可以看到客户端的真实ip, 而不是转发服务器的ip.
         * (5) [更多proxy指令](http://nginx.org/en/docs/http/ngx_http_proxy_module.html)
 
-* 6. `upstream 模块`
+* 6 `upstream 模块`
     * 1. 模块: `ngx_http_upstream_module`
     * 2. 功能简介:
         * 该指令使请求被上行信道之间的基于客户端的IP地址分布.
