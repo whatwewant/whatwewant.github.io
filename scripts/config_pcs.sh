@@ -13,6 +13,7 @@ if [ "$?" != "0" ]; then
     echo "Pcs 不存在，正在为你安装pcs"
     cd $TMPDIR
     sudo apt-get install -y git make cmake
+    sudo apt-get install -y libcurl4-openssl-dev
     sudo rm -rf $TMPDIR/pcs
     git clone https://github.com/GangZhuo/baidupcs.git $TMPDIR/pcs
     cd $TMPDIR/pcs
@@ -20,7 +21,7 @@ if [ "$?" != "0" ]; then
     sudo make install
     cd -
 
-    echo "Login Now"
-    pcs login
+    # echo "Login Now"
+    # pcs login
 fi
 

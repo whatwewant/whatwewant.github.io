@@ -1,0 +1,42 @@
+# 
+FROM ubuntu:14.04
+
+MAINTAINER Cole Smith <tobewhatwewant@gmail.com>
+
+# cp ci /var/www
+COPY ci /var/www/ci
+RUN mv /var/www/ci /var/www/html
+
+# for sshd
+RUN mkdir -p /var/run/sshd
+
+RUN apt-get update
+RUN apt-get install -qqy openssh-server
+RUN apt-get install -qqy nginx
+RUN apt-get install -qqy mysql-server
+RUN apt-get install -qqy php5-fpm php5-mysql
+# RUN apt-get install -qqy supervisor
+
+# 清理
+RUN apt-get autoclean \
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
+# default sh -c "COMMAND"
+# RUN [ -f "/var/www/html/index.html" ] && rm -rf /var/www/html/index.html
+    
+# 创建用户 ubuntu, 密码ubuntu
+RUN export PASS=ubuntu && id -u ubuntu >>/dev/null 2>&1 || useradd --create-home --shell /bin/bash --user-group --groups adm,sudo ubuntu && echo "ubuntu:$PASS" | chpasswd
+
+# 复制supervisord配置
+# 确保当前目录有 supervisord.conf 文件
+# 配置写法，看下边
+# ADD confs/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# new source.list
+# COPY confs/sources.list /etc/apt/sources.list.cn
+
+# 映射端口
+EXPOSE 22 80
+
+# 执行命令
+CMD ["/usr/bin/supervisord"]

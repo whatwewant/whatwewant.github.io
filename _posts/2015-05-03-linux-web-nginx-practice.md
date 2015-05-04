@@ -7,16 +7,16 @@ tags: [linux, nginx, web, lnmp]
 ---
 {% include JB/setup %}
 
-## 参考
+## 一、参考
 * [实验室](https://www.shiyanlou.com/courses/95)
 * [官网](http://nginx.org/)
 
-## 安装 nginx (ubuntu)
+## 二、安装 nginx (ubuntu)
 * 方法一: sudo apt-get install nginx
 * 方法二: [脚本]({{site.url}}/scripts/install_nginx.sh)
 * `以下配置根据方法一`
 
-## NGINX实践: LNMP
+## 三、NGINX实践: LNMP
 * 1. nginx
     * 安装: sudo apt-get install nginx
     * 启动: sudo service nginx start 或 sudo /etc/init.d/nginx start
@@ -71,7 +71,7 @@ tags: [linux, nginx, web, lnmp]
             * sudo service nginx restart
             * sudo service php5-fpm restart
             
-## `NGINX HTTP 模块`
+## 四、`NGINX HTTP 模块`
 * 1 `http index 模块`:
     * 语法: `index file1 file2 ...`;
     * 作用域: http, server, location
@@ -310,3 +310,5 @@ upstream backend {
 ```
 
 * 7 [NGINX全部模块](http://wiki.nginx.org/Modules)
+
+## 五、Nginx模块开发实验
