@@ -46,5 +46,6 @@ initialize () {
 initialize
 
 # download and install packages
-PACKAGE_URL="http://pinyin.sogou.com/linux/download.php?f=linux&bit=64"
+# PACKAGE_URL="http://pinyin.sogou.com/linux/download.php?f=linux&bit=64"
+PACKAGE_URL="http://download.ime.sogou.com/1408440412/sogou_pinyin_linux_1.1.0.0037_amd64.deb"
 wgetThenDpkg $PACKAGE_URL sougou.deb
