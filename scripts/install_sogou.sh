@@ -38,6 +38,7 @@ wgetThenDpkg () {
 }
 
 initialize () {
+    sudo ls /tmp >> /dev/null 2>&1
     [[ ! -d $CONFIG_DIR ]] && mkdir -p $CONFIG_DIR
     [[ ! -d $PACKAGE_DIR ]] && mkdir -p $PACKAGE_DIR
 }
