@@ -317,6 +317,9 @@ download_log ttf-wqy-zenhei
 # For android studio 
 download_log lib32z1
 
+# System Tools
+download_log fping hping3 htop nmap
+
 # Install Goagent
 # https://wiki.archlinux.org/index.php/GoAgent_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 # git clone https://github.com/goagent/goagent /usr/share/goagent
@@ -364,6 +367,10 @@ install_docker.sh
 install-monaco-font-ubuntu.sh
 # copy_scripts_to_usr_local_bin
 copy_scripts_to_usr_local_bin.sh
+# install sogou input method
+install_sogou.sh
+# install wps
+install_wps.sh
 
 # sogou input method
 wget_copy http://download.ime.sogou.com/1408440412/sogou_pinyin_linux_1.1.0.0037_amd64.deb sogou.deb /tmp
