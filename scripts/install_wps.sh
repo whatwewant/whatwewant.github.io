@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # set -e
+CURRENT_PATH=$(cd `dirname $0`; pwd)
 
 # downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
@@ -41,6 +42,7 @@ initialize () {
     sudo ls /tmp >> /dev/null 2>&1
     [[ ! -d $CONFIG_DIR ]] && mkdir -p $CONFIG_DIR
     [[ ! -d $PACKAGE_DIR ]] && mkdir -p $PACKAGE_DIR
+    export PATH=$CURRENT_PATH:$PATH
 }
 
 # Begin
