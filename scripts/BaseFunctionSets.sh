@@ -12,23 +12,26 @@ PACKAGE_DIR=/tmp/src
 # BINARY_DIR=/usr/local/sbin
 CONFIG_DIR=$HOME/.config/Cud
 LOG_FILE=$CONFIG_DIR/INSTALL_PACKAGES.log
+PROGRAM_DIR=$HOME/.config/ProgramFiles
 
 menu() {
     echo -e "
     Function Sets 
         (For detail: $0 about FUNCTION_NAME):
-
-    dpkgLog
-    wgetTo 
-    wgetThenDpkg 
-    initialize 
-    downloadLog
-    pipLog
-    pip3Log
-    easy_installLog
-    makeLog
-    gitThenMake
     "
+#    dpkgLog
+#    wgetTo 
+#    wgetThenDpkg 
+#    initialize 
+#    downloadLog
+#    pipLog
+#    pip3Log
+#    easy_installLog
+#    makeLog
+#    gitThenMake
+#    wgetToThenUntgz
+#    "
+    cat BaseFunctionSets.sh| grep -i \(\) | awk -F '\(' '{print "    "$1}'
 }
 
 initialize () {
@@ -37,6 +40,7 @@ initialize () {
     sudo ls /tmp >> /dev/null 2>&1
     [[ ! -d $CONFIG_DIR ]] && mkdir -p $CONFIG_DIR
     [[ ! -d $PACKAGE_DIR ]] && mkdir -p $PACKAGE_DIR
+    [[ ! -d $PROGRAM_DIR ]] && mkdir -p $PROGRAM_DIR
     export PATH=$CURRENT_PATH:$PATH
 }
 
@@ -168,6 +172,20 @@ gitThenMake() {
     gTMNAME=$2
     git clone $gTMURL $PACKAGE_DIR/$gTMNAME && \
         make_log $gTMNAME
+}
+
+wgetToThenUntgz () {
+    if [ "$1" == "about" ]; then
+        echo "Usage:"
+        echo "  wgetToThenUntgz 压缩文件地址URL 自定义文件名"
+        exit 0
+    fi
+    pack_url=$1
+    pack_name=$2
+    wgetTo $pack_url $pack_name
+    tar -zxvf $PACKAGE_DIR/$pack_name -C $PROGRAM_DIR && \
+        echo "(ProgramFile) Succeed ProgramFile: $name to $PROGRAM_DIR $(date +%Y-%m-%d\ %H-%M-%S)" >> $LOG_FILE || \
+        echo "(ProgramFile) Failed ProgramFile: $name to $PROGRAM_DIR $(date +%Y-%m-%d\ %H-%M-%S)" >> $LOG_FILE
 }
 
 # 初始化
