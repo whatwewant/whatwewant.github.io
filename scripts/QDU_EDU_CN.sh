@@ -7,9 +7,39 @@ TMP_DATA_DIR=/tmp
 INDEX_HTML=$TMP_DATA_DIR/${PROGRAM_NAME}_INDEX.html
 AFTER_POST_HTML=$TMP_DATA_DIR/${PROGRAM_NAME}_POST.html
 
+install_packages() {
+    PackagesSet="curl"
+    which curl >> /dev/null 2>&1 && \
+        which iconv >> /dev/null 2>&1 && \
+        return 
+
+    echo "正在安装必要的工具..."
+    which apt-get >> /dev/null 2>&1
+    if [ "$?" = "0" ]; then
+        sudo apt-get update
+        sudo apt-get install -y $PackagesSet
+        sudo apt-get install -y iconv
+        return 
+    fi
+    
+    which yum >> /dev/null 2>&1
+    if [ "$?" = "0" ]; then
+        sudo yum update
+        sudo yum install -y $PackagesSet
+        sudo yum install -y perl-Text-Iconv.x86_64
+        return 
+    fi
+    
+    echo "   Cannot Recognize Your Linux Distribution..."
+    echo "  Please Install:"
+    echo "      curl"
+    echo "      iconv"
+}
+
 initialize() {
     # 初始化操作
     [[ ! -d "USER_INFO_DIR" ]] && mkdir -p $USER_INFO_DIR
+    install_packages
 }
 
 getCharMd5() {
@@ -21,6 +51,7 @@ getCharMd5() {
 getCookie() {
     index_url=$1
     tmpCookieFile=${TMP_DATA_DIR}/${PROGRAM_NAME}-$(date +%s).cookie
+    [[ -f "$INDEX_HTML" ]] && rm -rf $INDEX_HTML
     curl -s -c $tmpCookieFile $index_url > $INDEX_HTML
     [[ -f $tmpCookieFile ]] && cat $tmpCookieFile
 }
@@ -44,6 +75,7 @@ httpPostWithCookie() {
     # $COMMAND
     # curl ${cookie_post} $(staticHttpHeader) -d '$data' $url > $AFTER_POST_HTML
     # echo $data
+    [[ -f "$AFTER_POST_HTML" ]] && rm -rf $AFTER_POST_HTML
     curl -b $cookie_post \
         -H "Host: 10.0.109.2" \
         -H "Origin: http://10.0.109.2" \
@@ -64,16 +96,32 @@ login() {
 
 QDU_EDU_CHECK_LOGIN() {
     index_url=$1
+    [[ -f "$INDEX_HTML" ]] && rm -rf $INDEX_HTML
     curl -s $index_url > $INDEX_HTML 2>&1
+    if [ "$?" != "0" ]; then
+        echo "未能检测到 QDU_EDU_CN网络" 
+        exit -1
+    fi
     cat $INDEX_HTML | grep -i "logout" >> /dev/null 2>&1 && \
-        echo "1" || \
-        echo "0"
+        result=1 || \
+        result=0
 }
 
+QDU_EDU_ERROR() {
+    echo "Error:"
+    echo -n "    "
+    which iconv >> /dev/null 2>&1 && \
+        iconv -f GBK -t utf-8 $AFTER_POST_HTML | awk '/msga=+/{print}' | awk -F "'" '{print $2}' || \
+        cat $AFTER_POST_HTML | awk '/msga=+/{print}' | awk -F "'" '{print $2}'
+}
+
+# result=0
 QDU_EDU_LOGIN() {
     url="http://10.0.109.2"
-    result=$(QDU_EDU_CHECK_LOGIN $url)
-    if [ "$result" != "0" ]; then
+    # result=$(QDU_EDU_CHECK_LOGIN $url)
+    QDU_EDU_CHECK_LOGIN $url
+
+    if [ "$result" = "1" ]; then
         echo "Already Login !"
         exit 0
     fi
@@ -92,7 +140,8 @@ QDU_EDU_LOGIN() {
 
     cat $AFTER_POST_HTML | grep -i "You have successfully logged into our system." >> /dev/null 2>&1 && \
         echo "登入成功" || \
-        echo "登陆失败"
+        (echo "登陆失败" && \
+        QDU_EDU_ERROR)
 }
 
 QDU_EDU_LOGOUT() {
