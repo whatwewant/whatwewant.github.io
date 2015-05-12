@@ -30,6 +30,14 @@ install_packages() {
         return 
     fi
     
+    which pacman >> /dev/null 2>&1
+    if [ "$?" = "0" ]; then
+        sudo pacman -Syy
+        sudo pacman -S --noconfirm  $PackagesSet
+        sudo pacman -S --noconfirm perl-text-iconv
+        return 
+    fi
+
     echo "   Cannot Recognize Your Linux Distribution..."
     echo "  Please Install:"
     echo "      curl"
