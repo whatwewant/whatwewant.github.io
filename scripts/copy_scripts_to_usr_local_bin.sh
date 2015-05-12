@@ -19,3 +19,5 @@ COPY control_cpu_frequent.sh control_cpu_frequence
 # 2. shadowsocks_global
 COPY linux-shdowsocks-global.sh shadowsocks_global
 
+# 3. QDU_EDU_CN
+COPY QDU_EDU_CN.sh QDU_EDU_CN
