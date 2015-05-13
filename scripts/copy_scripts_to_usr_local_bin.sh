@@ -21,3 +21,6 @@ COPY linux-shdowsocks-global.sh shadowsocks_global
 
 # 3. QDU_EDU_CN
 COPY QDU_EDU_CN.sh QDU_EDU_CN
+
+# 4. config_desktop_shortcuts
+COPY config_desktop_shortcuts.sh config_desktop_shortcuts

@@ -8,7 +8,7 @@ export PATH=.:$PATH
 
 if [ "$#" != "2" ]; then
     echo "Usage:"
-    echo "  $0 scriptName command"
+    echo "  $0 scriptName command [Options]"
     echo "Such as:"
     echo "  $0 ACBI /usr/bin/ACBI &"
     echo ""

@@ -371,10 +371,10 @@ copy_scripts_to_usr_local_bin.sh
 install_sogou.sh
 # install wps
 install_wps.sh
-
-# sogou input method
-wget_copy http://download.ime.sogou.com/1408440412/sogou_pinyin_linux_1.1.0.0037_amd64.deb sogou.deb /tmp
-dpkg_log /tmp/sogou.deb
+# create_ap
+config_create_ap.sh
+# phpstorm
+install_phpstorm.sh
 
 # 安装Brackets.io , html, js
 # http://brackets.io
@@ -394,7 +394,7 @@ sleep 10
 # reboot 
 read -p "Are you sure to reboot ?(Y/N)" answer
 if [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
-	reboot
+	sudo reboot
 fi
 
 exit 
