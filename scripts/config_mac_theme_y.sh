@@ -62,12 +62,24 @@ case "$UBUNTU_VERSION" in
         sudo apt-get install -y libreoffice-style-sifr
         sudo apt-get install -y mbuntu-y-lightdm-v5
         ;;
+    *)
+	[[ -d "/tmp/Mac_Ubuntu" ]] && rm -rf /tmp/Mac_Ubuntu
+	git clone https://github.com/whatwewant/Mac_Ubuntu /tmp/Mac_Ubuntu
+	cd /tmp/Mac_Ubuntu
+	bash install.sh
+	;;
 esac
 
-## Slingscold(Alternative to Launchpad)
-sudo apt-get install -y slingscold
-## Indicator Synapse and Mutate (Alternative to Spotlight)
-sudo apt-get install -y indicator-synapse
-## Apply MBuntu Splash
-# Mutate Spolight
-sudo apt-get install mutate
+case "$UBUNTU_VERSION" in
+    "14.04" | "15.04")
+	## Slingscold(Alternative to Launchpad)
+	sudo apt-get install -y slingscold
+	## Indicator Synapse and Mutate (Alternative to Spotlight)
+	sudo apt-get install -y indicator-synapse
+	## Apply MBuntu Splash
+	# Mutate Spolight
+	sudo apt-get install -y mutate
+        ;;
+    *)
+        ;;
+esac
