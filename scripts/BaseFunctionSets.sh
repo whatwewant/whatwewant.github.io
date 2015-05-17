@@ -188,6 +188,18 @@ wgetToThenUntgz () {
         echo "(ProgramFile) Failed ProgramFile: $name to $PROGRAM_DIR $(date +%Y-%m-%d\ %H-%M-%S)" >> $LOG_FILE
 }
 
+lnS () {
+    if [ "$1" == "about" ]; then
+        echo "Usage:"
+        echo "  lnS 实际地址 DIY_COMMAND_NAME"
+        echo "(\$1 in $PROGRAM_DIR, \$2 in /usr/local/bin)"
+        exit 0
+    fi
+    app=$1
+    name=$2
+    sudo ln -s $PROGRAM_DIR/$app /usr/local/bin/$2
+}
+
 # 初始化
 initialize;
 
