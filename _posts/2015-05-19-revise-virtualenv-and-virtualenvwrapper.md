@@ -10,7 +10,7 @@ tags: [python, virtualenv, virtualenvwrapper]
 
 ## 官方文档
 * [virtualenv](https://virtualenv.pypa.io/en/latest/)
-* [virtualenv](https://virtualenvwrapper.readthedocs.org/en/latest/)
+* [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
 
 # 一 virtualenv
 * `What`:
