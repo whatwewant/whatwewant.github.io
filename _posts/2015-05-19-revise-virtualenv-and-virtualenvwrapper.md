@@ -59,25 +59,25 @@ tags: [python, virtualenv, virtualenvwrapper]
             * Syntax: `mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] VIRTUAL_ENVIRONMENT_NAME`
             * `注意: 项目默认创建一律在 ~/.virtualenvs 目录下`
             * 栗子:
-                * 默认: 
-                    * mkvirtualenv django1.8 # (ls ~/.virtualenvs 可见)
-                * 指定Python版本: 
-                    * mkvirtualenv -p python3 django1.8
-                * 指定Python版本和依赖的包: 
-                    * mkvirtualenv -r requirements.txt -p python3 django1.8
-                * 指定项目地址, 只要载入环境，自动切换到项目目录:
-                    * mkvirtualenv -a . django1.8
+            * 默认: 
+                * mkvirtualenv django1.8 # (ls ~/.virtualenvs 可见)
+            * 指定Python版本: 
+                * mkvirtualenv -p python3 django1.8
+            * 指定Python版本和依赖的包: 
+                * mkvirtualenv -r requirements.txt -p python3 django1.8
+            * 指定项目地址, 只要载入环境，自动切换到项目目录:
+                * mkvirtualenv -a . django1.8
             * `注意: 环境创建完成后，会自动载入环境`
         * `打开或切换工作环境`:
             * Syntax: `workon [(-c|--cd)|(-n|--no-cd)] [environment_name|"."]`
             * 栗子:
-                * 默认:
-                    * workon django1.8
-                    * `注意: 默认进入 mkvirtualenv 选项 -a 指定的目录，如果没有，则在当前目录`
-                * 切换, 即已经在一个虚拟环境, 但要切换另一个环境:
-                    * workon django1.5
-                * 不进入 -a 指定的目录:
-                    * workon -n django1.8
+            * 默认:
+                * workon django1.8
+                * `注意: 默认进入 mkvirtualenv 选项 -a 指定的目录，如果没有，则在当前目录`
+            * 切换, 即已经在一个虚拟环境, 但要切换另一个环境:
+                * workon django1.5
+            * 不进入 -a 指定的目录:
+                * workon -n django1.8
         * `退出环境，使用系统环境`:
             * deactivate
         * `删除环境`:
