@@ -9,8 +9,8 @@ tags: [python, virtualenv, virtualenvwrapper]
 {% include JB/setup %}
 
 ## 官方文档
-* `[virtualenv](https://virtualenv.pypa.io/en/latest/)`
-* `[virtualenv](https://virtualenvwrapper.readthedocs.org/en/latest/)`
+* [virtualenv](https://virtualenv.pypa.io/en/latest/)
+* [virtualenv](https://virtualenvwrapper.readthedocs.org/en/latest/)
 
 # 一 virtualenv
 * `What`:
