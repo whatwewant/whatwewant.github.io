@@ -14,6 +14,7 @@ tags: [collections]
     * [史上最全Vim快捷键键位图 -- 入门到进阶](http://cenalulu.github.io/linux/all-vim-cheatsheat/)
     * [Sqlite全面学习系列](http://top.jobbole.com/21548/)
     * [如何写一个Web服务器](http://lifeofzjs.com/blog/2015/05/16/how-to-write-a-server/)
+    * [15个学习 AngularJS 最好的网站](http://segmentfault.com/a/1190000002783199)
 
 ### 4 月
 * 2015-04-11 [前后端完全分离初探](http://arccode.net/2015/04/08/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%AE%8C%E5%85%A8%E5%88%86%E7%A6%BB%E5%88%9D%E6%8E%A2/)
