@@ -375,6 +375,8 @@ install_wps.sh
 config_create_ap.sh
 # phpstorm
 install_phpstorm.sh
+# docker
+install_docker.sh
 
 # 安装Brackets.io , html, js
 # http://brackets.io
