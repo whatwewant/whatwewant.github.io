@@ -264,6 +264,7 @@ pip_log BeautifulSoup4
 pip_log requests 
 pip_log django
 pip_log qduTAportal qdudomportal simplefileserver
+pip_log speedtest-cli
 
 # Database
 download_log sqlite3
