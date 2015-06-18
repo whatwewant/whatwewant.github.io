@@ -59,7 +59,7 @@ Syntax:
 
 * 3 创建表: CREATE TABLE 语法
         
-``` Syntax
+```
 // Syntax
     CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
         [(create_defination, ...)]
