@@ -12,7 +12,7 @@ tags: [mysql, 数据库]
 
 ### 三. MySQL语句语法:
 
-#### 一、数据定义语言: 第一: 创建
+#### 一、数据定义语言: 第一: 创建CREATE
 * 1 创建数据库/模式: CREATE DATABASE/SCHEME 语法
 
 ```
@@ -193,7 +193,8 @@ select_statement:
     [IGNORE | REPLACE] [AS] SELECT ... (some legal select statement)
 ```
 
-``` CREATE TABLE 栗子
+```
+# CREATE TABLE 栗子
 # 1. 最简单
 create table Student
 (
@@ -232,4 +233,18 @@ create table SC
 );
 desc SC;
 show create table SC;
+
+# 5. 临时TABLE, 退出后自动删除
+create temporary table temp_table 
+(
+    ...
+);
 ```
+
+#### 一、数据定义语言: 第二: 删除DROP
+* 1 DROP DATABASE 语法
+    * `DROP {DATABASE | SCHENA} [IF EXISTS] db_name`
+* 2 DROP INDEX 语法
+    * `DROP INDEX index_name ON tbl_name`
+* 3 DROP TABLE 语法
+    * `DROP [TEMPRARY] TABLE [IF EXISTS] tbl_name[, tbl_name, ...] [RESTRICT | CASCADE]`
