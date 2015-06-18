@@ -133,6 +133,7 @@ select * from Student;
         id integer auto_increment,
         Sno integer,
         Cno integer,
+        Grade integer,
         primary key (id),
         foreign key (Sno) references Student (Sno),
         foreign key (Cno) references Course (Cno)
@@ -155,4 +156,86 @@ select * from Student;
 
 -- 9. 条件之 HAVING where_defination
     ....
+```
+
+### 三、UPDATE
+* 1 UPDATE 语法
+
+```
+Single-table 语法:
+    UPDATE [LOW_PRIORITY] [IGNORE] tbl_name
+        SET col_name1=expr1 [, col_name2=expr2 ...]
+        [WHERE where_defination]
+        [ORDER BY ...]
+        [LIMIT row_count];
+
+Multiple-table 语法:
+    UPDATE [LOW_PRIORITY] [IGNORE] table_references
+        SET col_name1-expr1 [, col_name2=expr2 ...]
+        [WHERE where_defination];
+```
+
+* 2. UPDATE 栗子
+
+```
+-- 1. 更新一个字段(列)的所有值
+    update SC
+        set Grade = 100;
+
+-- 2. 按条件更新
+    update SC
+        set Grade = 88
+        where Sno = 200215123 and Cno = 1;
+
+-- 3. 排序限制条数
+    update SC
+        set Grade = Grade + 2 -- 这是mysql单行注释, 可以做加减乘除 
+        where Cno = 2        
+        oreder by Grade desc  # 这也是单行注释，排序
+        limit 5;
+
+-- 4. 多表操作:
+    .... (待续)
+```
+
+### 四、DELETE
+* 1 DELETE 语法
+
+```
+Single-Table 语法:
+    DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
+        FROM tbl_name
+        [WHER where_defination]
+        [ORDER BY ...]
+        [LIMIT row_count];
+
+Multiple-Table 语法:
+    DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
+        tbl_name[.*], [, tbl_name[.*] ...]
+        FROM table_references
+        [WHERE where_defination];
+    或者
+    DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
+        FROM tbl_name[.*] [, tbl_name[.*] ...]
+        USING table_references
+        [WHERE where_defination];
+```
+
+* 2 DELETE 栗子(慎用)
+
+```
+-- 1. 删除一个表中的所有数据(慎用)
+    delete from a;
+
+-- 2. 满足条件就删除
+    delete from SC
+        where Grade = 0;
+
+-- 3. 排序限制: 去掉最高分
+    delete from SC
+        order by Grade desc
+        limit 1;
+
+-- 4. 多表:
+    ....(待续)
 ```
