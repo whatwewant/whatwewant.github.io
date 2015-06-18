@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL Learning Notes"
+title: "MySQL Learning Notes 之 CREATE/DROP/ALTER"
 keywords: [mysql]
 description: mysql
 category: mysql
@@ -8,11 +8,9 @@ tags: [mysql, 数据库]
 ---
 {% include JB/setup %}
 
-## MYSQL
+## MYSQL 之 数据定义语言(结构定义)
 
-### 三. MySQL语句语法:
-
-#### 一、数据定义语言: 第一: 创建CREATE
+#### 第一: 创建CREATE
 * 1 创建数据库/模式: CREATE DATABASE/SCHEME 语法
 
 ```
@@ -249,7 +247,7 @@ create temporary table temp_table
 * 3 DROP TABLE 语法
     * `DROP [TEMPRARY] TABLE [IF EXISTS] tbl_name[, tbl_name, ...] [RESTRICT | CASCADE]`
 
-#### 一、数据定义语言: 第二: 改变结构ALTER
+#### 第二: 改变结构ALTER
 * 1 ALTER DATABASE 语法
 
 ```
