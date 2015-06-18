@@ -60,7 +60,7 @@ Syntax:
 * 3 创建表: CREATE TABLE 语法
         
 ``` Syntax
-# Syntax
+// Syntax
     CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
         [(create_defination, ...)]
         [table_option] [select_statement];
@@ -194,8 +194,8 @@ select_statement:
 ```
 
 ```
-# CREATE TABLE 栗子
-# 1. 最简单
+// CREATE TABLE 栗子
+// 1. 最简单
 create table Student
 (
     sno int,
@@ -203,7 +203,7 @@ create table Student
     cno int
 );
 
-# 2. INF: 原子性(主属性不为空NULL) + 主键(PRIMARY key) 
+// 2. INF: 原子性(主属性不为空NULL) + 主键(PRIMARY key) 
 create table Student
 (
     id int primary key auto_increment,
@@ -211,7 +211,7 @@ create table Student
     cname varchar(30) not null
 );
 
-# 3. 不存在才创建
+// 3. 不存在才创建
 create table if no exists Cost
 (
     id int,
@@ -223,7 +223,7 @@ create table if no exists Cost
     primary key (id)
 );
 
-# 4. 外键/外码: foreign key .... references ...
+// 4. 外键/外码: foreign key .... references ...
 create table SC
 (
     id int,
@@ -234,7 +234,7 @@ create table SC
 desc SC;
 show create table SC;
 
-# 5. 临时TABLE, 退出后自动删除
+// 5. 临时TABLE, 退出后自动删除
 create temporary table temp_table 
 (
     ...
@@ -248,3 +248,63 @@ create temporary table temp_table
     * `DROP INDEX index_name ON tbl_name`
 * 3 DROP TABLE 语法
     * `DROP [TEMPRARY] TABLE [IF EXISTS] tbl_name[, tbl_name, ...] [RESTRICT | CASCADE]`
+
+#### 一、数据定义语言: 第二: 改变结构ALTER
+* 1 ALTER DATABASE 语法
+
+```
+Syntax:
+    ALTER {DATABASE | SCHEMA} [db_name]
+        alter_specification [, alter_specification, ...]
+
+    alter_specification:
+          [DEFAULT] CHARACTER SET charset_name
+        | [DEFAULT] COLLATE collation_name
+```
+
+* 2 ALTER TABLE 语法
+
+```
+Syntax:
+    ALTER [IGNORE] TABLE tbl_name
+        alter_specification [, alter_specification, ...]
+
+    alter_specification:
+          ADD [COLUMN] column_defination [FIRST | LAST | FIFTH | BEFORE col_name | AFTER col_name]
+        | ADD [COLUMN] (column_defination, ...)
+        | ADD INDEX [index_name] [index_type] (index_col_name, ...)
+        | ADD [CONSTRAINT [symbol]]
+            PROMARY KEY [index_name] [index_type] (index_col_name, ...)
+        | ADD [CONSTRAINT [symbol]]
+            UNIQUE [index_name] [index_type] (index_col_name, ...)
+        | ADD [FULLTEXTISPATIAL] [index_name] (index_col_name, ...)
+        | ADD [CONSTRAINT [symbol]]
+            FOREIGN KEY [index_name] (index_col_name, ...)
+            [reference_defination]
+        | ALTER [COLUMN] col_name {SET DEFAULT literal | DROP DEFAULT}
+        | CHANGE [COLUMN] old_col_name column_defination
+        | MODIFY [COLUMN] column_defination [FIRST | AFTER col_name]
+        | DROP [COLUMN] col_name
+        | DROP PRIMARY KEY
+        | DROP INDEX index_name
+        | DROP FOREIGN KEY fk_symbol
+        | DISABLE KEYS
+        | ENABLE KEYS
+        | RENAME [TO] new_tbl_name
+        | ORDER BY col_name
+        | CONVERT TO CHARACTER SET charset_name [COLLATE collation_name]
+        | [DEFAULT] CHARACTER SET charset_name [COLLATE collation_name]
+        | DISCADE TABLESPACE
+        | IMPORT TABLESPACE
+        | table_options
+        | partition_options
+        | ADD PARTITION partition_defination
+        | DROP PARTITION partition_names
+        | COALESCE PARTITION number
+        | REORGANIZE PARTITION partition_names INTO (partition_definations)
+        | ANALYZE PARTITION partition_names
+        | CHECK PARTITION partition_names
+        | OPTIMIZE PARTITION partition_names
+        | REBUILD PARTITION partition_names
+        | REPAIR PARTITION partition_names
+```
