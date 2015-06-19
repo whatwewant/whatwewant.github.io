@@ -156,6 +156,36 @@ select * from Student;
 
 -- 9. 条件之 HAVING where_defination
     ....
+
+-- 10 Like
+    select title, category
+        from movie_table
+        where
+            title like 'A%'
+            and
+            category = 'family'
+        order by title;
+
+-- 11 分组->求和sum/求平均avg->排序
+    select first_name, sum(sales)
+        from cookie_sales
+        group by first_name
+        order by sum(sales) desc;
+
+-- 12 不同的值只返回一次，返回的结果没有重复值(distinct)
+    select distinct first_name
+        from cookie_sales;
+
+-- 13 限制条数，并返回指定位置
+    select first, count(day)
+        from cookie_sales
+        group by first_name
+        order by count(day) desc
+        limit 0, 4;  -- 从0位置开始，取四条结果
+        /*取第二名: limit 1 1;*/
+
+-- 14 函数: MAX MIN SUM AVG COUNT
+
 ```
 
 ### 三、UPDATE
@@ -196,6 +226,19 @@ Multiple-table 语法:
 
 -- 4. 多表操作:
     .... (待续)
+
+-- 5. 多个条件，更新不同值
+    update movie_table
+        set category = 
+            case
+                when drama = 'T' then 'drama'
+                when comedy = 'T' then 'comedy'
+                when action = 'T' then 'action'
+                when gore = 'T' then 'horror'
+                when scifi = 'T' then 'scifi'
+                when for_kide = 'T' or cartoon = 'T' then 'family'
+                else 'misc'
+            end;
 ```
 
 ### 四、DELETE
