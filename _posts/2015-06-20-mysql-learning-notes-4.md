@@ -10,8 +10,9 @@ tags: [MySQL, SQL, 数据库, 数据库管理语句]
 
 ## MySQL 数据库管理语句: 
 1. CREATE/DROP USER
-2. SHOW ...
-3. ...
+2. GRANT + REVOKE
+3. SET PASSWORD
+4. SHOW ...
 
 ### 一、CREATE USER 语法
 1. CREATE USER Syntax:
