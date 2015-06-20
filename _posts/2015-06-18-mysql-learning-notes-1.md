@@ -340,7 +340,7 @@ Syntax:
     show create table Student;
 
 -- 5. 改变列名及属性(一起): CHANGE
-    -- 1. 重命名
+    -- 1. 重命名, 最好RENAME
     alter table Student
         change column sex Ssex varchar(1);
     -- 2. 只修改属性, 用MODIFY效果更佳
@@ -377,5 +377,7 @@ Syntax:
     alter table Student
         rename to student;
     show tables;
+    另一种办法:
+        rename table student to Student;
 
 ```
