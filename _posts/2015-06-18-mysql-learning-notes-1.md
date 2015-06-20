@@ -306,3 +306,76 @@ Syntax:
         | REBUILD PARTITION partition_names
         | REPAIR PARTITION partition_names
 ```
+
+* 2 ALTER 栗子
+
+```
+-- 1. 加入主键:
+    alter table Student
+        add primary key (Sno);
+    /* desc Student; */
+    /* show create table Student; */
+
+-- 2. 加入新列:
+    alter table Student
+        add column Sdept varchar(2);
+
+-- 3. 外键(含外键的是子表，被外键的是父表， 父表必须有主键)
+    alter table SC
+        add foreign key (Sno) references Student(Sno);
+
+-- 4. 添加按顺序的列,默认是最后(LAST):
+    -- FIRST: 加到第一列
+    -- SENCOND: 加到第二咧
+    -- THIRD: 加到第三列
+    -- AFTER column_name: 在column_name列之后一列
+    -- BEFORE column_name: 在column_name列之前一列
+    -- 栗子:
+    alter table Student
+        add column id int first;
+    alter table Student
+        add column Sname varchar(20) before Sdept;
+    alter table Student
+        add column sex varchar(1) after Sname;
+    show create table Student;
+
+-- 5. 改变列名及属性(一起): CHANGE
+    -- 1. 重命名
+    alter table Student
+        change column sex Ssex varchar(1);
+    -- 2. 只修改属性, 用MODIFY效果更佳
+    alter table Student
+        change column Sname Sname varchar(30);
+
+-- 6. 修正仅属性: MODIFY
+    alter table Student
+        modify column Sname varchar(255);
+    show create table Student;
+
+-- 7. 删除列:
+    alter table Student
+        drop column first_name;
+    desc Student;
+
+-- 8. 删除主键PRIMARY KEY:
+    alter table Student
+        drop primary key;
+
+-- 9. 删除外键FOREIGN KEY: 
+    -- 要拿到CONSTRAINT_NAME
+        -- 1 show create table Student;
+        -- 2 自己命名的限制名
+    alter table Student
+        drop foreign key Student_ibfk_1; -- 这里限制名是自动生成的
+        /* 限制名可以自己在定义或添加属性时指定 */
+
+-- 10. 删除索引INDEX:
+    alter table Student
+        drop index index_name;
+
+-- 11. 重命名表名:
+    alter table Student
+        rename to student;
+    show tables;
+
+```
