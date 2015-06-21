@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "MySQL Learning Notes 之 CREATE/DROP/ALTER"
+title: "MySQL (一) 数据库定义之 CREATE/DROP/ALTER"
 keywords: [mysql]
 description: mysql
-category: mysql
-tags: [mysql, 数据库]
+category: SQL
+tags: [MySQL, SQL, 数据库]
 ---
 {% include JB/setup %}
 

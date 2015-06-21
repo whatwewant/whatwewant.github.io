@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Mysql Learning Notes 3 之 JOIN/UNION/TRUNCATE ..."
+title: "MySQL (三) 数据操作之JOIN/UNION/TRUNCATE ..."
 keywords: [""]
 description: "MySQL 数据操作篇"
-category: mysql
+category: SQL
 tags: [MySQL, SQL, 数据库]
 ---
 {% include JB/setup %}

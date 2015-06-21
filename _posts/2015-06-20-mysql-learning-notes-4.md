@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "MySQL Learning 4-数据库管理语句"
+title: "MySQL (四) 数据库管理语句"
 keywords: ["数据库管理语句"]
 description: ""
-category: mysql
+category: SQL
 tags: [MySQL, SQL, 数据库, 数据库管理语句]
 ---
 {% include JB/setup %}
