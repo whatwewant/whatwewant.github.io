@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "mysql learning notes 之 INSERT DELETE UPDATE SELECT"
+title: "MySQL (二) 数据操作之 INSERT DELETE UPDATE SELECT"
 keywords: [DATA INSERT, DELETE, UPDATE, SELECT]
 description: "SQL 数据的增删改查"
-category: mysql
+category: SQL
 tags: [mysql, SQL, 数据库, INSERT, DELETE, UPDATE, SELECT]
 ---
 {% include JB/setup %}
