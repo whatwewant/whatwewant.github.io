@@ -535,3 +535,41 @@ DIV 整除: SELECT 5 DIV 2; # 2
 12. SQRT(X) : 返回非负数X的二次方根
 
 ```
+
+### 五、日期和时间函数
+
+```
+1. ADDDATE = DATE_ADD:
+    * ADDDATE(date, INTERVAL expr type)
+    * ADDDATE(date, days): 日期DATE加上天数days后的新日期
+        * SELECT ADDDATE('2001-01-02', 31); # '2001-02-02'
+        * SELECT ADDDATE('2001-01-02', INTERVAL 31 DAY); # '2001-02-02'
+        * SELECT ADDDATE('2001-01-02', INTERVAL 31 SECOND); # '2001-02-02 00:00:31'
+    * YEAR, MONTH DAY, HOUR, MINUTE, SECOND
+    * MINUTE_SECOND, DAY_SECOND, HOUR_SECOND, DAY_HOUR ...
+
+2. ADDTIME(expr, expr2) : 将expr2加到expr，然后返回结果.
+    * SELECT ADDTIME('2001-12-31 23:59:59.99999', '1 1:1:1.00002'); # '2002-01-02 01:01:01.000010'
+    * SELECT ADDTIME('01:00:00.999999', '02:00:00.999998'); # '03:00:01.999997'
+
+3. CONVERT_TZ(dt, from_tz, to_tz): 将时间日期值dt从时区from_tz到时区to_tz
+    * SELECT CONVERT_TZ('2004-01-01 12:00:00', 'GMT', 'MET');
+    * SELECT CONVERT_TZ('2004-01-01 12:00:00', '+00:00', '+10:00'); # '2004-01-01 22:00:00'
+```
+
+4. CURDATE() CURRENT_DATE(): 当前日期:
+    * SELECT CURDATE(); # '2015-06-23'
+    * SELECT CURDATE() + 0; 20150623
+5. CURTIME() CURRENT_TIME(): 当前时间:
+    * SELECT CURTIME(); # '10:40:05'
+    * SELECT CURTIME(); # 104005
+
+6. DATE(expr): 提取日期或时间日期表达式expr中的日期部分
+    * SELECT DATE('2015-06-23 10:42:01');
+
+7. DATEDIFF(expr1, expr2): 返回日期expr1和日期expr2相差的天数, expr1>expr2时为正
+    * SELECT DATEDIFF('1981-11-26 23:45:45', '2015-06-23'); # -12262
+    * SELECT DATEDIFF(ADDDATE(CURDATE(), 20), CURDATE()); # 20
+
+8. DATE_FORMAT:
+
