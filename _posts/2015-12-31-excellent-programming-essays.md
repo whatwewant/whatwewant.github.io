@@ -16,6 +16,7 @@ tags: [collections]
     * [如何生成每秒百万级别的 HTTP 请求？](http://blog.jobbole.com/87509/)
     * [为最佳性能调优 Nginx](http://blog.jobbole.com/87531/)
     * [用 LVS 搭建一个负载均衡集群](http://blog.jobbole.com/87503/)
+    * [用 Python 和 OpenCV 检测和跟踪运动对象](http://python.jobbole.com/81593/)
 
 ### 5 月
 * 2015-05-01
