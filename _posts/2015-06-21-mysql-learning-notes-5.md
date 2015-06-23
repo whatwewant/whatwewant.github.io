@@ -466,6 +466,7 @@ DIV 整除: SELECT 5 DIV 2; # 2
 
 ```
 1. ABS(X) : 返回X的绝对值
+
 2. 三角函数:
     1. COS(X): 返回X的余弦
        ACOS(X): 返回X的反余弦
@@ -474,15 +475,30 @@ DIV 整除: SELECT 5 DIV 2; # 2
     3. TAN(X): 正切
        ATAN(X): 反正切
     4. COT(X) ACOT(X)
-3. 去上下界:
-    * CEILING(X) = CEIL(X); 返回不小于X的最小整数值
-    * FLOOR(X): 返回不大于X的最大整数
+
+3. 取近似:
+    * 上界整数: CEILING(X) = CEIL(X); 返回不小于X的最小整数值
+    * 下届整数: FLOOR(X): 返回不大于X的最大整数
+    * 最接近(四舍五入): 
+        * 整数: ROUND(X): X 是浮点数
+        * 小数位数为D为的浮点数: ROUND(X, D)
+
+3.1 TRUNCATE(X, D):
+    * D为非负数, 则保留浮点数X的D位小数
+    * D为负数, 只保留整数部分，并将|D|位整数置零
+        * SELECT TRUNCATE(1.223, 1); # 1.2
+        * SELECT TRUNCATE(1.999, 0); # 1
+        * SELECT TRUNCATE(122.231, -2); # 100
+        * SELECT TRUNCATE(-1.999, 1); # 1.9
+
 4. CRC32(expr): 循环冗余校验值, 返回一个32比特无符号值.若参数为NULL ，则结果为 NULL。
     * SELECT CRC32('MySQL'); # 3259397556
     * SELECT CRC32('mysql'); # 2501908538
+
 5. DEGREES(X): 返回参数X, 该参数由弧度被转化为度
     * select DEGREES(PI()); # 180
     * select DEGREES(PI() / 2); # 90
+
 6. 指数和对数:
     * EXP(X): 返回e的X乘方后的值
         * SELECT EXP(0); # 1
@@ -496,9 +512,26 @@ DIV 整除: SELECT 5 DIV 2; # 2
     * LOG10(X)
     * POW(X, Y) == POWER(X, Y): 返回X的Y次方结果
         * SELECT POW(2, 2); # 4
+
 7. MOD(X, Y): 模, 返回X DIV Y的余数, 小数也起作用
     * select MOD(34.5, 4); # 1.5
+
 8. PI(): 3.141593
 
-...
+9. RADIANS(X): 返回由角度X转化为弧度
+    * select RADIANS(80);
+
+10. 随机数:
+    * RAND() : 返回0到1之间的浮点数
+    * RAND(N): N为种子数，类似时间戳，种子数一样，则结果一样
+        * 7-12之间的随机整数: SELECT FLOOR(7 + (RAND() * 6));
+        * 随机顺序检索: SELECT * FROM tbl_name ORDER BY RAND();
+
+11. SIGN(X):
+    * X > 0, 返回1
+    * X = 0, 返回0
+    * X < 0, 返回-1
+
+12. SQRT(X) : 返回非负数X的二次方根
+
 ```
