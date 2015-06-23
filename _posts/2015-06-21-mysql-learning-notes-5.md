@@ -555,7 +555,6 @@ DIV 整除: SELECT 5 DIV 2; # 2
 3. CONVERT_TZ(dt, from_tz, to_tz): 将时间日期值dt从时区from_tz到时区to_tz
     * SELECT CONVERT_TZ('2004-01-01 12:00:00', 'GMT', 'MET');
     * SELECT CONVERT_TZ('2004-01-01 12:00:00', '+00:00', '+10:00'); # '2004-01-01 22:00:00'
-```
 
 4. CURDATE() CURRENT_DATE(): 当前日期:
     * SELECT CURDATE(); # '2015-06-23'
@@ -572,4 +571,4 @@ DIV 整除: SELECT 5 DIV 2; # 2
     * SELECT DATEDIFF(ADDDATE(CURDATE(), 20), CURDATE()); # 20
 
 8. DATE_FORMAT:
-
+```
