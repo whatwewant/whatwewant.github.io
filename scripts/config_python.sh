@@ -52,8 +52,29 @@ pipLog() {
 pipLog ipython
 pipLog virtualenv virtualenvwrapper
 pipLog requests # grequests
-pipLog django djangorestframework
-pipLog flask
+# pipLog django djangorestframework
+# pipLog flask
 pipLog qduTAportal qdudomportal simplefileserver
 pipLog speedtest-cli
 pipLog BeautifulSoup4
+
+# virtualenvwrapper
+[[ -f "$HOME/.zshrc" ]] && \
+    Xshrc="$HOME/.zshrc" || \
+    Xshrc="$HOME/.bashrc"
+
+cat $Xshrc | grep -i virtualenvwrapper.sh >> /dev/null 2>&1 || \
+    echo "source /usr/local/bin/virtualenvwrapper.sh" >> $Xshrc
+
+source /usr/local/bin/virtualenvwrapper.sh
+
+workon | grep py3 || mkvirtualenv -p python3 py3
+workon | grep django || mkvirtualenv -p python3 django
+workon | grep flask || mkvirtualenv -p python3 flask
+
+allvirtualenv pip install ipython
+
+workon py3 && pip install requests you-get
+workon django && pip install django djangorestframework
+workon flask && pip install flask
+# virtualenvwrapper --end
