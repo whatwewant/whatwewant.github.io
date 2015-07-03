@@ -1,5 +1,6 @@
 ﻿---
 layout: post
+title: DIV + CSS BASIC
 category: web
 tag: [html, css, web-front]
 ---
@@ -187,6 +188,26 @@ tag: [html, css, web-front]
 		* 只对块级元素有效
 	* 取值
 		* right / left / both / none
+* 浮动脱离文档流，导致无法撑开DIV解决:
+    * 在父DIV中加入
+        * 1 声明该DIV的伪类选择器divName::after (divName只是标识，泛指能找到DIV的选择器名)
+        * 2 必须是block
+        * 3 高度必须为0
+        * 4 内容随意，但必须有
+        * 5 清楚两边浮动: clear: both
+        * 6 overflow: hidden;
+
+
+```javascript
+    divName::after {
+        display: block;
+        height: 0;
+        content: "0";
+        clear: both;
+        overflow: hidden;
+    }
+```
+
 ### 6.4 定位 Position
 * Value
     * static: Default
@@ -220,3 +241,6 @@ tag: [html, css, web-front]
 	* a:active : 激活选定状态
 * 属性:
 	* color
+
+### 7.2 box-shadow
+
