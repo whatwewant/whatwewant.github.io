@@ -200,6 +200,18 @@ lnS () {
     sudo ln -s $PROGRAM_DIR/$app /usr/local/bin/$2
 }
 
+checkNetwork () {
+    if [ "$#" = "1" ] && [ "$1" = "about" ]; then
+        echo "Usage:"
+        echo "  checkNetwork"
+        echo "Function:"
+        echo "  Check Network State: 0(Success) other(failed)"
+        exit -1
+    fi
+    ping -c 3 www.baidu.com >> /dev/null 2>&1
+    echo $?
+}
+
 # 初始化
 initialize;
 
