@@ -77,7 +77,7 @@ gulp.task('watch', function () {
     // listen dist/**
     livereload.listen();
     gulp.watch(['dist/**']).on('change', livereload.changed);
-    gulp.watch(['index.html']).on('change', livereload.changed);
+    gulp.watch(['*.html']).on('change', livereload.changed);
 });
 
 gulp.task('default', ['watch']);
