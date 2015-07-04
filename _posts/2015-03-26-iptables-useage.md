@@ -49,3 +49,9 @@ iptables -I FORWARD 2 -s 10.4.156.0/24 -j DROP # 不满足上一项，直接丢�
 iptables -I FORWARD 1 -d 10.4.156.0/24 -m limit --limit 1/s -j ACCEPT
 iptables -I FORWARD 2 -d 10.4.156.0/24 -j DROP # 不满足上一项，直接丢弃
 ```
+
+### 使来自内网192.168.12.0/24的网能连山外网, 其中ppp0可上网
+
+```bash
+sudo iptables -t nat -I POSTROUTING -s 192.168.12.0/24 -o ppp0 -j MASQUERADE
+```
