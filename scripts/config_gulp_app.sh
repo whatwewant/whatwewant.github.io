@@ -41,6 +41,10 @@ if [ "${SCRIPT_PATH}" = "${CURRENT_PATH}" ]; then
 fi
 
 # COPY GULP APP PROJECT TO CURRENT_PATH
+if [ ! -d "${SCRIPT_PATH/../confs/gulp}" ]; then
+    echo "  Fatal Error. Default Setting Error."
+    echo " You are not in scripts directory."
+fi
 cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/app
 
 echo ""
