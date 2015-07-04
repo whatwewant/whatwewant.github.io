@@ -11,7 +11,12 @@ elif [ "$SHELL" = "/bin/zsh" ]; then
     profile=~/.zshrc
 fi
 
-source $profile
+source $profile >> /dev/null 2>&1
+if [ "$?" != "0" ]; then
+    profile=~/.bashrc
+    source $profile >> /dev/null 2>&1
+fi
+
 which node >> /dev/null
 if [ "$?" != "0" ]; then
     # sudo apt-get update
@@ -27,3 +32,5 @@ if [ "$?" != "0" ]; then
     # list node Version
     # nvm node
 fi
+
+echo "Congratulation ! Node Install Successfully!"
