@@ -1,5 +1,5 @@
 {
-  "name": "markdown-editor",
+  "name": "gulp-app",
   "version": "1.0.0",
   "description": "Simple Markdown Editor",
   "main": "index.js",
