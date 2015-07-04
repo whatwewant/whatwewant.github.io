@@ -7,6 +7,12 @@ category: "Reading"
 tags: [collections]
 ---
 {% include JB/setup %}
+
+### 7 月
+* 2015-07-05
+    * [URL的井号](http://www.ruanyifeng.com/blog/2011/03/url_hash.html)
+    * [阮一峰](http://www.ruanyifeng.com/blog/)
+
 ### 6 月
 * 2015-06-19
     * [第一篇：白话tornado源码之一个脚本引发的血案](http://www.cnblogs.com/wupeiqi/p/4375445.html)
