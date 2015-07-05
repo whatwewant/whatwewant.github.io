@@ -6,10 +6,10 @@ description: ""
 category: ""
 tags: [""]
 ---
-{% include JB/setup %}
+`{% include JB/setup %}`
 
+## 第三章 html表格应用和布局
 
-﻿## 第三章 html表格应用和布局
 ### table
 * 标签
 	* tr td th
@@ -36,7 +36,7 @@ tags: [""]
 			* framename: 在指定的框架中打开链接文档
 #### iframe
 * 语法
-	* <iframe src="引用页地址" name="框架表示名" frameborder="边框" scrolling="no"><iframe>
+	* `<iframe src="引用页地址" name="框架表示名" frameborder="边框" scrolling="no"><iframe>`
 * 属性
 	* src : url或相对url
 	* name
@@ -50,10 +50,10 @@ tags: [""]
 * 类选择器: class
 * ID选择器: id
 * 复杂选择器
-    * 群组选择器: div,p,#id,.c {color:red;}
+    * 群组选择器: div,p,#id,.c `{color:red;}`
     * 后代选择器 (只对后代起作用):
-        * 直接后代选择器(间接不起作用): div>p { color:red; }
-        * 全部后代选择器: div p {color:red; } /*只对div内的p标签作用*/
+        * 直接后代选择器(间接不起作用): div>p `{ color:red; }`
+        * 全部后代选择器: div p `{color:red; }` /*只对div内的p标签作用*/
 
 ### 5.0.1 单位: px <-> em
 * px: 普通像素单位
@@ -74,7 +74,7 @@ tags: [""]
 * 行距、对齐等:
 	* line-height: 行高
         * 案例:
-            * 居中: center { line-height: ...}
+            * 居中: center `{ line-height: ...}`
 	* letter-spacing: 字符间距
 	* text-align: 文本对齐
 		* Value:
@@ -84,7 +84,7 @@ tags: [""]
 			* justify
 			* inherit
         * 案例: 
-            * li标签左对齐: li { text-align: left; /*默认左对齐*/}
+            * li标签左对齐: li `{ text-align: left; /*默认左对齐*/}`
 	* text-decoration: 文本修饰, 下划线等
 		* Value: 
 			* none
@@ -94,7 +94,7 @@ tags: [""]
 			* inherit
 	* white-space: 空白处理, 不换行(nowrap)
     * text-transform: 字母大小写
-    * text-indent: 缩进, { text-indent: 2em;}
+    * text-indent: 缩进, `{ text-indent: 2em;}`
     * direction: 规定文本方向,书写方向
 	
 ### 5.2 背景属性
@@ -202,13 +202,13 @@ tags: [""]
 
 
 ```javascript
-    divName::after {
+    divName::after `{
         display: block;
         height: 0;
         content: "0";
         clear: both;
         overflow: hidden;
-    }
+    }`
 ```
 
 ### 6.4 定位 Position
