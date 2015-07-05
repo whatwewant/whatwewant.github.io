@@ -1,6 +1,6 @@
 ﻿---
 layout: post
-title: DIV + CSS BASIC
+title: "DIV + CSS BASIC"
 category: web
 tag: [html, css, web-front]
 ---
