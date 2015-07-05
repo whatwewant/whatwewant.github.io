@@ -14,6 +14,7 @@ tags: [collections]
     * [URL的井号](http://www.ruanyifeng.com/blog/2011/03/url_hash.html)
     * [Node.js 命令行程序开发教程](http://www.ruanyifeng.com/blog/2015/05/command-line-with-node.html)
     * [require() 源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)
+    * [JavaScript 教程 by 廖雪峰](http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000)
 
 ### 6 月
 * 2015-06-19

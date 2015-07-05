@@ -5,6 +5,8 @@
 SCRIPT_PATH=$(cd `dirname $0`; pwd)
 CURRENT_PATH=$(pwd)
 APP_PATH=$CURRENT_PATH
+TMP_DIR=/tmp
+TMP_GIT_REPO=${TMP_DIR}/projbase
 
 source $CURRENT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
 
@@ -16,6 +18,17 @@ fi
 npm -v >> /dev/null 2>&1
 if [ "$?" != "0" ]; then
     sudo apt-get install -y npm
+fi
+
+if [ ! -d "${SCRIPT_PATH}/../confs" ]; then
+    if [ ! -d "${TMP_GIT_REPO}" ]; then
+        git clone https://github.com/whatwewant/whatwewant.github.io $TMP_GIT_REPO 
+        if [ "$?" != "0" ]; then
+            echo "Fatal Error: Need git tool."
+            exit -1
+        fi
+    fi
+    SCRIPT_PATH=${TMP_GIT_REPO}/scripts
 fi
 
 if [ "${SCRIPT_PATH}" = "${CURRENT_PATH}" ]; then
