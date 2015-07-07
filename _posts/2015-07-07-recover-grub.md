@@ -40,4 +40,4 @@ tags: [linux, grub, ubuntu]
         * `reboot`
     * 8 恭喜，修复Grub
 
-## [懒人脚本]({{site.url}}/scripts/recover_grub.sh)
+## [懒人脚本, 开包即用, 单机下载]({{site.url}}/scripts/recover_grub.sh)
