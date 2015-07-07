@@ -17,11 +17,17 @@
       {{ content }}
       {% if page.license != false %}
       <footer>
-        <p>
+        <p style="text-align: center;">
           本作品由 <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a> 创作，采用
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="查看协议详细信息" target="_blank">CC BY-NC-SA 3.0 许可协议</a>
           进行许可。
         </p>
+        <div>
+            <div style="text-align: center;margin: 10px auto;">文章对你有用的话，支持一下吧!</div>
+            <div style="width: 100%;margin: 0 auto;">
+                <img style="display: block; margin: 0 auto;" src="/images/webwxgetmsgimg.png" width="200px", height="200px"/>    
+            </div>
+        </div>
       </footer>
       {% endif %}
     </section>
