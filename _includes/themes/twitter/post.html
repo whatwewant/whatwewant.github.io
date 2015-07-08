@@ -1,9 +1,49 @@
 <section id="content">
-  <article class="post">
+  <article class="post" style="position: relative;">
 
-    <header>
+    <header >
       <h1>{{ page.title }}{% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}</h1>
     </header>
+
+    <div style="background: #ccc; opacity: 0.5;">
+        <nav style="position: fixed; top: 110px; right: 10px; z-index: 10; width: 120px; background: #ccc;padding: 20px 20px; opacity: 1;">
+            <div style="font-size: 20px; text-align: center; margin-bottom: 20px; color: rgb(255, 31, 31);">文章导航</div>
+            <ul id="small-title-set" style="list-style: none; opacity: 3; font-weight: bold;">
+            </ul>
+        </nav>
+    </div>
+    <script>
+        window.onload = function () {
+            var parent = document.getElementById('small-title-set');
+            var childNodeData = document.getElementsByTagName('h3');
+            // var small_title_id = 1;
+            for (var i=0; i<childNodeData.length; ++i) {
+                var data = childNodeData[i].innerText;
+                if (! data)
+                    continue
+                data = data.trim();
+
+                var node = document.createElement('li');
+                node.appendChild((function () {
+                    var nodeA = document.createElement('a');
+                    nodeA.setAttribute('href', '#' + childNodeData[i].id);
+                    nodeA.style.color = 'rgb(47, 47, 47)';
+                    // nodeA.style.textIndent = '2em';
+
+                    if (data.length >= 10)
+                        nodeA.innerHTML = data.substring(0, 10) + '...';
+                    else
+                        nodeA.innerHTML = data;
+
+                    // nodeA.innerHTML = (small_title_id++) + '. '+ data + '...';
+
+                    return nodeA;
+                })());
+
+                parent.appendChild(node);
+            }
+        }
+    </script>
 
     <section>
       <div class="post-extra">
