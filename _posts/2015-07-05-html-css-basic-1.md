@@ -3,8 +3,8 @@ layout: post
 title: "Html CSS 基础"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: 前端
+tags: [html, css, web-front]
 ---
 `{% include JB/setup %}`
 
