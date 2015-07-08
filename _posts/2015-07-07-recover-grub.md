@@ -8,11 +8,11 @@ tags: [linux, grub, ubuntu]
 ---
 {% include JB/setup %}
 
-## 问题描述:
+### 问题描述:
 * 原本多系统(Win + Linuxs)，但windows坏了，要重装，但想保留Ubuntu等
 * 安装完Win8后, Grub没了，想要恢复Grub引导
 
-## 方法(推荐): LiveCD 进入(大部分Linux发行版都行)
+### 方法(推荐): LiveCD 进入(大部分Linux发行版都行)
 * 步骤:
     * 1 查看系统分区(一般是sda, 由于多系统, 找到其中一个linux根目录所在的分区/sda/sdaX)
         * `sudo fdisk -l` : 
@@ -40,4 +40,4 @@ tags: [linux, grub, ubuntu]
         * `reboot`
     * 8 恭喜，修复Grub
 
-## [懒人脚本, 开包即用, 单机下载]({{site.url}}/scripts/recover_grub.sh)
+### [懒人脚本, 开包即用, 单机下载]({{site.url}}/scripts/recover_grub.sh)
