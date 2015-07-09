@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL (三) 数据操作之JOIN/UNION/TRUNCATE ..."
+title: "MySQL (三) 数据操作语言DML: JOIN/UNION/TRUNCATE ..."
 keywords: [""]
 description: "MySQL 数据操作篇"
 category: SQL
@@ -8,7 +8,7 @@ tags: [MySQL, SQL, 数据库]
 ---
 {% include JB/setup %}
 
-## MYSQL 数据操作语法
+## MYSQL 数据操作语法: Data Manipulate Language
 
 ### 一、JION 语法
 * 1. JOIN Syntax

@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "MySQL (二) 数据操作之 INSERT DELETE UPDATE SELECT"
+title: "MySQL (二) 数据操作语言(DML): INSERT DELETE UPDATE SELECT"
 keywords: [DATA INSERT, DELETE, UPDATE, SELECT]
-description: "SQL 数据的增删改查"
+description: "SQL 数据操作语言DML"
 category: SQL
 tags: [mysql, SQL, 数据库, INSERT, DELETE, UPDATE, SELECT]
 ---
 {% include JB/setup %}
+
+## 数据操纵语言(DML): Data Manipulate Language
 
 ### 一. INSERT
 * 1 语法

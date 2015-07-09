@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL (四) 数据库管理语句"
+title: "MySQL (四) 数据控制语言(DCL): CREATE USER/GRANT/REVOKE .."
 keywords: ["数据库管理语句"]
 description: ""
 category: SQL
@@ -8,7 +8,7 @@ tags: [MySQL, SQL, 数据库, 数据库管理语句]
 ---
 {% include JB/setup %}
 
-## MySQL 数据库管理语句: 
+## MySQL 数据库管理语句: 数据控制语言(DCL): Data Control Language 
 1. CREATE/DROP USER
 2. GRANT + REVOKE
 3. SET PASSWORD
