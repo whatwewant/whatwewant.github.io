@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MySQL (一) 数据库定义之 CREATE/DROP/ALTER"
+title: "MySQL (一) 数据库定义语言(DDL) CREATE/DROP/ALTER"
 keywords: [mysql]
 description: mysql
 category: SQL
@@ -8,7 +8,7 @@ tags: [MySQL, SQL, 数据库]
 ---
 {% include JB/setup %}
 
-## MYSQL 之 数据定义语言(结构定义)
+## MYSQL 之 数据定义语言(结构定义): Data Definition Language
 
 ### 第一: 创建CREATE
 * 1 创建数据库/模式: CREATE DATABASE/SCHEME 语法
