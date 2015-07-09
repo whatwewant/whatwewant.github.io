@@ -20,6 +20,16 @@ if [ "$?" != "0" ]; then
     sudo apt-get install -y npm
 fi
 
+# Node Path
+if [ "${NODE_PATH}" = "" ]; then
+    NODE_PATH="$HOME/.config/ProgramFiles/node_modules"
+    [[ "$SHELL" = "/bin/zsh" ]] && \
+        SH_PROFILE=$HOME/.zshrc || \
+        SH_PROFILE=$HOME/.bashrc
+    cat $HOME/.zshrc| grep NODE_PATH >> /dev/null 2>&1 || \
+        echo "NODE_PATH={NODE_PATH}" >> $SH_PROFILE
+fi
+
 if [ ! -d "${SCRIPT_PATH}/../confs" ]; then
     if [ ! -d "${TMP_GIT_REPO}" ]; then
         git clone https://github.com/whatwewant/whatwewant.github.io $TMP_GIT_REPO 
