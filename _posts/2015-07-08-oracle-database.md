@@ -288,3 +288,10 @@ Example:
         DELETE FROM tb_user;
         COMMIT;
 ```
+
+### 五、查询数据
+* 1 基础SELECT
+* 2 模糊SELECT
+* 3 多表SELECT
+* 4 伪列
+* 5 子查询和分页SQL
