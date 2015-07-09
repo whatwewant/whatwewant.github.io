@@ -187,3 +187,104 @@ Ex:
     COMMENT ON COLUMN tb_info.info_email IS '邮箱';
     COMMENT ON COLUMN tb_info.info_payfor IS '付费状态';
 ```
+
+### 四、管理数据: INSERT UPDATE DELETE
+* 1 添加/插入数据
+
+```
+Syntax:
+    INSERT INTO tbl_name[(column1, column2...)] VALUES (value1, value2 ...)
+
+Example:
+    INSERT INTO tb_user(id, user_name, user_password) VALUES (2015, 'Gardom', '123456');
+```
+
+* 2 使用序列
+
+```
+-- 1 创建序列:
+    -- Syntax:
+        CREATE SEQUENCE squence_name
+            START WITH 1    -- 从1开始
+            INCREMENT BY 1  -- 每次加1
+            MAXVALUE 2000   -- 最大值2000
+            MINVALUE        -- 最小值
+            NOCYCLE         -- 不循环
+            NOCACHE;        -- 不缓存
+
+    -- Example:
+        CREATE SEQUENCE user_seq
+            START WITH 1
+            INCREMENT BY 1;
+
+-- 2 序列操作:
+    -- Syntax:
+        -- 访问序列的值
+            - NEXTVALUE : 返回系列的下一个值
+            - CURRVAL   : 返回序列的当前值(第一次NEXTVAL初始化后才能用CURRVAL)
+            -- 栗子:
+                SELECT user_seq.CURRVAL FROM dual;
+
+            -- Tips:
+                dual是Oracle中的虚拟表，可用于查看当前用户，当前系统时间等，序列值.
+
+        -- 更改序列
+            -- 栗子
+                ALTER SEQUENCE user_seq MAXVALUE 5000; -- 更改序列
+                DROP SEQUENCE user_seq;
+
+        -- 运用
+            -- 栗子
+                INSERT INTO tb_user (id, user_name, user_password)
+                    VALUES (user_seq.nextval, 'gardon', '123456');
+            
+```
+
+* 3 修改数据
+    * 提交(COMMIT)和回滚(ROLLBACK):　这里所说的都是对Oracle DB, 其他不一定
+        * 提交(COMMIT):
+            * DML语言，需要commit:
+                * 比如update, delete, insert等修改表中数据
+            * 其他，如DDL语言，不需要回滚
+                * 比如create, drop等改变表结构的，因为内部隐藏了commit
+        * 回滚(ROLLBACK)
+            * `必须在没有提交之前才可以回滚；提交后只能查看日志`
+    * 修改数据UPDATE
+
+```
+UPDATE Syntax:
+    UPDATE tbl_name
+        SET column_name = new_value
+            [, column_name2 = new_value2 ...]
+        [WHERE condition_expression];
+    COMMIT; -- Oracle DB need commit.
+
+UPDATE Example:
+    -- 根据ID修改用户密码
+        UPDATE tb_user 
+            SET user_password = '654321' 
+            WHERE id= '1';
+        COMMIT;
+
+    -- 更新所有数据，即不要WHERE条件语句, 注意安全
+        UPDATE tb_user
+            SET user_password = '654321';
+```
+
+* 4 删除数据
+
+```
+Syntax:
+    DELETE FROM tb_user
+        [WHERE condition_expression];
+
+Example:
+    -- 根据ID删除用户
+        DELETE FROM tb_user
+            WHERE id = '1';
+        COMMIT;
+
+    -- 删除整个表, Carefully
+        DELETE FROM tb_user;
+        COMMIT;
+```
