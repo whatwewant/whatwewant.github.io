@@ -8,7 +8,7 @@ tags: [KeyMaps, Eclipse, Java. JSP]
 ---
 {% include JB/setup %}
 
-## [资源来自网页整理](http://rongmayisheng.com/post/eclipse%E6%9C%80%E6%9C%89%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%95%B4%E7%90%86)
+## [资源来自网友整理](http://rongmayisheng.com/post/eclipse%E6%9C%80%E6%9C%89%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%95%B4%E7%90%86)
 
 ### 一、快捷键修改:
 * 菜单栏中Window–>Preferences–>General–>Keys来查看和修改快捷键绑定。
