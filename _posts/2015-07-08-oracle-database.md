@@ -291,7 +291,71 @@ Example:
 
 ### 五、查询数据
 * 1 基础SELECT
-* 2 模糊SELECT
+    * 含义: 查询(SELECT)语句用于从表中选取数据,结果存储在一个虚拟的结果表中.
+
+```
+Syntax:
+    SELECT column_name [, column_name2 ...]
+        FROM tbl_name
+        [WHERE condition_expression]
+        [ORDER BY column_name [ASC | DESC]];
+
+Example:
+    SELECT id, user_name
+        FROM tbl_user
+        WHERE user_name='gardom' and user_password='123456';
+```
+
+* 2 模糊SELECT: LIKE, _
+
+```
+Syntax:
+    -- % : 代表零个或多个字符
+    -- _ : 只能代表一个字符
+        WHERE column_name LIKE '%str%';
+        WHERE column_name LIKE '%str';
+        WHERE column_name LIKE 'str%';
+        WHERE column_name LIKE '_str';
+        WHERE column_name LIKE 'str_';
+        WHERE column_name LIKE '_str_';
+        WHERE column_name LIKE 'str1_str2'; 
+        WHERE column_name LIKE '_str%'; .....
+```
+
 * 3 多表SELECT
-* 4 伪列
+    * 1 等值连接: 返回多个表中所有能匹配的记录
+        * `SELECT t.*, i.* FROM tb_type t, tb_info i WHERE t.type_sign = i.info_type;`
+        * `-- t, i为表的别名;`
+    * 2 左连接  : 以左表为基础,即使右表中没有匹配，也从左表返回所有行
+        * `LEFT JOIN`
+        * `SELECT t.*, i.* FROM tb_type t LEFT JOIN tb_info i ON t.type_sign = i.info_type;`
+    * 3 右连接  : 以右表为基础, ...
+        * `RIGHT JOIN`
+    * 4 全关联  : 只要其中一个表中存在匹配，就返回所有行
+        * `FULL JOIN`
+* 4 Oracle伪列
+    * 伪列: 就想一个表列，但是它并没有存储在表中;
+    * 伪列可以在表中查询，但不能插入、更新和删除;
+    * 常用伪列:
+        * ROWID 是表中行的存储地址;
+            * 该地址可以唯一表示数据库中的一行;
+        * ROWNUM 是查询返回的结果中行的序号
+            * 可以使用它来限制查询返回的行数
+            * 通常用来分页.
+
 * 5 子查询和分页SQL
+    * 子查询: 嵌套查询
+    * 分页:
+
+```
+-- 分页:
+    SELECT * 
+        FROM (
+            SELECT a.*, ROWNUM rn 
+                FROM (
+                    SELECT * FROM tb_info ORDER BY info_date DESC
+                    ) a
+                WHERE ROWNUM <= 5 -- 注意，子查询不用写分号
+        ) 
+        WHERE rn >= 2;
+```
