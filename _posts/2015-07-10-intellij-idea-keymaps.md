@@ -12,10 +12,11 @@ tags: [KeyMaps, IntelliJ, IntelliJ Idea]
 * [官方，快捷键全](https://www.jetbrains.com/idea/docs/IntelliJIDEA_ReferenceCard.pdf)
 
 ### 二、必须记住
-* `Ctrl+Shift+Space` 自动补全代码
+* `Ctrl+ShiftSpace` 自动补全代码
 * `Shift+Enter`: 创建新行并跳到下一行
 * `Shift+F10`: Run, (我喜欢改成Ctrl+R)
 * `Ctrl+J`: 常用的有fori/sout/psvm+Tab即可生成循环、System.out、main方法等boilerplate样板代码，用Ctrl+J可以查看所有模板
+* `Ctrl+Alt+O` 优化导入的类和包
 * `Ctrl+X` 删除行
 * `Ctrl+D` 复制行
 * `Ctrl+/` 或 Ctrl+Shift+/  注释（// 或者/*...*/ ）
@@ -29,7 +30,6 @@ tags: [KeyMaps, IntelliJ, IntelliJ Idea]
 * Ctrl+N   查找类
 * Ctrl+Shift+N 查找文件
 * Ctrl+Alt+L  格式化代码
-* Ctrl+Alt+O 优化导入的类和包
 * Ctrl+E或者Alt+Shift+C  最近更改的代码
 * Ctrl+R 替换文本
 * Ctrl+F 查找文本
