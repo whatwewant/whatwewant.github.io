@@ -15,6 +15,7 @@ tags: [KeyMaps, IntelliJ, IntelliJ Idea]
 * `Ctrl+Shift+Space` 自动补全代码
 * `Shift+Enter`: 创建新行并跳到下一行
 * `Shift+F10`: Run, (我喜欢改成Ctrl+R)
+* `Ctrl+J`: 常用的有fori/sout/psvm+Tab即可生成循环、System.out、main方法等boilerplate样板代码，用Ctrl+J可以查看所有模板
 * `Ctrl+X` 删除行
 * `Ctrl+D` 复制行
 * `Ctrl+/` 或 Ctrl+Shift+/  注释（// 或者/*...*/ ）
