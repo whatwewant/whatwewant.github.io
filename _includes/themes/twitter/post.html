@@ -5,7 +5,7 @@
       <h1>{{ page.title }}{% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}</h1>
     </header>
 
-    <div style="background: #ccc; opacity: 0.5;">
+    <div style="background: #ccc; opacity: 0.5; display: none;">
         <nav style="position: fixed; top: 110px; right: 10px; z-index: 10; width: 120px; background: #ccc;padding: 20px 20px; opacity: 1;">
             <div style="font-size: 20px; text-align: center; margin-bottom: 20px; color: rgb(255, 31, 31);">文章导航</div>
             <ul id="small-title-set" style="list-style: none; opacity: 3; font-weight: bold;">
@@ -14,8 +14,12 @@
     </div>
     <script>
         window.onload = function () {
-            var parent = document.getElementById('small-title-set');
             var childNodeData = document.getElementsByTagName('h3');
+            if (! childNodeData.length) {
+                return ;
+            }
+
+            var parent = document.getElementById('small-title-set');
             // var small_title_id = 1;
             for (var i=0; i<childNodeData.length; ++i) {
                 var data = childNodeData[i].innerText;
@@ -42,6 +46,7 @@
 
                 parent.appendChild(node);
             }
+            parent.parentNode.parentNode.style.display = 'block';
         }
     </script>
 
