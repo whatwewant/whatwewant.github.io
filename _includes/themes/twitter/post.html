@@ -45,8 +45,9 @@
                 })());
 
                 parent.appendChild(node);
+                if (i == 0)
+                    parent.parentNode.parentNode.style.display = 'block';
             }
-            parent.parentNode.parentNode.style.display = 'block';
         }
     </script>
 
