@@ -23,14 +23,14 @@ Menu () {
 }
 
 case $1 in
-    "" | start)
+    "" | start | on)
         ps -e | grep -i create_ap >> /dev/null 2>&1
         [[ "$?" = "0" ]] && \
             echo "WIFI Already starts. You can restart it Manually." && \
             exit -1
         echo "Starting Wifi Now ..."
         ;;
-    stop)
+    stop | off)
         echo "Stopping Wifi ..."
         sudo create_ap --stop $FROM_NETWORK_INTERFACE >> $ERROR_LOG 2>&1
         [[ "$?" != "0" ]] && \
