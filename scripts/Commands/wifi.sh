@@ -16,10 +16,30 @@ WIFI_INFO_FILE=/tmp/wifi_info
 ERROR_LOG=/tmp/wifi_log
 
 Menu () {
-    echo "$0 start|stop|restart|help|info"
+    echo "$0 start|stop|restart|help|info|users"
     echo ""
     echo " -c filename    Load UserName and Password From file."
     echo ""
+}
+
+getUser () {
+    userInfo=$(create_ap --list-running | grep -i wlan0)
+    userCount=$(($(echo $userInfo | wc -l)-1))
+    userDetail=$(echo $userInfo | awk '{print $1}')
+    
+    echo "Total Users: ${userCount}"
+    if [ "$userCount" != "0" ]; then
+        echo "Users Detail: "
+    fi
+    line=0
+    for id in $userDetail; do
+        if [ "$line" = "0" ]; then
+            echo "$(create_ap --list-clients $id) (ID: $id)"
+            line=1
+        else
+            echo "$(create_ap --list-clients $id | grep 192.168.12) (ID: $id)"
+        fi
+    done
 }
 
 case $1 in
@@ -57,6 +77,10 @@ case $1 in
         ps -e | grep -i create_ap >> /dev/null 2>&1
         [[ "$?" != "0" ]] && echo "WIFI State: OFF" || \
             echo "WIFI State: ON"
+        exit 0
+        ;;
+    users)
+        getUser
         exit 0
         ;;
     -h | --help | help)
@@ -131,6 +155,7 @@ echo "  \"WIFI_MAC\": \"$MAC_ADDRESS\"" >> $WIFI_INFO_FILE
 echo "}" >> $WIFI_INFO_FILE
 
 sudo create_ap --daemon \
+    -c ${TIME_STEMP:18:1} \
     $FROM_NETWORK_INTERFACE \
     $TO_NETWORK_INTERFACE \
     $WIFI_NAME \
