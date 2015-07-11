@@ -24,3 +24,6 @@ COPY QDU_EDU_CN.sh QDU_EDU_CN
 
 # 4. config_desktop_shortcuts
 COPY config_desktop_shortcuts.sh config_desktop_shortcuts
+
+# 5. wifi ap
+COPY ./Commands/wifi.sh wifi
