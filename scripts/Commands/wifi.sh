@@ -24,7 +24,8 @@ Menu () {
 
 getUser () {
     userInfo=$(create_ap --list-running | grep -i wlan0)
-    userCount=$(($(echo $userInfo | wc -l)-1))
+    [[ "$userInfo" = "" ]] && userCount=0 || \
+        userCount=$(echo $userInfo | wc -l)
     userDetail=$(echo $userInfo | awk '{print $1}')
     
     echo "Total Users: ${userCount}"
@@ -80,7 +81,18 @@ case $1 in
         exit 0
         ;;
     users)
-        getUser
+        $0 state | grep ON >> /dev/null 2>&1
+        if [ "$?" != "0" ]; then
+            echo "Wifi Doesn't On."
+        else
+            getUser
+        fi
+        exit 0
+        ;;
+    out)
+        # getOut id
+        [[ "$2" != "" ]] && outId=$2 && \
+            sudo create_ap --stop $outId
         exit 0
         ;;
     -h | --help | help)
