@@ -23,22 +23,23 @@ Menu () {
 }
 
 getUser () {
-    userInfo=$(create_ap --list-running | grep -i wlan0)
+    userInfo=$(create_ap --list-running | grep -i wlan)
     [[ "$userInfo" = "" ]] && userCount=0 || \
         userCount=$(echo $userInfo | wc -l)
     userDetail=$(echo $userInfo | awk '{print $1}')
     
     echo "Total Users: ${userCount}"
+    echo ""
     if [ "$userCount" != "0" ]; then
-        echo "Users Detail: "
+        echo "Users Detail: (ID $userDetail)"
     fi
     line=0
     for id in $userDetail; do
         if [ "$line" = "0" ]; then
-            echo "$(create_ap --list-clients $id) (ID: $id)"
+            echo "$(create_ap --list-clients $id)"
             line=1
         else
-            echo "$(create_ap --list-clients $id | grep 192.168.12) (ID: $id)"
+            echo "$(create_ap --list-clients $id | grep 192.168.12)"
         fi
     done
 }
