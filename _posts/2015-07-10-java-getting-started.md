@@ -317,10 +317,27 @@ int a = obj;
 |F|月中的星期|Number|2|
 |E|星期的天数|Text|Tuesday; Tue|
 |a|Am/Pm标记 | Text| PM|
-|k|一天中的小数数(1-24)|Number|24|
-|K|am/pm中的小时数(0-11)|Number|0|
+|k|一天中的小数数(24-1-23)|Number|24|
+|K|am/pm中的小时数(1-11-0)|Number|0|
 |z|时区|General|time zone|Pacific Standard Time; PST; GMT-08:00|
 |Z|时区|RFC 822|time zone| -0800|
+
+* 4 SimpleDateFormat Example
+
+```java
+Date d = new Date();
+
+// 常用时间－日期格式:
+// yyyy/MM/dd HH:mm:ss ==> 2015/07/13 14:02:15
+// yyyy/MM/dd          ==> 2015/07/13
+// HH:mm:ss            ==> 14:02:15
+// yy-MM-dd            ==> 15-07-13
+
+String datePattern = "yyyy/MM/dd HH:mm:ss";
+SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
+
+System.out.println(sdf.format(d));
+```
 
 #### 8 System
 
