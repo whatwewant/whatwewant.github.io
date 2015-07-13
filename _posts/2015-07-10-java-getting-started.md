@@ -131,16 +131,22 @@ public int add (int a, int ...b) {
 
 ```java
 // 封装类的实例
+// 封装类(引用类, Reference types)转换为基本类型(Primitive types)
+//      封装类型名.xxxValue() 来取得基础类型值
+//          xxx指的是基本类型(Primitive Types)
 int a = 10;
 Integer obj = new Integer(10);
+a = obj; // 自动转换
+a = obj.intValue(); // 显示转换
+float b = obj.floatValue();
+  // boolean Boolean 
+  // char   Character // *
   // byte   Byte
   // short  Short
   // int    Integer // *
+  // long   Long
   // float  Float
   // double Double
-  // long   Long
-  // char   Character // *
-  // boolean Boolean
 ```
 
 * 2 封装类的作用
