@@ -409,3 +409,112 @@ System.out.println(
 ```
 
 #### 9 Runtime
+
+### 四 核心类(二) Collection 集合
+* 树形家族Collection
+    * Set
+        * HashSet
+    * Queue
+        * Deque
+    * List
+        * ArrayList
+        * Vector
+    * Map
+        * HashMap
+
+#### 4.2.1 HashSet: 是基于HashMap的key保存的HashSet元素
+* `特点: 无序、不重复`
+* 1 构造函数:
+    * `HashSet();`: Set<String> = new HashSet<String>();
+    * `HashSet(Collection<? extends E> c);`
+    * `HashSet(int initialCapacity [, float loadFactor]);`
+* 2 常用方法:
+    * boolean add(DataType variable);
+    * Iterator <E> iterator(): 返回对此 set 中元素进行迭代的迭代器。返回元素的顺序并不是特定的。
+    * int size()
+    * void clear();
+    * boolean isEmpty()
+    * boolean contains(Object o)
+    * boolean remove(Object o)
+
+```java
+// 1 创建String类型的HashSet并添加元素
+    Set<String> hSet = new HashSet<String>();
+    hSet.add("h1");
+    hSet.add("h2");
+    hSet.add("h3");
+    hSet.remove("h2");
+    hSet.size();
+    hSet.isEmpty();
+    hSet.contains("h1");
+
+// 2 迭代输出Set的值
+    Iterator<String> it = hSet.iterator();
+    while (it.hasNext()) {
+        System.out.println(it.next());
+    }
+```
+
+#### 4.2.2 ArrayList Vector
+* `特点: 有序、可重复`
+* 1 构造函数
+    * `ArrayList()`
+    * `ArrayList(Collection<? extends E> c);`
+    * `ArrayList(int initialCapacity);`
+* 2 常用方法:
+    * boolean add([int index, ] E element);
+    * void addAll(Collection<? extends E> c);
+    * void clear();
+    * boolean contains(Object o);
+    * E get(int index);
+    * int indexOf(Object o);
+    * int lastIndexOf(Object o);
+    * boolean isEmpty();
+    * E remove(int index);
+    * boolean remove(Object o);
+    * protected removeRange(int fromIndex, int toIndex);
+    * int size();
+
+```java
+// 1 创建ArrayList并添加元素
+    List<String> aList = new ArrayList();
+    aList.add("123");
+    aList.add("456");
+    aList.add("456");
+
+    for (int i=0; i<aList.size(); ++i) {
+        System.out.println(aList.get(i));
+    }
+```
+
+#### 4.2.3 HashMap
+* 1 构造函数
+    * `HashMap()`
+    * `HashMap(int initialCapacity [, float loadFactor])`
+    * `HashMap(Map<? extends K, ? extends V> m)`
+* 2 常用方法:
+    * V put(K key, V value);
+    * void putAll(Map<? extends K, ? extends V> m);
+    * int size();
+    * V get(Object key);
+    * boolean isEmpty();
+    * V remove(Object key);
+    * Set<K> keySet(); // 获得键集合
+    * Collection<V> values(); // 返回此映射所包含的值
+
+```
+// HashMap Sample
+Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put("username", "gardom");
+        map.put("password", "123456");
+        map.put("administer", "0");
+
+        Iterator<Object> it = map.keySet().iterator();
+//        for (int i = 0; i<it.; ++i) {
+//            System.out.println(map.get(key));
+//        }
+        while (it.hasNext()) {
+            String key = (String) it.next();
+            System.out.println(key + ": " +map.get(key));
+        }
+```
