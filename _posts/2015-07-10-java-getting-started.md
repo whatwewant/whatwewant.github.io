@@ -410,7 +410,7 @@ System.out.println(
 
 #### 9 Runtime
 
-### 四 核心类(二) Collection 集合
+### 四、核心类(二) Collection 集合
 * 树形家族Collection
     * Set
         * HashSet
@@ -501,6 +501,8 @@ System.out.println(
     * V remove(Object key);
     * Set<K> keySet(); // 获得键集合
     * Collection<V> values(); // 返回此映射所包含的值
+    * boolean containsKey(Object key);
+    * boolean containsValue(Object value);
 
 ```
 // HashMap Sample
@@ -510,11 +512,15 @@ Map<Object, Object> map = new HashMap<Object, Object>();
         map.put("administer", "0");
 
         Iterator<Object> it = map.keySet().iterator();
-//        for (int i = 0; i<it.; ++i) {
-//            System.out.println(map.get(key));
-//        }
         while (it.hasNext()) {
             String key = (String) it.next();
             System.out.println(key + ": " +map.get(key));
         }
+        
+        System.out.println(map.keySet());
+        System.out.println(map.values());
+        System.out.println(map.size());
+        System.out.println(map.hashCode());
+        System.out.println(map.containsKey("username"));
+        System.out.println(map.containsValue("123456"));
 ```
