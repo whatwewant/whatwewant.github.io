@@ -21,7 +21,11 @@ tags: [""]
 * 2 数据类型:
     * float a = 3.14f; // 必须声明为3.14f, 否则3.14为double类型, 出错
 
-### 三、面向对象基础
+### 三、面向对象基础: 
+* 默认、abstract、interface、final、static
+    * 抽象类 = 抽象方法public abstract + 普通方法 (抽象方法必须实现，普通方法不必)
+    * 接口 (特殊的抽象类，即抽象类的方法全为抽象方法)
+    * `单继承　多实现`
 * 3 方法:
     * 1 值传递和址传递
         * 值传递: 传变量, 只是传变量值的拷贝
@@ -273,6 +277,7 @@ int a = obj;
     * round(double a):
     * max(doubale a, double b) <==> min
     * random(): 0-1 随机数
+        * `UUID.randomUUID()`
     * `More: C-Left Or Doc`
 * 2 Date
     * 1 构造方法:
@@ -284,3 +289,39 @@ int a = obj;
     * 2 常用方法:
         * `boolean after(Date when)`: return getMillisOf(this) > getMillisOf(when);
         * `boolean before(Date when)`
+
+#### 7 SimpleDateFormat
+* 1 构造函数
+    * `public SimpleDateFormat()`
+    * `public SimpleDateFormat(String pattern)`
+    * `public SimpleDateFormat(String patternm Locale local)`
+    * `public SimpleDateFormat(String pattern, DateFormatSymbols formatSymbols)`
+* 2 常用方法:
+    * public final String format(Date date)
+* 3 SimpleDateFormat日期-时间格式模式参数
+
+| 字母 | 日期或时间元素 | 表示 | 示例 |
+|:----:|:---------------|:-----|:-----|
+|G|Era|标志符|Text|AD|
+|y|年|Year| 1996, 96|
+|M|年中的月份|Month|July; Jul; 07|
+|d|月中的天数|Number|10|
+|H|一天中的小时数(0-23)|Number|0|
+|h|am/pm中的小时数(1-12)|Number|12|
+|m|小时中的分钟数|Number|30|
+|s|分钟中的秒数|Number|55|
+|S|毫秒数|Number|978|
+|w|年中的周数|Number|27|
+|W|月中的周数|Number|2|
+|D|年中的天数|Number|189|
+|F|月中的星期|Number|2|
+|E|星期的天数|Text|Tuesday; Tue|
+|a|Am/Pm标记 | Text| PM|
+|k|一天中的小数数(1-24)|Number|24|
+|K|am/pm中的小时数(0-11)|Number|0|
+|z|时区|General|time zone|Pacific Standard Time; PST; GMT-08:00|
+|Z|时区|RFC 822|time zone| -0800|
+
+#### 8 System
+
+#### 9 Runtime
