@@ -3,8 +3,8 @@ layout: post
 title: "Linux NetWok Bridge(创建网桥)"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: Linux
+tags: [Linux, Network, Bridge]
 ---
 {% include JB/setup %}
 
