@@ -184,5 +184,11 @@ if [ "$?" != "0" ]; then
     echo "Please Look at logfile ${ERROR_LOG}"
     exit -1
 else
-    echo "More Infomation, look at $ERROR_LOG"
+    echo ""
+    echo "**********************************"
+    echo "* SSID     : $WIFI_NAME          "
+    echo "* PASSWORD : $WIFI_PASSWORD      "
+    echo "**********************************"
+    echo ""
+    echo "(More Infomation, look at $ERROR_LOG)"
 fi
