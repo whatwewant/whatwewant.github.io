@@ -337,8 +337,75 @@ String datePattern = "yyyy/MM/dd HH:mm:ss";
 SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
 
 System.out.println(sdf.format(d));
+// Result: 2015/07/13 14:02:15
 ```
 
 #### 8 System
+* 1 构造方法:
+    * 由于该类的构造方法是private的，所以无法创建该类的对象(实例化), 其内部的成员变量和成员方法都是static的，方法可以有类直接调用.
+* 2 成员变量和方法:
+    * 属性: 
+        * in 标准输入
+        * out 标准输出
+        * err 标准出错
+    * 方法
+
+```java
+// System类方法
+// 1. arraycopy : 该方法的作用是数组拷贝，也就是将一个数组中的内容复制到另外一个数组中的指定位置，由于该方法是native方法，所以性能上比使用循环高效。
+//  Syntax: public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length);
+//  Example:
+int [] a = {1, 2, 3, 4};
+int [] b = new int[5]; // b = {0, 0, 0, 0, 0}
+System.arraycopy(a, 1, b, 3, 2);
+// b = {0, 0, 0, 2, 3};
+```
+
+```java
+// 2. currentTimeMillis: 长整型, 返回当前计算机时间
+//      应用: 计算程序运行时间
+long start = System.currentTimeMillis();
+for (int i=0; i<1000000000; i++) {
+    int a = 0;
+}
+long end = System.currentTimeMillis();
+long time = end - start;
+```
+
+```java
+// 3. exit: 用于退出程序
+//  Syntax: public static void exit(int status);
+//      statue: 0 表示正常退出; 否则异常退出
+
+// 4. gc方法: 请求系统进行垃圾回收，至于系统是否立刻回收，则取决于系统中垃圾回收算法的实现以及系统执行时的情况。
+//  Syntax: public static void gc();
+```
+
+```java
+// 5 getProperty方法: 获得系统属性名为key的属性对应的值
+//  Syntax: public static String getProperty(String key);
+// 
+// 属性名           属性值
+// java.version     Java版本
+// java.home        Java安装目录
+// os.name          操作系统名称
+// os.version       操作系统(内核)版本
+// user.name        用户账户名称
+// user.home        家目录
+// user.dir         用户当前工作目录
+//
+// Example:
+String osName = System.getProperty("os.name");
+
+System.out.println(
+    "Java Version: " + System.getProperty("java.version") + "\n" +
+    "Java Home: " + System.getProperty("java.home") + "\n" +
+    "OS name: " + System.getProperty("os.name") + "\n" +
+    "OS Version: " + System.getProperty("os.version") + "\n" +
+    "User Name: " + System.getProperty("user.name") + "\n" +
+    "User Home: " + System.getProperty("user.home") + "\n" +
+    "User Dir: " + System.getProperty("user.dir")
+);
+```
 
 #### 9 Runtime
