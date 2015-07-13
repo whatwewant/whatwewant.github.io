@@ -9,7 +9,16 @@ tags: [""]
 {% include JB/setup %}
 
 ### 一、基础
-* 1 数据类型:
+* 1 八个基本数据类型
+    * 1 `boolean`
+    * 2 `char`
+    * 3 `byte`
+    * 4 `short`
+    * 5 `int`
+    * 6 `long`
+    * 7 `float`
+    * 8 `double`
+* 2 数据类型:
     * float a = 3.14f; // 必须声明为3.14f, 否则3.14为double类型, 出错
 
 ### 三、面向对象基础
