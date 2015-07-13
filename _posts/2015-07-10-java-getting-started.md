@@ -3,8 +3,8 @@ layout: post
 title: "Java Getting Started"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: Java
+tags: [Java, JSP 基础]
 ---
 {% include JB/setup %}
 
