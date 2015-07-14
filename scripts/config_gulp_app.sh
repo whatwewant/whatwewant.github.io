@@ -1,4 +1,8 @@
 #!/bin/bash
+###############################################
+# Usage:
+#   ./gulp project_name
+###############################################
 
 # set -e
 
@@ -7,6 +11,15 @@ CURRENT_PATH=$(pwd)
 APP_PATH=$CURRENT_PATH
 TMP_DIR=/tmp
 TMP_GIT_REPO=${TMP_DIR}/projbase
+PROJ_NAME=$1
+
+if [ "$PROJ_NAME" = "" ]; then
+    echo "****************************"
+    echo "* Usage: "
+    echo "*   $0 proj_name"
+    echo "****************************"
+    exit -1
+fi
 
 source $CURRENT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
 
@@ -68,7 +81,12 @@ if [ ! -d "${SCRIPT_PATH/../confs/gulp}" ]; then
     echo "  Fatal Error. Default Setting Error."
     echo " You are not in scripts directory."
 fi
-cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/app
+
+if [ "$PROJ_NAME" != "" ]; then
+    cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/${PROJ_NAME}/app
+else
+    cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/app
+fi
 
 echo ""
 echo "Create Gulp App Successfully !"
