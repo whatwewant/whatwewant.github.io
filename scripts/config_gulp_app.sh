@@ -83,6 +83,7 @@ if [ ! -d "${SCRIPT_PATH/../confs/gulp}" ]; then
 fi
 
 if [ "$PROJ_NAME" != "" ]; then
+    mkdir ${APP_PATH}/${PROJ_NAME}
     cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/${PROJ_NAME}/app
 else
     cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/app
@@ -90,5 +91,5 @@ fi
 
 echo ""
 echo "Create Gulp App Successfully !"
-echo "App Path: ${APP_PATH}"
+echo "App Path: ${APP_PATH}/${PROJ_NAME}"
 echo ""
