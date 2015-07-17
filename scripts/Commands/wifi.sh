@@ -20,9 +20,15 @@ WIFI_IPTABLE="wifi"
 Menu () {
     echo "$0 start|stop|restart|help|info|users"
     echo ""
+    echo "Option: "
     echo " -c filename  Load UserName and Password From file."
     echo " -l speed     Limit speed, (MTU = 1500 Byte = 1.46 KB), such 100 = 100*1.46 KB."
     echo ""
+    echo "Example:"
+    echo "  wifi on/off"
+    echo "  wifi on -g"
+    echo "  wifi on --limit 300"
+    echo "  wifi --limit 300"
 }
 
 getUser () {
@@ -170,6 +176,26 @@ case $2 in
         echo "Load Info ..."
         WIFI_NAME=$(cat $wifi_file_name | grep -i wifi_name | awk -F '"' '{print $4}')
         WIFI_PASSWORD=$(cat $wifi_file_name | grep -i wifi_password | awk -F '"' '{print $4}')
+        ;;
+    -l | --limit | --limit-speed)
+        speed=$3 # MTU
+        [[ "$speed" = "" ]] && Menu && exit -1
+        sudo iptables -N ${WIFI_IPTABLE} >> /dev/null 2>&1
+        if [ "$?" != "0" ]; then
+            sudo iptables -F ${WIFI_IPTABLE}
+        fi
+        #
+        wifi_iptable_drop=$(sudo iptables -L FORWARD --line-number | grep -i ${WIFI_IPTABLE} | head -n 1 | awk '{print $1}')
+        [[ "$wifi_iptable_drop" != "" ]] && \
+            sudo iptables -D FORWARD ${wifi_iptable_drop} >> /dev/null 2>&1
+        sudo iptables -I FORWARD 1 -j ${WIFI_IPTABLE}
+        #
+        sudo iptables -I ${WIFI_IPTABLE} 1 -s ${IP_SEGMENT} -m limit --limit ${speed}/s -j ACCEPT
+        sudo iptables -I ${WIFI_IPTABLE} 2 -d ${IP_SEGMENT} -m limit --limit ${speed}/s -j ACCEPT
+        sudo iptables -I ${WIFI_IPTABLE} 3 -s ${IP_SEGMENT} -j DROP
+        sudo iptables -I ${WIFI_IPTABLE} 4 -d ${IP_SEGMENT} -j DROP
+        sudo iptables -A ${WIFI_IPTABLE} -j RETURN
+        exit 0
         ;;
     -r | --reconfig)
         sudo rm -rf $wifi_file_name
