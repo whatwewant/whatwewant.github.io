@@ -14,11 +14,14 @@ TO_NETWORK_INTERFACE=eth0
 MAC_ADDRESS="00:${TIME_STEMP:13:2}:${TIME_STEMP:15:2}:${TIME_STEMP:17:2}:${TIME_STEMP:16:2}:${TIME_STEMP:14:2}"
 WIFI_INFO_FILE=/tmp/wifi_info
 ERROR_LOG=/tmp/wifi_log
+IP_SEGMENT="192.168.12.0/24"
+WIFI_IPTABLE="wifi"
 
 Menu () {
     echo "$0 start|stop|restart|help|info|users"
     echo ""
-    echo " -c filename    Load UserName and Password From file."
+    echo " -c filename  Load UserName and Password From file."
+    echo " -l speed     Limit speed, (MTU = 1500 Byte = 1.46 KB), such 100 = 100*1.46 KB."
     echo ""
 }
 
@@ -58,6 +61,9 @@ case $1 in
         ;;
     stop | off)
         echo "Stopping Wifi ..."
+        wifi_iptable_drop=$(sudo iptables -L FORWARD --line-number | grep -i ${WIFI_IPTABLE} | head -n 1 | awk '{print $1}')
+        [[ "$wifi_iptable_drop" != "" ]] && \
+            sudo iptables -D FORWARD ${wifi_iptable_drop} >> /dev/null 2>&1
         sudo create_ap --stop $FROM_NETWORK_INTERFACE >> $ERROR_LOG 2>&1
         [[ "$?" != "0" ]] && \
             echo "Failed to stop ..."
@@ -102,6 +108,26 @@ case $1 in
         ;;
     -h | --help | help)
         Menu
+        exit 0
+        ;;
+    -l | --limit | --limit-speed)
+        speed=$2 # MTU
+        [[ "$2" = "" ]] && Menu && exit -1
+        sudo iptables -N ${WIFI_IPTABLE} >> /dev/null 2>&1
+        if [ "$?" != "0" ]; then
+            sudo iptables -F ${WIFI_IPTABLE}
+        fi
+        #
+        wifi_iptable_drop=$(sudo iptables -L FORWARD --line-number | grep -i ${WIFI_IPTABLE} | head -n 1 | awk '{print $1}')
+        [[ "$wifi_iptable_drop" != "" ]] && \
+            sudo iptables -D FORWARD ${wifi_iptable_drop} >> /dev/null 2>&1
+        sudo iptables -I FORWARD 1 -j ${WIFI_IPTABLE}
+        #
+        sudo iptables -I ${WIFI_IPTABLE} 1 -s ${IP_SEGMENT} -m limit --limit ${speed}/s -j ACCEPT
+        sudo iptables -I ${WIFI_IPTABLE} 2 -d ${IP_SEGMENT} -m limit --limit ${speed}/s -j ACCEPT
+        sudo iptables -I ${WIFI_IPTABLE} 3 -s ${IP_SEGMENT} -j DROP
+        sudo iptables -I ${WIFI_IPTABLE} 4 -d ${IP_SEGMENT} -j DROP
+        sudo iptables -A ${WIFI_IPTABLE} -j RETURN
         exit 0
         ;;
     *)
