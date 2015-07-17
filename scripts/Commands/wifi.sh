@@ -23,6 +23,8 @@ Menu () {
     echo "Option: "
     echo " -c filename  Load UserName and Password From file."
     echo " -l speed     Limit speed, (MTU = 1500 Byte = 1.46 KB), such 100 = 100*1.46 KB."
+    echo " -i interface In Interface"
+    echo " -o interface Out Interface"
     echo ""
     echo "Example:"
     echo "  wifi on/off"
@@ -177,6 +179,9 @@ case $2 in
         WIFI_NAME=$(cat $wifi_file_name | grep -i wifi_name | awk -F '"' '{print $4}')
         WIFI_PASSWORD=$(cat $wifi_file_name | grep -i wifi_password | awk -F '"' '{print $4}')
         ;;
+    -i | --in)
+        FROM_NETWORK_INTERFAC=$3
+        ;;
     -l | --limit | --limit-speed)
         speed=$3 # MTU
         [[ "$speed" = "" ]] && Menu && exit -1
@@ -196,6 +201,9 @@ case $2 in
         sudo iptables -I ${WIFI_IPTABLE} 4 -d ${IP_SEGMENT} -j DROP
         sudo iptables -A ${WIFI_IPTABLE} -j RETURN
         exit 0
+        ;;
+    -o | --out)
+        TO_NETWORK_INTERFACE=$3
         ;;
     -r | --reconfig)
         sudo rm -rf $wifi_file_name
