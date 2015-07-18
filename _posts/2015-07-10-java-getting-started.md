@@ -524,3 +524,91 @@ Map<Object, Object> map = new HashMap<Object, Object>();
         System.out.println(map.containsKey("username"));
         System.out.println(map.containsValue("123456"));
 ```
+
+### 五、类之间的关系
+
+#### 1 继承与多态
+* 1 继承(inheritance): extends
+    * 1 父类与子类:
+        * 被继承的类, 称为基类(base class)，父类(parent class)或超类(super class)
+        * 继承者, 称为子类(child class 或 subclass) 或者 派生类(derived class)
+    * 2 单继承:　子类只有一个父类，一个父类可以有多个子类
+    * 3 语法: [访问符] [修饰符] class 子类 extends 父类 { ... }
+    * 4 构造函数调用:
+        * `先调用父类构造函数，在调用子类构造函数，再调用其他`
+* 2 多态(polymorphism)
+    * 1 定义：
+        * `上转型对象`: 多态通常体现在具有继承关系和实现关系的类之间，一个父类具有多个子类，可以将子类对象直接赋值给一个父类引用变量，无需任何类型转换.
+        * `方法重写Override`: 子类重写父类的方法也是Java多态性的一种体现.当子类继承父类时，如果父类的方法无法满足子类的需要，子类可以对父类中的方法进行改造.
+    * 2 `方法重写Override　条件`:
+        * 1 方法名和参数列表必须完全相同
+        * 2 子类方法的返回值类型与父类保持一致，或是父类方法返回值类型的子类
+        * 3 子类方法声明的异常与父类保持一直，或是父类方法声明的异常的子类;
+        * 4 父类中的私有方法不能被子类重写, 如果在子类中定义了父类重名的私有方法，则该方法是子类的一个新方法, 与父类中的私有方法无关;
+        * 5 子类方法的可访问性必须与父类方法的可访问性保持一致，或者更加公开.若父类方法可访问性为protected, 子类方法只能为protected或public, 不能为private或缺省;
+        * 6 不能重写静态方法
+    * 3 `Super 关键字` : 构造方法
+        * 1 主要用途:
+            * 1 在子类的构造方法中调用`父类的构造方法super()`, `super代表父类`
+            * 2 在子类方法中访问父类的属性或方法, `常用于子类重写方法Override`, `super不能访问父类私有属性和方法`
+        * 2 关于子类:
+            * `子类构造方法默认隐式调用父类构造方法, 相当于无参的构造方法第一句添加super()`, `这就是为什么先调用父类构造方法的情况`, `实际上都是从子类构造方法入口`
+            * `如果父类没有无参的构造方法, 子类的构造方法必须显示调用父类的有参构造方法super(args...)`
+            * `子类重写调用父类的方法时，不必在第一句，所以先调用子类覆盖方法，再调用父类方法`
+                * 语法: `super.method();`
+    * 4 `Final 关键字`:
+        * 1 含义: final关键字是一个修饰符，表示不可改变的、最终的, 用于修饰属性、方法和类;
+            * 1 `修饰变量Attribute: 表示该变量不可改变, 即常量;`
+            * 2 `修饰方法Method: 表示方法不可被子类重写，即最终方法;`
+            * 3 `修饰类Class: 表示该类不可被继承，即最终类`
+
+```
+// 多态: 父类引用指向子类对象
+//  作用: 动态调用重写方法
+// 父类A, 子类B,C均继承A
+A obj1 = new B();
+A obj2 = new C();
+```
+
+```
+// 父类
+public class Base {
+    public void print() {
+        System.out.println("父类");
+    }
+}
+
+// 子类B
+public class B extends Base {
+    public void print() {
+        System.out.println("子类B");
+    }
+}
+
+// 子类C
+public class C extends Base {
+    public void print() {
+        System.out.println("子类C");
+    }
+}
+
+// Demo
+public class OverrideDemo {
+    public static void main (String[] args) {
+        // 多态
+        // obj 指向自己
+        Base obj = new Base();
+        obj.print();
+        
+        // obj指向子类B对象
+        obj - new B();
+        obj.print();
+
+        // obj指向子类C对象
+        obj = new C();
+        obj.print();
+    }
+}
+```
+
+#### 2 其他关系
