@@ -154,9 +154,9 @@ application中的属性有: <%
     * `response.sendRedirect("login_failure.jsp")`: 请求重定向
     * `session.setAttribute("user", username)`
 
-#### 五、JavaBeans
+### 五、JavaBeans
 
-#### 六、JSP状态管理
+### 六、JSP状态管理
 * 6.1 HTTP协议无状态性
     * `无状态`是指，当浏览器发送请求给服务器的时候，服务器响应客户端请求。但是当同一个浏览器再次发送请求给服务器的时候，服务器并不知道它就是刚才哪个浏览器.即`服务器不会记住浏览器`.
 
@@ -245,3 +245,12 @@ application中的属性有: <%
 | Session中保存的是`Object`类型 | Cookie保存的是`String`类型 |
 | 随会话的结束二将其存储的数据销毁 | Cookie可以`长期`保存在客户端 |
 | 保存`重要`信息 | 保存`不重要`信息 |
+
+### 七、指令与动作
+* 7.1 include指令: `JSP三大指令: Page Include TagLib`
+    * 语法: <%@ include file="URL" %>
+* 7.2 include动作
+* 7.3 include指令与include动作的区别
+* 7.4 <jsp:forward> 动作
+* 7.5 <jsp:param> 动作
+* 7.6 <jsp:plugin> 动作
