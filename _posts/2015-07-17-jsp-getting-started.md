@@ -289,3 +289,8 @@ application中的属性有: <%
 // request.getParamter获取
 ```
 * 7.6 <jsp:plugin> 动作
+
+### 八、实际案例:
+* 1 `实现DBHelper类(util包)`: 只做数据库静态连接与断开
+* 2 `创建实体类(entity包)`: 起名规则:表名, 所有实体类符合JavaBeans思想
+* 3 `创建业务逻辑类(DAO)(dao包)`: 起名规则: entity名+"DAO"
