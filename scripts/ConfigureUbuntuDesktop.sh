@@ -257,6 +257,9 @@ download_log geany
 # 截图工具
 download_log shutter
 
+# 画图/网站结构画图
+download_log pinta
+
 # python
 download_log python python-setuptools python-virtualenv python-pip ipython
 download_log python-mysqldb
