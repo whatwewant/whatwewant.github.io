@@ -249,8 +249,43 @@ application中的属性有: <%
 ### 七、指令与动作
 * 7.1 include指令: `JSP三大指令: Page Include TagLib`
     * 语法: <%@ include file="URL" %>
-* 7.2 include动作
+        * file属性: 包含要包含的页面
+* 7.2 include动作: `动作标签<jsp:... />`
+    * 语法: <jsp:include page="URL" flush="true|false" />
+        * page: 要包含的页面
+        * flush: 被包含的页面是否从缓冲区读取
 * 7.3 include指令与include动作的区别
+
+| | include 指令 | jsp:include 动作 |
+|:--|:-----------|:-----------------|
+| 语法格式 | <%@ include file="URL" %> | <jsp:include page="URL" flush="true|false"/> |
+| 发生作用的时间 | 页面转换期间 | 请求期间 |
+| 包含的内容 | 文件的实际内容 | 页面的输出 |
+| 转换成的Servlet | 主页面和包页面转换为一个Servlet | 主页面和包页面转换为独立的Servlet |
+| 编译时间 | 较慢--资源必须被解析 | 较快 |
+| 执行时间 | 稍快 | 较慢--每次资源必须被解析 |
+
 * 7.4 <jsp:forward> 动作
+    * 语法:
+        * `<jsp:forward page="URL" />`
+        * 等同于: `request.getRequestDispatcher("/url").forward(request, response);`
+    * `解决request.getParameter乱码`:
+        * `request.setCharacterEncoding("utf-8");`
+
 * 7.5 <jsp:param> 动作
+    * 语法:
+        * `<jsp:param name="参数名" value="参数值" />`
+        * 常与`<jsp:forward ... >...</jsp:forward>`一起使用，作为其子标签
+    * 作用: 
+        * 1. 设置键值，然多页面获取
+        * 2. 修改其他页面传过来的键值
+
+```Java
+// <jsp:param >
+    <jsp:forward page="user.jsp">
+        <jsp:param name="email" value="admin@126.com" />
+    </jsp:forward>
+// 其他页面可以用
+// request.getParamter获取
+```
 * 7.6 <jsp:plugin> 动作
