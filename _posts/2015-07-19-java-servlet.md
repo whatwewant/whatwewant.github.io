@@ -120,9 +120,6 @@ public class HelloServlet extends HttpServlet {
 * 5.7 `page`: this
 * 5.8 `pageContext`: PageContext
 * 5.9 `Config`: getServletCOnfig()函数
-* 5.3 Session
-* 5.4 Page
-* 5.6 PageContext
 
 ### 六、Servlet与表单
 * request
