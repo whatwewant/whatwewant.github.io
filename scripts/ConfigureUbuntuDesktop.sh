@@ -254,6 +254,9 @@ download_log cmake
 download_log geany
 # download_log codeblocks
 
+# 截图工具
+download_log shutter
+
 # python
 download_log python python-setuptools python-virtualenv python-pip ipython
 download_log python-mysqldb
