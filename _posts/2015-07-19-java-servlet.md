@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Java Servlet 基础"
+title: "Java Web (二) Servlet 基础"
 keywords: [""]
 description: ""
 category: Java
-tags: [Java, Servlet, JSP]
+tags: [Java, Servlet, JSP, Web]
 ---
 {% include JB/setup %}
 
