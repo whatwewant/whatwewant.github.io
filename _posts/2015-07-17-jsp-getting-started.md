@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "JSP Getting Started"
+title: "Java Web (一) JSP 基础"
 keywords: [""]
 description: "JSP 入门"
 category: Java
-tags: [Java, JSP]
+tags: [Java, JSP, Web]
 ---
 {% include JB/setup %}
 
