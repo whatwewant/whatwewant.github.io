@@ -18,7 +18,7 @@ IP_SEGMENT="192.168.12.0/24"
 WIFI_IPTABLE="wifi"
 
 Menu () {
-    echo "$0 start|stop|restart|help|info|users"
+    echo "$0 start|stop|restart|help|info|users|log"
     echo ""
     echo "Option: "
     echo " -c filename  Load UserName and Password From file."
@@ -85,6 +85,15 @@ case $1 in
         $0 start
         sleep 2
         $0 info
+        exit 0
+        ;;
+    log)
+        echo "*********************"
+        echo "* Detail Wifi Log"
+        echo "*********************"
+        echo ""
+        cat $ERROR_LOG
+        echo ""
         exit 0
         ;;
     info)
