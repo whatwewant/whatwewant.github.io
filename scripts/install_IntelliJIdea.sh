@@ -10,12 +10,12 @@ source $CURRENT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
 
 if [ "$(checkNetwork)" = "0" ]; then
     # download and install packages
-    PACKAGE_URL="http://download-cf.jetbrains.com/webstorm/WebStorm-10.0.2.tar.gz"
-    wgetToThenUntgz $PACKAGE_URL webstorm.tar.gz
+    PACKAGE_URL="https://d1opms6zj7jotq.cloudfront.net/idea/ideaIU-14.1.4.tar.gz"
+    wgetToThenUntgz $PACKAGE_URL ideaIU.tar.gz
 
     # soft link
     # sudo ln -s $PROGRAM_DIR/WebStorm-141.728/bin/webstorm.sh /usr/bin/webstorm
-    lnS WebStorm-141.728/bin/webstorm.sh webstorm
+    lnS idea-IU-141.1532.4/bin/idea.sh IntelliJIdea
 else
     echo "No Network."
     echo "Like:"
