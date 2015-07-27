@@ -85,7 +85,7 @@ $(document).ready(function() {
     $('#loader').show();
     if (entries == null) {
       $.ajax({url: '/atom.xml?r=' + (Math.random() * 99999999999), dataType: 'xml', success: function(data) {
-        entries = data.getElementsByTagName('entry');
+        entries = data.getElementsByTagName('title');
         findEntries(query);
       }});
     } else {
