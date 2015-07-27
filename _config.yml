@@ -1,7 +1,8 @@
 # This is the default format. 
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
 # permalink: /:categories/:title.html
-permalink: /:year/:month/:day/:title.html
+# permalink: /:year/:month/:day/:title.html
+permalink /post/:year-:month-:day-:title.html
 
 safe: false
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
@@ -95,7 +96,7 @@ JB :
   comments :
     provider : duoshuo
     duoshuo :
-        short_name : whatwewan-github-io
+        short_name : whatwewant-github-io
     disqus :
       short_name : whatwewant
     livefyre :
