@@ -318,7 +318,7 @@ public class EncodingFilter implement Filter {
 </filter-mapping>
 
 // 2. com.cole.filter.LoginFilter.java
-public class EncodingFilter implement Filter {
+public class LoginFilter implement Filter {
     public void destroy () {
     }
 
