@@ -152,7 +152,7 @@ Filter End ... doFilter
 ```
 
 ### 四-过滤器分类(Dispacther)(3类)
-* 1 四类: 默认REQUEST
+* 1 四类(Servlet 2.x) / 五类(Servlet 3.x): 默认REQUEST
     * 1 `REQUEST`: 
         * 用户直接访问页面或服务器response.sendRedirect时，Web容器将会调用过滤器
     * 2 `FORWARD`: 
@@ -163,5 +163,179 @@ Filter End ... doFilter
         * 目标资源是通过RequestDispatcher的include方法调用时
         * jsp页面: <jsp:include />
     * 4 `ERROR`  :
+        * 目标资源是通过声明式异常处理机制调用时，过滤器将被调用
+    * 5 `(Servlet 3.x) ASYNC`:
+        * 支持异步处理
+
+* 2 `ERROR` 实例:
+
+```Java
+// 过滤 404 错误自动到 Page Not Found
+// 1. web.xml 注册错误页面和过滤器
+    <!-- 自动跳转404 -->
+    <error-page>
+        <error-code>404</error-code>
+        <!-- 404.html 已经存在于 web-content 目录 -->
+        <location>/404.html</location>
+    </error-page>
+
+    <!-- 捕捉 404 错误， 进行操作 --> 
+    <filter>
+        <filter-name>Error404</filter-name>
+        <filter-class>com.cole.filter.ErrorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Error404</filter-name>
+        <!-- 所有的页面的404错误都会自动到 /404.html -->
+        <!-- 只需要捕捉 /404.html 页面即可 -->
+        <url-pattern>/404.html</url-pattern>
+        <!-- 必须指定 dispatcher 包含 ERROR, 默认为REQUEST, 否则无法捕捉 -->
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+```
+
+```Java
+// 2. Filter Class: com.cole.servlet.ErrorFilter.java
+// 创建Filter的两种方法:
+//      1. 右键new -> Filter (IDE大多类似)
+//      2. 新建Java Class -> 继承 Filter -> 实现init doFilter destroy方法
+
+public class ErrorFilter implements Filter {
+    public void destroy () {
+        System.out.println("销毁 Filter");
+    }
+
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        // 将 req 强制转换为 request 之后就可以用 request的很多方法 ..
+        // 比如 response.sendRedirect, 
+        // 比如 request.getResquestDispatcher("URL").forward(request, response);
+        // HttpServletRequest request = (HttpServletRequest) req;
+        // HttpServletResponse response = (HttpServletResponse) resp;
+        System.out.println("开始 doFilter");
+        // chain.doFilter是放行，显示 404 页面
+        chain.doFilter(req, resp);
+        System.out.println("结束 doFilter");
+    }
+
+    public void init(FilterConfig config) throws ServletException {
+        System.out.println("初始化 Filter");
+    }
+}
+```
+
+* 3 Servlet 3.0 新Filter: `@WebFilter`
+    * 1 定义: `注解(@)`
+        * @WebFilter 用于将一个类声明为过滤器，该注解将会在部署时被容器处理，容器根据具体的属性配置将相应的类部署为过滤器.
+    * 2 @WebFilter 常用属性
+
+|属性名|类型|描述|
+|:-----|:---|:---|
+| filterName | String | 指定过滤器的name属性, 等价于 <filter-name> |
+| value | String [] | 该属性等价于urlPatterns属性, 但是两者不应该同时使用 (value的优先级大于 urlPatterns)|
+| urlPatterns | String [] | 指定一组过滤器的URL匹配模式, 等价于<url-pattern> 标签 |
+| servletNames | String [] | 指定过滤器将用于哪些Servlet.取值是@WebFilter中的name属性的取值，或者是web.xml中<servlet-name>的取值 |
+
+| dispatcherTypes | DispatcherType | 指定过滤器的转发模式. 具体取值包括 ASYNC ERROR FORWARD INCLUDE REQUEST |
+| initParams | WebInitParam[] | 指定一组初始化参数，等价于 <init-param> |
+| asyncSupport | boolean | 声明过滤器是否支持异步操作模式,等价于<async-support>标签 |
+| description | String | 过滤器的描述信息, 等价于 <description> |
+| displayName | String | 该过滤器的现实名，通常配合工具使用，等价于<display-name> |
+
+```Java
+@WebFilter (servletNames = {"ErrorServlet"}, filterName = "Error404")
+
+等价于
+
+<filter>
+    <filter-name>Error404</filter-name>
+    <filter-class>...</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>Error404</filter-name>
+    <servlet-class>ErrorServlet</servlet-class>
+</filter-mapping>
+```
+
+```Java
+// WebFilter 实例
+@WebFilter(filterName="MyAsyncFilter", value={"/404.html"}, 
+    dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.ERROR, DispatcherType.ASYNC})
+public class AsyncFilter implement Filter 
+    ...
+}
+```
 
 ### 五、案例
+* 过滤器在实际项目中的应用场景
+    * 1 对用户请求进行统一认证
+    * 2 编码转换
+    * 3 对用户发送的数据进行过滤替换
+    * 4 转换图像格式
+    * 5 对响应的内容进行压缩
+
+#### 案例一 过滤编码
+
+```Java
+// 1. Servlet 2.x/3.x web.xml
+<filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>com.cole.filter.EncodingFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+// 2. com.cole.filter.EncodingFilter.java
+public class EncodingFilter implement Filter {
+    public void destroy () {
+    }
+
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        // 将request编码和response编码设置为urt-8，防止乱码
+        req.setCharacterEncoding("utf-8");
+        resp.setContentType("text/html;charset=utf-8");
+        chain.doFilter(req, resp);
+    }
+
+    public void init(FilterConfig config) throws ServletException {
+    }
+}
+```
+
+#### 案例二: 对用户请求进行统一认证
+
+```Java
+// 1. Servlet 2.x/3.x web.xml
+<filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.cole.filter.LoginFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+        // 将request编码和response编码设置为urt-8，防止乱码
+    <!-- 所有管理界面必须管理员登陆 -->
+    <url-pattern>/admin/*</url-pattern>
+</filter-mapping>
+
+// 2. com.cole.filter.LoginFilter.java
+public class EncodingFilter implement Filter {
+    public void destroy () {
+    }
+
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+        if (request.getSession().getAttribute("username") == null) {
+            response.getWriter().println("<script>alert('请先登陆');window.location.href='/sign_in';</script>");
+            return ;
+        }
+ 
+        chain.doFilter(req, resp);
+    }
+
+    public void init(FilterConfig config) throws ServletException {
+    }
+}
+```
+
