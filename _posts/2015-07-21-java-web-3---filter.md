@@ -234,7 +234,6 @@ public class ErrorFilter implements Filter {
 | value | String [] | 该属性等价于urlPatterns属性, 但是两者不应该同时使用 (value的优先级大于 urlPatterns)|
 | urlPatterns | String [] | 指定一组过滤器的URL匹配模式, 等价于<url-pattern> 标签 |
 | servletNames | String [] | 指定过滤器将用于哪些Servlet.取值是@WebFilter中的name属性的取值，或者是web.xml中<servlet-name>的取值 |
-
 | dispatcherTypes | DispatcherType | 指定过滤器的转发模式. 具体取值包括 ASYNC ERROR FORWARD INCLUDE REQUEST |
 | initParams | WebInitParam[] | 指定一组初始化参数，等价于 <init-param> |
 | asyncSupport | boolean | 声明过滤器是否支持异步操作模式,等价于<async-support>标签 |
