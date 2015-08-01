@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "我的小作品"
+title: "作品区"
 description: "small work"
 group: navigation
 comments: false
