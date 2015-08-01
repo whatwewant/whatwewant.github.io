@@ -6,6 +6,8 @@ group: navigation
 ---
 {% include JB/setup %}
 
+{% assign page.url = http://whatwewant.github.io/message.html %}
+
 ### Hi:
 
 欢迎访问我的博客，你可以在下面留下你的足迹。\^_\^
