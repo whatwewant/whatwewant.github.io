@@ -3,7 +3,6 @@ layout: page
 title: "留言板"
 description: ""
 group: navigation
-comments: false
 ---
 {% include JB/setup %}
 
