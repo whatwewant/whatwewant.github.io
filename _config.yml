@@ -24,6 +24,7 @@ author :
   nickname : 一路向北
   email : tobewhatwewant@gmail.com
   github : whatwewant
+  gfa : https://github.com/whatwewant
   twitter : whatwewant
   feedburner : feedname
 
@@ -86,6 +87,7 @@ JB :
   tags_path : /tags.html
   atom_path : /atom.xml
   rss_path : /rss.xml
+  work_path: /work.html
   messages_path : /messages.html
   about_path : /about.html
 
