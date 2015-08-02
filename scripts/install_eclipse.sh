@@ -11,7 +11,7 @@ source $CURRENT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
 if [ "$(checkNetwork)" = "0" ]; then
     # download and install packages
     PACKAGE_URL="http://mirrors.ustc.edu.cn/eclipse/technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-linux-gtk-x86_64.tar.gz"
-    wgetToThenUntgz $PACKAGE_URL idea.tar.gz
+    wgetToThenUntgz $PACKAGE_URL eclipse.tar.gz
 
     # soft link
     # sudo ln -s $PROGRAM_DIR/WebStorm-141.728/bin/webstorm.sh /usr/bin/webstorm
