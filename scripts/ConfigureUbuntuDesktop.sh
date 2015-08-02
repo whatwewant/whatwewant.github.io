@@ -359,8 +359,6 @@ config_mac_theme_y.sh
 config_vim.sh
 config_zsh.sh
 config_tmux.sh
-# config create ap
-config_create_ap.sh
 # background
 config_init_background_images.sh
 # config nodejs
@@ -369,8 +367,6 @@ config_nodejs.sh
 config_pcs.sh
 # install shadowsocks 
 install_shadowsocks_libev.sh
-# install docker
-install_docker.sh
 # install monaco font
 install-monaco-font-ubuntu.sh
 # copy_scripts_to_usr_local_bin

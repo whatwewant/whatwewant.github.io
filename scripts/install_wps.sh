@@ -48,6 +48,12 @@ initialize () {
 # Begin
 initialize
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 # download and install packages
 PACKAGE_URL="http://archive.ubuntukylin.com:10006/ubuntukylin/pool/main/w/wps-office/wps-office_9.1.3_amd64.deb"
 wgetThenDpkg $PACKAGE_URL wps.deb
+
+endLog

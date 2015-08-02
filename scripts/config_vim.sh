@@ -1,4 +1,9 @@
 #!/bin/bash
+
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 echo "安装将花费一定时间，请耐心等待直到安装完成^_^"
 
 # Backup Old Config
@@ -20,7 +25,7 @@ mkdir -p ~/.vim/bundle && \
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 if which apt-get >/dev/null; then
-	sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools python-dev git
+	downloadLog vim vim-gnome ctags xclip astyle python-setuptools python-dev git
 elif which yum >/dev/null; then
 	sudo yum install -y gcc vim git ctags xclip astyle python-setuptools python-devel	
 fi
@@ -38,3 +43,5 @@ echo "请耐心等待" >> potter
 vim potter +PluginInstall +qall
 rm potter
 echo "安装完成"
+
+endLog

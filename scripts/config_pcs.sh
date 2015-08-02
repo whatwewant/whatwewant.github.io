@@ -4,6 +4,10 @@
 # Mail: tobewhatwewant@gmail.com
 # Created Time: 2014年11月05日 星期三 18时42分05秒
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 export PATH=.:$PATH
 
 TMPDIR=/tmp
@@ -25,3 +29,4 @@ if [ "$?" != "0" ]; then
     # pcs login
 fi
 
+endLog

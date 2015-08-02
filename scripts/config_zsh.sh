@@ -2,10 +2,14 @@
 
 user=$(whoami)
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 # install zsh
 which zsh >> /dev/null
 if [ "$?" != "0" ]; then
-    sudo apt-get install -y zsh
+    downloadLog zsh
 fi
 
 # config zsh
@@ -24,3 +28,5 @@ if [ "$SHELL" != "/bin/zsh" ]; then
 else
     echo "now is in zsh environment."
 fi
+
+endLog
