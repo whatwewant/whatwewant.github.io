@@ -6,6 +6,10 @@ PROGRAM_NAME=tmux
 DESTINATION=~/.tmux/plugins/tpm
 URL="https://github.com/tmux-plugins/tpm.git"
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 bash_url() {
     echo "Install $PROGRAM_NAME ..."
     script_url=$1
@@ -51,3 +55,5 @@ tmux source-file ~/.tmux.conf
 
 # Manual to click prefix + I to download tmux plugins
 echo "Now You need munual to click prefix + I to download plugins"
+
+endLog

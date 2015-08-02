@@ -4,6 +4,10 @@
 # Mail: tobewhatwewant@gmail.com
 # Created Time: 2014年11月30日 星期日 20时14分08秒
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 profile=~/.bashrc
 if [ "$SHELL" = "/bin/bash" ]; then
     profile=~/.bashrc
@@ -34,3 +38,5 @@ if [ "$?" != "0" ]; then
 fi
 
 echo "Congratulation ! Node Install Successfully!"
+
+endLog

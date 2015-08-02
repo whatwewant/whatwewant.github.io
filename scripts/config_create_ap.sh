@@ -2,6 +2,10 @@
 
 # https://github.com/oblique/create_ap
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 DTool="sudo apt-get install -y"
 
 # Begin
@@ -25,3 +29,5 @@ echo "Succeed in installing create_ap"
 echo "Then,"
 echo "  $ create_ap -h # for help"
 echo "Congratulation!"
+
+endLog

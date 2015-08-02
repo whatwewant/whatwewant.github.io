@@ -13,6 +13,10 @@ PACKAGE_DIR=/tmp/src
 CONFIG_DIR=$HOME/.config/Cud
 LOG_FILE=$CONFIG_DIR/INSTALL_PACKAGES.log
 
+script_path=$(cd `dirname $0`; pwd)
+source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
+startLog
+
 dpkgLog() {
     # 使用前修复依赖
     sudo apt-get -f -y install >> /dev/null 2>&1
@@ -53,3 +57,5 @@ initialize
 # PACKAGE_URL="http://pinyin.sogou.com/linux/download.php?f=linux&bit=64"
 PACKAGE_URL="http://download.ime.sogou.com/1408440412/sogou_pinyin_linux_1.1.0.0037_amd64.deb"
 wgetThenDpkg $PACKAGE_URL sougou.deb
+
+endLog

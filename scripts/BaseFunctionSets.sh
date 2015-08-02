@@ -212,6 +212,44 @@ checkNetwork () {
     echo $?
 }
 
+getScriptName () {
+    if [ "$#" = "1" ] && [ "$1" = "about" ]; then
+        echo "Usage:"
+        echo "  getScriptName"
+        echo "Function:"
+        echo "  Get Script Name"
+        exit -1
+    fi
+    echo $(basename $0)
+}
+
+startLog () {
+    if [ "$#" = "1" ] && [ "$1" = "about" ]; then
+        echo "Usage:"
+        echo "  startLog"
+        echo "Function:"
+        echo "  Start Log For Each Script"
+        exit -1
+    fi
+
+    echo "**********************************" >> $LOG_FILE
+    echo "Start Log for: $(getScriptName) ..." >> $LOG_FILE
+}
+
+endLog () {
+    if [ "$#" = "1" ] && [ "$1" = "about" ]; then
+        echo "Usage:"
+        echo "  endLog"
+        echo "Function:"
+        echo "  End Log For Each Script"
+        exit -1
+    fi
+
+    echo "End Log for: $(getScriptName) ." >> $LOG_FILE
+    echo "**********************************" >> $LOG_FILE
+    echo "" >> $LOG_FILE
+}
+
 # 初始化
 initialize;
 
