@@ -48,6 +48,8 @@ case "$UBUNTU_VERSION" in
         downloadLog mbuntu-y-lightdm-v4
         ## 
         downloadLog mbuntu-y-docky-skins-v4
+	    ## Indicator Synapse and Mutate (Alternative to Spotlight)
+	    downloadLog indicator-synapse
         ;;
     "15.04")
         downloadLog mbuntu-y-ithemes-v5
@@ -77,8 +79,6 @@ case "$UBUNTU_VERSION" in
     "14.04" | "15.04")
 	## Slingscold(Alternative to Launchpad)
 	downloadLog slingscold
-	## Indicator Synapse and Mutate (Alternative to Spotlight)
-	downloadLog indicator-synapse
 	## Apply MBuntu Splash
 	# Mutate Spolight
 	downloadLog mutate
