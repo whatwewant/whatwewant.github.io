@@ -38,6 +38,7 @@ initialize () {
     sudo apt-get update
 }
 
+initialize
 
 download_log() {
     # 使用前修复依赖
