@@ -349,7 +349,7 @@ download_log fping hping3 htop nmap
 
 # My Script 
 [[ -d "$BLOG_DIR" ]] && rm -rf $BLOG_DIR || \
-    git clone http://github.com/whatwewant/whatwewant.io $BLOG_DIR
+    git clone http://github.com/whatwewant/whatwewant.github.io.git $BLOG_DIR
 # export path
 export PATH=$SCRIPT_DIR:$PATH
 
