@@ -7,4 +7,4 @@
 
 script_path=$(cd `dirname $0`; pwd)
 
-sudo cp ${script_path}/../wallpaper/wallpaper.jpg /usr/share/backgrounds/warty-final-ubuntu.png
+sudo cp ${script_path}/wallpaper/wallpaper.jpg /usr/share/backgrounds/warty-final-ubuntu.png
