@@ -6,7 +6,12 @@ description: "好文章收藏"
 category: "Reading"
 tags: [collections]
 ---
+
 {% include JB/setup %}
+
+### 8 月
+* 2015-08-02
+    * [Shadowsocks + Redsocks 实现 OpenWRT 路由器自动翻墙](https://cokebar.info/archives/948)
 
 ### 7 月
 * 2015-07-05
