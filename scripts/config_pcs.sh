@@ -16,8 +16,8 @@ which pcs >> /dev/null
 if [ "$?" != "0" ]; then
     echo "Pcs 不存在，正在为你安装pcs"
     cd $TMPDIR
-    sudo apt-get install -y git make cmake
-    sudo apt-get install -y libcurl4-openssl-dev
+    downloadLog git make cmake
+    downloadLog libcurl4-openssl-dev
     sudo rm -rf $TMPDIR/pcs
     git clone https://github.com/GangZhuo/baidupcs.git $TMPDIR/pcs
     cd $TMPDIR/pcs
