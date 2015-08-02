@@ -10,6 +10,13 @@
 
 # set -e
 
+UserPassword=""
+while [ "$UserPassword" = "" ]; do
+    echo "Need Your Password."
+    echo -n "User Password: "
+    read UserPassword
+done
+
 BASEPATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export PATH=.:$BASEPATH
 
@@ -186,6 +193,10 @@ git_bash() {
     git_log $url $name
     bash_log $LOG_DIR/$name $script
 }
+
+# zsh
+download_log zsh
+echo "$UserPassword" | chsh -s /bin/zsh
 
 # Bradcom 802.11 Linux STA 无线网卡驱动
 # apt-get install -y bcmwl-kernel-source && \
