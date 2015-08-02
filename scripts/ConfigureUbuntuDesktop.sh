@@ -382,6 +382,8 @@ install_shadowsocks_libev.sh
 install-monaco-font-ubuntu.sh
 # copy_scripts_to_usr_local_bin
 copy_scripts_to_usr_local_bin.sh
+# docker
+install_docker.sh
 # install sogou input method
 install_sogou.sh &
 # install wps
@@ -390,8 +392,12 @@ install_wps.sh &
 config_create_ap.sh
 # phpstorm
 install_phpstorm.sh &
-# docker
-install_docker.sh
+# webstorm
+install_webstorm.sh &
+# IntelliJ Idea
+install_IntelliJIdea.sh &
+# Eclipse
+install_eclipse.sh &
 
 # 安装Brackets.io , html, js
 # http://brackets.io
