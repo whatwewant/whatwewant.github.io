@@ -383,13 +383,13 @@ install-monaco-font-ubuntu.sh
 # copy_scripts_to_usr_local_bin
 copy_scripts_to_usr_local_bin.sh
 # install sogou input method
-install_sogou.sh
+install_sogou.sh &
 # install wps
-install_wps.sh
+install_wps.sh &
 # create_ap
 config_create_ap.sh
 # phpstorm
-install_phpstorm.sh
+install_phpstorm.sh &
 # docker
 install_docker.sh
 
