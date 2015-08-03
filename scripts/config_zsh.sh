@@ -1,6 +1,7 @@
 #!/bin/bash
 
 user=$(whoami)
+userPassword=$1
 
 script_path=$(cd `dirname $0`; pwd)
 source $script_path/BaseFunctionSets.sh >> /dev/null 2>&1
@@ -24,7 +25,11 @@ cp ~/.oh-my-zsh/templates/potter.zshrc ~/.zshrc
 
 # change sh
 if [ "$SHELL" != "/bin/zsh" ]; then
-    chsh -s /bin/zsh # 
+    if [ "$userPassword" != "" ]; then
+        echo $userPassword | chsh -s /bin/zsh # 
+    else
+        chsh -s /bin/zsh # 
+    fi
 else
     echo "now is in zsh environment."
 fi
