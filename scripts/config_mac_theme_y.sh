@@ -54,7 +54,7 @@ case "$UBUNTU_VERSION" in
     "15.04")
         downloadLog mbuntu-y-ithemes-v5
         downloadLog mbuntu-y-icons-v5
-        sudo apt-get install mbuntu-y-docky-skins-v5
+        downloadLog mbuntu-y-docky-skins-v5
         cd /tmp && wget -O config.sh http://drive.noobslab.com/data/Mac-15.04/config.sh
         chmod +x config.sh;./config.sh
         cd /tmp && wget -O Mac.po http://drive.noobslab.com/data/Mac-15.04/change-name-on-panel/mac.po
