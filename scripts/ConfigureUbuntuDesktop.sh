@@ -278,6 +278,7 @@ download_log python-mysqldb
 # python3
 download_log python3-setuptools python3-pip
 # pip packages
+pip_log virtualenvwrapper
 pip_log BeautifulSoup4
 pip_log requests 
 pip_log django
