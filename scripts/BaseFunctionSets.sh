@@ -11,7 +11,7 @@ PACKAGE_DIR=~/Download/ConfigUbuntu/src
 # URL="https://github.com/madeye/shadowsocks-libev.git"
 # BINARY_DIR=/usr/local/sbin
 CONFIG_DIR=$HOME/.config/Cud
-LOG_FILE=$CONFIG_DIR/INSTALL_PACKAGES.log
+LOG_FILE=$CONFIG_DIR/INSTALL_PACKAGES_${DATE_TODAY}.log
 PROGRAM_DIR=$HOME/.config/ProgramFiles
 
 menu() {
