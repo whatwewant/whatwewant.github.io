@@ -5,7 +5,7 @@
 CURRENT_PATH=$(cd `dirname $0`; pwd)
 
 # downloadTool="sudo apt-get install -y"
-PACKAGE_DIR=/tmp/src
+PACKAGE_DIR=~/Download/ConfigUbuntu/src
 # SRC_DIR=$PACKAGE_DIR
 # SRC_DIR_FINAL=${SRC_DIR}/shadowsocks
 # URL="https://github.com/madeye/shadowsocks-libev.git"

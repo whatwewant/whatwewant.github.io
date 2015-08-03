@@ -23,7 +23,7 @@ export PATH=.:$BASEPATH
 CONFIG_FILE=$(pwd)
 CONFIG_DIR=$HOME/.config/Cud
 LOG_FILE=$CONFIG_DIR/ConfigureUbuntu-$(date +%Y-%m-%d_%H-%M-%S).log
-LOG_DIR=/tmp/ConfigureUbuntu
+LOG_DIR=~/Download/ConfigureUbuntu
 BLOG_DIR=$CONFIG_DIR/whatwewant
 SCRIPT_DIR=$BLOG_DIR/scripts
 

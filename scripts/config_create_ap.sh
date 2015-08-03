@@ -18,7 +18,7 @@ echo "Starting Create Your Wifi ..."
 $DTool --reinstall git hostapd iptables dnsmasq
 
 # create_ap
-git clone https://github.com/oblique/create_ap.git /tmp/create_ap
+git clone https://github.com/oblique/create_ap.git $PACKAGE_DIR/create_ap
 
 # install
 cd /tmp/create_ap
