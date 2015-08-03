@@ -57,6 +57,8 @@ pipLog requests # grequests
 pipLog qduTAportal qdudomportal simplefileserver
 pipLog speedtest-cli
 pipLog BeautifulSoup4
+# mysql cli
+pipLog mycli
 
 # virtualenvwrapper
 [[ -f "$HOME/.zshrc" ]] && \
@@ -74,7 +76,7 @@ workon | grep flask || mkvirtualenv -p python3 flask
 
 allvirtualenv pip install ipython
 
-workon py3 && pip install requests you-get
+workon py3 && pip install requests you-get dockercli
 workon django && pip install django djangorestframework
 workon flask && pip install flask
 # virtualenvwrapper --end
