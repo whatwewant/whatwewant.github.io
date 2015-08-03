@@ -371,7 +371,7 @@ config_python.sh
 config_mac_theme_y.sh
 # config vim zsh tmux
 config_vim.sh
-config_zsh.sh
+config_zsh.sh $UserPassword
 config_tmux.sh
 # background
 config_init_background_images.sh
