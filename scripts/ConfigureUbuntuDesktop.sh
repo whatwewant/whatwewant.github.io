@@ -29,7 +29,7 @@ SCRIPT_DIR=$BLOG_DIR/scripts
 
 initialize () {
     # 1. LOG_DIR
-    [[ -d "$LOG_DIR" ]] && rm -rf $LOG_DIR || mkdir $LOG_DIR
+    [[ -d "$LOG_DIR" ]] && rm -rf $LOG_DIR || mkdir -p $LOG_DIR
 
     # 2. CONFIG_DIR
     [[ ! -d "$CONFIG_DIR" ]] && mkdir -p $CONFIG_DIR
