@@ -365,6 +365,8 @@ download_log fping hping3 htop nmap
 # export path
 export PATH=$SCRIPT_DIR:$PATH
 
+# 安装Python即相关
+config_python.sh
 # 安装mac主题
 config_mac_theme_y.sh
 # config vim zsh tmux
