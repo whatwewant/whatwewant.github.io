@@ -174,7 +174,7 @@ if has("autocmd")
 endif
 
 " new .c, .h, .sh, .java, .py, .js auto insert file head
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py,*.js exec ":call SetTitle()"
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py,*.js,*.lua exec ":call SetTitle()"
 " define function SetTitle, auto insert file head
 func SetTitle()
     " .py
@@ -199,6 +199,17 @@ func SetTitle()
         call append(line(".")+5, "# Github       : whatwewant")
         call append(line(".")+6, "# Created Time : ".strftime("%c"))
         call append(line(".")+7, "# *************************************************")
+        call append(line(".")+8, "")
+    elseif expand("%:e") == 'lua'
+        call setline(1, "#!/usr/bin/lua")
+        call append(line("."), "-- ")
+        call append(line(".")+1, "-- *************************************************")
+        call append(line(".")+2, "-- File Name    : ".expand("%"))
+        call append(line(".")+3, "-- Author       : Cole Smith")
+        call append(line(".")+4, "-- Mail         : tobewhatwewant@gmail.com")
+        call append(line(".")+5, "-- Github       : whatwewant")
+        call append(line(".")+6, "-- Created Time : ".strftime("%c"))
+        call append(line(".")+7, "-- *************************************************")
         call append(line(".")+8, "")
     else
         call setline(1,          "/****************************************************")
