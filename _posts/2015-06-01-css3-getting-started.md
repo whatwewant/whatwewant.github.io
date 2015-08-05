@@ -449,7 +449,7 @@ p {
 </html>
 ```
 
-### 六、CSS3选择器(上)
+### 六、CSS3选择器(上): 伪类选择器
 * 6-1 属性选择器
     * Syntax: E为选择器, attr为属性名, val为属性值
         * `E[attr="val"]`: 等于
@@ -639,3 +639,79 @@ div:empty {
 |对象|空格|区别|
 |:---|---|:---|
 |first-child 与 first-of-type 及 nth-child 与 nth-of-type 及 only-child 与 only-of-type 及 last-child 与 last-oftype || *-child不区分类型，但是如果它前面指定了类型(也就是说可以不指定)，那么如果符合表达式的第一个作用的元素与该类型不同时，效果全部失效, 没有任何作用. *-of-type:区分类型，如果它前面指定了类型，则它会自动分类，找到与其类型相同的符合表达式的第一个元素开始作用; 如果没指定类型，则每种类型符合表达式的第一个元素开始生效.|
+
+### 七、CSS选择器(下): 伪类选择器
+* 7-1 `:enable`选择器 与 `:disabled`选择器
+    * 在Web的表单中，有些表单元素有可用(":enabled")和不可用(":disabled")状态下，比如输入框、密码框、复选框等.
+    * 在默认情况下，这些表单元素都默认为enabled状态
+
+```
+/* css */
+div { margin: 30px; }
+
+input[type="text"]:enabled {
+    border: 1px solid #f36;
+    box-shadow: 0 0 5px #f36;
+}
+
+input[type="text"]:disbaled {
+    box-shadow: none;
+}
+
+<!-- html -->
+<form acttion="#">
+    <div>
+        <label for="enabled">可用输入框:</label>
+        <input type="text" id="enabled" />
+    </div>
+    <div>
+        <label for="disabled">禁用输入框:</label>
+        <input type="text" id="disabled" />
+    </div>
+</form>
+```
+
+* 7-2 `:checked`选择器
+    * `选中`, 在表单元素中, 单选(radio)和复选(checkbox)都具有`选中`和`未选中`状态.
+
+* 7-3 `::selection`选择器
+    * `鼠标选中文本`的状态为`::selection`
+    * ":selection"伪元素是用来匹配`凸显`的文本.
+    * 浏览器默认情况下，`用鼠标选择`网页文本是以`深蓝的背景，白色的字体`显示的.
+
+```
+/* css */
+p::selection { background: orange;}
+
+<!-- html -->
+<div class="box">
+    <p>鼠标选择该文本的颜色是橘黄色</p>
+    <div>鼠标选择是默认颜色是蓝色</div>
+</div>
+```
+
+* 7-4 `:read-only`选择器
+    * 只读选择器，　就是当元素中readonly属性值设为readonly的时候.
+
+* 7-5 `:read-write`选择器
+    * `:read-write`选择器刚好与`:read-only`选择器相反，主要用来指定当元素处于`非只读`状态时的样式。
+
+* 7-6 `::before` 和 `::after`
+    * 与CSS2中的`:before` 和 `:after`一样
+    * 主要用来给元素的前面或后面插入内容
+    * 常和`content`配合使用，使用最多的场景是`清除浮动`
+
+```
+/* css */
+.clearfix::before,
+.clearfix::after {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix:after { clear: both;}
+.clearfix {zoom: 1;}
+```
+
+* 7-7 切换背景练习
