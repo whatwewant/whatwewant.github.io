@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "css3 getting started"
+title: "CSS3 基础"
 keywords: [""]
 description: ""
 category: 前端
@@ -451,31 +451,194 @@ p {
 
 ### 六、CSS3选择器(上)
 * 6-1 属性选择器
+    * Syntax: E为选择器, attr为属性名, val为属性值
+        * `E[attr="val"]`: 等于
+        * `E[attr^="val"]`: 属性attr以val `开头(^)` 的选择器E
+        * `E[attr$="val"]`: 属性attr以val `结尾($)`
+        * `E[attr*="val"]`: 属性attr `包含(*)` val
+
+```
+/* css */
+a[class^="column"] {
+    background: red;
+}
+a[href$=".doc"] {
+    background: green;
+}
+a[title*="box"] {
+    background: blue;
+}
+
+<!-- Html -->
+<a href="##" class="columnNews">我的背景想变成红色</a>
+<a href="##" class="columnVideo">我的背景想变成红色</a>
+<a href="##" class="columnAboutUs">我的背景想变成红色</a><br/>
+<a href="1.doc">我的背景想变成绿色</a>
+<a href="2.doc">我的背景想变成绿色</a><br/>
+<a href="##" title="this is a box">我的背景想变成蓝色</a>
+<a href="##" title="box1">我的背景想变成蓝色</a>
+<a href="##" title="there is two boxs">我的背景想变成蓝色</a>
+```
 
 * 6-2 结构性伪类选择器- root
+    * `:root`选择器，是指HTML文档的根选择器, 而根元素是<html>, 所以就等同于html.
+    * `:root {...}` == `html {...}`
 
 * 6-3 结构性伪类选择器- not
+    * `:not` 称为 否定选择器.和jQuery中的:not选择器一样，可以选择除了某个元素以外的所有元素.
+        * `一般配合属性选择使用, 别忘了括号`
+    * Example
+        * `input:not([type="submit"]) {border: 1px solid red;}`
+            * input中除了type为submit之外的
 
 * 6-4 结构性伪类选择器- empty
+    * Function: 选择没有任何内容的元素，这里没有是指没有任何内容，包括空格也不能有.(注释不包括)
+
+```
+/* css */
+div {
+    height: 50px;
+}
+
+
+div:empty {
+    border: 1px solid #ccc;
+}
+
+<!-- html -->
+<div>我这里有内容</div>
+<div> <!-- 我这里有一个空格 --></div>
+<div><!-- 我这里任何内容都没有 --></div>
+```
 
 * 6-5 结构性伪类选择器- target
+    * Function: 目标选择器，用来匹配文档中a标签href值为另一个ID选择器值的目标元素
+
+```
+/* css */
+.menuSection { display: none; }
+:target {
+    /* 这里: target指的就是 id="brand" 的div对象 */
+    display: block;
+}
+
+<!-- html -->
+<!-- 当点击Brand时, ID等于brand的选择器触发:target {...}效果 -->
+<h2> <a href="#brand">Brand</a><h2>
+<div class="menuSection" id="brand">
+    Content for Brand
+<.div>
+```
+
+```
+/* css */
+/* 当点击 href="brand"的a标签时, ID="brand"的标签的p标签变成黄色背景 */
+#brand:target p { background: green;}
+
+<!-- html -->
+<div id="brand">
+    <a href="#brand" >你变黄</a>
+    <p>变黄</p>
+</div>
+```
 
 * 6-6 结构性伪类选择器- first-child
+    * Function: 父选择器的第一个子选择器
+    * :first-child == :nth-child(1)
 
 * 6-7 结构性伪类选择器- last-child
+    * Function: 父元素的最后一个子元素
 
 * 6-8 结构性伪类选择器- nth-child(n)
+    * Funtion: 用来选择父元素的某一个或多个子元素, 不区分div:nth-child(n)的类型div
+    * Syntax:
+        * n 为 `整数值`, 从1开始
+        * n 为表达式 或 关键词(odd | even):
+            * `2n+1` == `odd` : 表示第`奇数`子元素
+            * `2n+2` == `even` : 表示第`偶数`子元素
+            * `n+5` : 表示第5个元素(包含)以后的所有子元素
+            * `-n+5` : 表示第5个元素(包含)以前的所有子元素
+            * `kN`: k为常数，如之前的2n+1的2, 此时的第一个元素是k, 每隔k个子元素
+            * `kN + m`: 第一个元素为k+m(>0, 否则2k+m开始), 以后每隔k个子元素
 
 * 6-9 结构性伪类选择器- nth-last-child(n)
+    * 与:nth-child(n)类似，只不过从最后一个开始倒数
 
-* 6-10 first-of-type 选择器
+* 6-10 first-of-type 选择器 与 last-of-type 选择器
+    * 与 `:first-child` 的区别就是, `指定了元素的类型`
+    * 而类型就比如: `.box > p:first-of-type` 中的`p`, 因为p元素不一定是容器中的第一个子元素;
+    * 当 `.box > p:first-child {...}` 中的第一个子元素不是`p`时，该css不产生任何效果; 但是 `.box > p:first-of-type { ... }` 会一直找到`p`
+
+```
+/* CSS */
+/* 注意:伪类选择器冒号(:)前后不要空格*/
+.box > p:first-child {
+    background: red;
+}
+
+.box > p:first-of-type {
+    background: green;
+}
+
+<!-- html -->
+<div class="box">
+    <div>第一个是DIV, 所有:first-child没效果</div>
+    <p>但是:first-of-type有效，该P变为绿色</p>
+</div>
+```
 
 * 6-11 nth-of-type(n) 选择器
+    * 和nth-child(n)类似, 取值可以是整数, 表达式或者关键字(odd, even)
+    * 与:nth-child(n)的区别是, `:nth-of-type(n)`区分类型，只有同类型才计数, 而 `:nth-child(n)` 不区分类型
 
-* 6-12 last-of-type 选择器
+```
+/* css */
+/* box选择器下偶数子元素 */
+/* 这里，even为偶数, 那么如果box所有元素的第二个元素类型不是div的话，这个css对所有失效; 这里所说的第二个元素指的是nth-child(n)中表达式的第一个作用的元素. */
+/* 如果去掉这里的'div'符号，那么效果一直在; 去掉'div'符号试试 */
+.box > div:nth-child(even) {
+    background: red: 
+}
+
+/* box选择器下的全部类型为div的元素偶数次序*/
+/* 当'div'省略时, 自动匹配偶数元素的类型, 每个类型的偶数次序都产生作用*/
+.box > div:nth-of-type(even) {
+    background: green;
+}
+
+<!-- html -->
+<div class="box">
+  <div>我是一个Div元素</div>
+  <p>我是一个段落元素</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+  <div>我是一个Div元素</div>
+  <p>我是一个段落</p>
+</div>
+```
 
 * 6-13 nth-last-of-type(n) 选择器
 
 * 6-14 only-child 选择器
+    * 选择父元素有且只有唯一一个子元素的情况生效.
 
 * 6-15 only-of-type 选择器
+
+* `区别`
+
+|对象|区别|
+|:---|:---|
+|first-child 与 first-of-type| *-child不区分类型，但是如果它前面指定了类型(也就是说可以不指定)，那么如果符合表达式的第一个作用的元素与该类型不同时，效果全部失效, 没有任何作用. *-of-type:区分类型，如果它前面指定了类型，则它会自动分类，找到与其类型相同的符合表达式的第一个元素开始作用; 如果没指定类型，则每种类型符合表达式的第一个元素开始生效.|
+|last-child 与 last-oftype |
+|nth-child 与 nth-of-type |
+|only-child 与 only-of-type |
