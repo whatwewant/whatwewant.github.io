@@ -638,7 +638,5 @@ div:empty {
 
 |对象|区别|
 |:---|:---|
-|first-child 与 first-of-type| *-child不区分类型，但是如果它前面指定了类型(也就是说可以不指定)，那么如果符合表达式的第一个作用的元素与该类型不同时，效果全部失效, 没有任何作用. *-of-type:区分类型，如果它前面指定了类型，则它会自动分类，找到与其类型相同的符合表达式的第一个元素开始作用; 如果没指定类型，则每种类型符合表达式的第一个元素开始生效.|
-|last-child 与 last-oftype |
-|nth-child 与 nth-of-type |
-|only-child 与 only-of-type |
+|first-child 与 first-of-type 及 nth-child 与 nth-of-type 及 only-child 与 only-of-type 及 last-child 与 last-oftype |
+| *-child不区分类型，但是如果它前面指定了类型(也就是说可以不指定)，那么如果符合表达式的第一个作用的元素与该类型不同时，效果全部失效, 没有任何作用. *-of-type:区分类型，如果它前面指定了类型，则它会自动分类，找到与其类型相同的符合表达式的第一个元素开始作用; 如果没指定类型，则每种类型符合表达式的第一个元素开始生效.|
