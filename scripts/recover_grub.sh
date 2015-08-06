@@ -38,10 +38,12 @@ read -p "Boot Partition(If you don't have it, remain blank.): " BOOT_PARTITION
 # echo ${ROOT_PARTITION} | tr -s " "
 BOOT_PARTITION=$(echo ${BOOT_PARTITION} | sed "s/ //g")
 
+[[ "$(ls /mnt | wc -l)" != "0" ]] && sudo umount -lr /mnt
+
 echo "Mount Root Partition to /mnt ..."
-sudo mount /mnt ${ROOT_PARTITION}
+sudo mount ${ROOT_PARTITION} /mnt
 ls /mnt | grep -i "root"
-if [ "$?" != "" ];
+if [ "$?" != "0" ]; then
     echo "Error ROOT PARTITION: ${ROOT_PARTITION}"
     exit -1
 else
@@ -50,7 +52,7 @@ fi
 
 if [ "${BOOT_PARTITION}" != "" ]; then
     echo "Mount Boot Partition to /mnt/boot"
-    sudo mount /mnt/boot ${BOOT_PARTITION}
+    sudo mount  ${BOOT_PARTITION} /mnt/boot
     echo "Mount Boot Partition Successful"
 fi
 
@@ -65,11 +67,11 @@ case ${answer:0:1} in
         # Chroot and Update grub
         sudo chroot /mnt /usr/sbin/update-grub
         # Umount
-        sudo umount --bind /sys /mnt/sys
-        sudo umount --bind /dev /mnt/dev
-        sudo umount --bind /proc /mnt/proc
-        sudo umount /mnt/boot ${BOOT_PARTITION}
-        sudo umount /mnt ${ROOT_PARTITION}
+        sudo umount -l /sys
+        sudo umount -l /dev
+        sudo umount -l /proc
+        sudo umount -l ${BOOT_PARTITION}
+        sudo umount -l ${ROOT_PARTITION}
         echo "Umount Successfully..."
         echo "Congratulation! Fix Grub !"
         ;;
