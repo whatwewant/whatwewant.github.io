@@ -888,21 +888,149 @@ p::selection { background: orange;}
 
 ### 九、变形与动画(下)
 * 9-1 Keyframes介绍
+    * Function:
+        * `@keyframes`称为关键帧
+        * 在一个`@keyframes`中的样式规则可以由多个百分比构成，如在"0%"到"100%"之间创建更多个百分比，分别给每个百分比中给需要有动画效果的元素加上不同样式，从而达到一种在不断变化的效果.
+    * Syntax:
+        * Step 1: `animation: ANIMATION_NAME DURATION TIMING_FUNCTION DELAY;`
+        * Step 2: `@keyframes ANIMATION_NAME { 0%{...}, 20%{...}..., 100%{...}}`
 
-* 9-2 调用动画
+```
+/* css */
+div {
+    width: 300px;
+    height: 200px;
+    background: red;
+    color: #fff;
+    margin: 20px auto;
+}
 
-* 9-3 设置动画播放时间
+div:hover {
+    animation: change 5s ease-out 0.2s;
+}
 
-* 9-4 设置动画播放方式
+@keyframes change {
+    0% {
+        background: red;
+    }
 
-* 9-5 设置动画开始播放时间
+    20% {
+        background: orange;
+    }
 
-* 9-6 设置动画播放次数
+    40% {
+        background: yellow;
+    }
 
-* 9-7 设置动画播放方向
+    60% {
+        background: green;
+    }
 
-* 9-8 设置动画的播放状态
+    80% {
+        background: blue;
+    }
 
-* 9-9 设置动画时间外属性
+    100% {
+        background: purple;
+    }
+}
+```
+
+* 9-2 调用动画: animation-name
+    * Function:
+        * 用来调用`@keyframes`定义好的动画.
+        * 名称必须完全一致，区分大小写.
+    * Syntax:
+        * `animation-name: none | IDENT[, none | DENT]*`
+            * IDENT 指的是你定义的名字
+            * none 为默认值，是任何动画失效，可用于`覆盖任何动画`.
+
+* 9-3 设置动画播放时间: animation-duration
+    * 类似: transition-duration
+    * 完成从0%到100%需要的时间
+
+* 9-4 设置动画播放方式: animation-timing-function
+    * 类似: transition-timing-function
+    * 多组用逗号(,)分开
+
+* 9-5 设置动画开始播放时间: animation-delay
+    * 类似: transition-delay
+
+* 9-6 设置动画播放次数: animation-iteration-count
+    * Function: 定义动画播放次数
+    * Syntax:
+        * `animation-iteration-count: infinite | <number> [, infinite | <number> ... ;]`
+            * infinite: 无限循环
+            * number 为整数，小数也行.
+
+```
+/* css3: animation */
+div {
+    width: 200px;
+    height: 200px;
+    border: 1px solid red;
+    margin: 20px auto;
+}
+
+div span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: orange;
+    border-radius: 100%;
+    animation-name: ball-around;
+    animation-duration: 10s;
+    animation-timing-function: ease;
+    animation-delay: 1s;
+    animation-iteration-count: infinite; 
+}
+ 
+@keyframes ball-around {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(180px, 0);
+        /* 等价于 transform: translateX(180px); */
+    }
+    50% {
+        transform: translate(180px, 180px);
+    }
+    75% {
+        transform: translate(0, 180px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+<!-- html -->
+<div>
+    <span></span>
+</div>
+```
+
+
+* 9-7 设置动画播放方向: animation-direction
+    * Syntax:
+        * `animation-direction: normal | alternate [, normal | alternate, ...];`
+            * `normal` 是默认值, 也就是动画的每次循环都是向前播放;
+            * `alternate`: 动画播放在`第偶次`向前播放, `第奇次`向反方向播放.
+
+* 9-8 设置动画的播放状态: animation-play-state
+    * Syntax:
+        * `animation-play-state: running | paused;`
+            * `running`: 默认值,主要作用是类似音乐播放器，可以通过paused将正在播放的动画停下来，也可以通过running将暂停的动画重新播放.这里的重新播放不一定是从元素动画开始播放,而是从暂停的哪个位置开始播放.另外如果暂停了动画的播放，元素的样式将回到最原始的设置状态.
+    * Example:
+        * `animation-play-state: paused;` : 页面加载时，动画不播放.
+
+* 9-9 设置动画时间外属性: animation-fill-mode
+    * Function: 在动画开始之前和结束之后发生的操作
+    * Syntax: `animation-fill-mode: none | forwards | backwords | both;`
+        * `node`: 默认, 表示动画预期进行和结束，在动画完成最后一帧时，动画会反转到初始帧;
+        * `forwards`: 表示动画在结束后继续应用最后的关键帧的位置;
+        * `backwards`: 会在向元素应用动画样式时迅速应用动画的初始帧;
+        * `both`: 元素动画同时具有forwards和backwards效果.
 
 * 9-10 制作3D旋转导航练习
