@@ -67,13 +67,14 @@ case ${answer:0:1} in
         # Chroot and Update grub
         sudo chroot /mnt /usr/sbin/update-grub
         # Umount
-        sudo umount -l /sys
-        sudo umount -l /dev
-        sudo umount -l /proc
-        sudo umount -l ${BOOT_PARTITION}
-        sudo umount -l ${ROOT_PARTITION}
+        # sudo umount -l /sys
+        # sudo umount -l /dev
+        # sudo umount -l /proc
+        # sudo umount -l ${BOOT_PARTITION}
+        # sudo umount -l ${ROOT_PARTITION}
         echo "Umount Successfully..."
         echo "Congratulation! Fix Grub !"
+        echo "Now, please reboot manually."
         ;;
     *)
         echo "You say no."
