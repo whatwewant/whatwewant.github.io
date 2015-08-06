@@ -39,6 +39,54 @@ tags: [css, css3]
         * `border-radius: 10px; /*所有角都使用半径为10px的圆角*/`
         * `border-radius: 5px 4px 3px 2px; /*四个半径分别为左上角、右上角、右下角、左下角，顺时针*/`
         * border-radius的值除了`px`单位，还能用`百分比(%)`或者`em`
+            * `border-radius: 水平 / 垂直;`
+                * `border-radius: 10px / 20px;`
+            * `border-radius: 水平1 水平2 / 垂直1 垂直2`
+
+```
+.demo {
+    border-radius: 10px 20px 30px 40px;
+}
+
+等价于
+
+.demo {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 40px;
+}
+```
+
+```
+.demo {
+    border-radius: 10px / 20px;
+}
+
+等价于
+
+.demo {
+    border-top-left-radius: 10px 20px;
+    border-top-right-radius: 10px 20px;
+    border-bottom-right-radius: 10px 20px;
+    border-bottom-left-radius: 10px 20px;
+}
+```
+
+```
+.demo {
+    border-radius: 10px 20px / 20px 10px;
+}
+
+等价于
+
+.demo {
+    border-top-left-radius: 10px 20px;
+    border-top-right-radius: 20px 10px;
+    border-bottom-right-radius: 10px 20px;
+    border-bottom-left-radius: 20px 10px;
+}
+```
 
 ```html
 ...
@@ -702,16 +750,159 @@ p::selection { background: orange;}
     * 常和`content`配合使用，使用最多的场景是`清除浮动`
 
 ```
-/* css */
+/* css 清除浮动代码 */
 .clearfix::before,
 .clearfix::after {
     content: '.';
     display: block;
     height: 0;
     visibility: hidden;
+    overflow: hidden;
 }
 .clearfix:after { clear: both;}
 .clearfix {zoom: 1;}
 ```
 
-* 7-7 切换背景练习
+```
+/* css 在::before和::after添加阴影效果 */
+.effect::before, .effect::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+
+    /* 通过position:absolute和top,bottom,left,right确定block的大小, 不用width和height, 更灵活 */
+    top: 50%;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+
+    border-radius: 100px 10px;
+}
+```
+
+### 八、变形与动画(上)
+* 8-1 变形--旋转: rotate()
+    * Function: 旋转rotate()函数通过指定的角度使元素相对原点进行旋转(二维).
+    * Syntax: `tranform: rotate( D deg);`
+        * 当 D 为`正值`时，元素相对原点中心`顺时针`旋转;
+        * 当 D 为`负值`时, 元素相对原点中心`逆时针`旋转
+    * Example:
+        * `transform: rotate(-45deg);`
+
+* 8-2 变形--扭曲: skew()
+    * Funtcion:
+        * 扭曲(`skew()`)函数能够让元素`倾斜显示`.它可以将一个对象以其中心位置绕着X轴和Y轴按照一定的角度倾斜.
+        * 这与rotate()函数的旋转不同, rotate()函数只是旋转,而不会改变元素的形状.
+        * `skew()`不会旋转，而只会改变元素的形状.
+    * Syntax:
+        * `skew(x)` 等价于 `skewX(x)`
+            * 仅使元素在水平(X轴)方向扭曲变形
+        * `skew(x, y)`:
+            * 使元素水平(X轴)和垂直(Y轴)方向同时扭曲.
+        * `skewY(y)`:
+            * 使元素在垂直(Y轴)方向扭曲变形.
+
+* 8-3 变形--缩放: scale()
+    * Funtion: 让元素根据`中心原点`对象进行`缩放`.
+    * Syntax:
+        * `scale(x)` 完全等价于 X(x)`
+        * `scale(X, Y)`
+            * 使元素水平(X轴)和垂直(Y轴)方向同时缩放
+        * `scaleY(y)`
+    * `Take Care`:
+        * scale()的取值默认的值为1;
+        * 当值`0.01~0.99`     --> `缩小`;
+        * 当值`>=1.01`时 --> `放大`;
+
+* 8-4 变形--位移: translate()
+    * Function: 
+        * 可以将元素向指定的方向移动，类似于position中的relative.
+        * 可以将元素从原来的位置移动，而不影响X、Y轴上的任何Web组件.
+    * Syntax: `值可以为正负`
+        * `translate(x)` === `translateX(x)`
+        * `translate(x, y)`
+        * `translateY(y)`
+
+* 8-5 变形--矩阵: matrix()
+
+* 8-6 变形--原点: transform-origin
+    * Function:
+        * 在没有重置transform-origin改变元素原点位置的情况下，CSS变形进行的旋转、位移、缩放，扭曲等操作都是以元素自己中心位置进行变形
+        * 但很多时候，我们可以通过transform-origin来对元素进行原点位置改变，使元素原点不在元素的中心位置，以达到需要的原点位置。
+
+* 8-7 动画: transition
+    * Function:
+        * 通过`鼠标点击(click)`、`获得焦点(:focus)`、`被点击`、`对元素任何改变`中触发，并平滑地以动画效果改变CSS的属性值.
+    * Steps:
+        * `Step 1: 在默认样式中声明元素的元素状态`
+        * `Step 2: 声明过渡元素的最终状态，比如悬浮(:hover)状态`
+        * `Step 3: 在默认样式中通过添加过渡函数，添加一些不同的样式`
+    * Categorie:
+        * `transition-property`
+        * `transition-duration`
+        * `transition-timing-function`
+        * `transition-delay`
+
+* 8-7 动画--过渡属性: transition-property
+    * Function: 
+        * transition-property用来指定过渡动画的CSS属性名称，而这个过渡属性只有具备一个中点值的属性（需要产生动画的属性）才能具备过渡效果
+    * Properties:
+        * 大部分css属性, 比如 `transition-property: background-color;`
+
+* 8-8 动画--过渡所需时间: transition-duration
+    * Function: 主要用来设置一个属性过渡到另一个属性所需要的时间。
+        * 一般设置在初始状态上
+    * Syntax:
+        * `transition-duration: 0.5s;`
+        * 单位: 秒(s), 毫秒(ms)
+
+* 8-9 动画--过渡函数: transition-timing-function
+    * Function: 
+        * 指的是过渡的"缓动函数"，即从初始状态到最终状态.
+        * 主要用来指定浏览器的过滤速度，以及过滤期间的操作进展情况.
+    * Functions(函数): `从初始状态到最终状态`
+        * `ease`: 由快到慢
+        * `ease-in`:　加速(渐显效果)
+        * `ease-out`: 减速(渐隐效果)
+        * `ease-in-out`: 先加速再减速(渐显渐隐)
+        * `linear`: 恒速
+    * Syntax: 
+        * `transition-timing-function: FUNCTION_NAME;`
+    * Example:
+        * `transition-timing-function: ease-in-out;` /*先加速再减速*/
+
+* 8-10 动画--过渡延迟时间: transition-delay
+    * Function:
+        * 与`transition-duration`相似, 但是`transition-duration`是用来设置过渡动画的`持续时间`;
+        * `transition-delay`主要用来指定`一个动画开始执行时的时间`, 也就是说当改变元素属性值后多长时间开始执行(`延迟时间`).
+    * Usage:
+        * 有时我们想改变两个或者多个css属性的transition效果时，只要把几个transition的声明串在一起，用逗号（“，”）隔开，然后各自可以有各自不同的延续时间和其时间的速率变换方式。但需要值得注意的一点：第一个时间的值为 transition-duration，第二个为transition-delay。
+    * Syntax:
+        * `transition-delay: TIME;`
+        * 合并: `transition: [PROPERTY] DURATION DELAY, [PROPERTY2] DURATION2 DELAY2;`
+    * Example:
+        * `transition: width 1s 0.5s, height 5s 3s;`
+            * 长度在延迟0.5秒后执行，持续时间1s;
+            * 高度在延迟3s后执行, 持续时间5s
+
+### 九、变形与动画(下)
+* 9-1 Keyframes介绍
+
+* 9-2 调用动画
+
+* 9-3 设置动画播放时间
+
+* 9-4 设置动画播放方式
+
+* 9-5 设置动画开始播放时间
+
+* 9-6 设置动画播放次数
+
+* 9-7 设置动画播放方向
+
+* 9-8 设置动画的播放状态
+
+* 9-9 设置动画时间外属性
+
+* 9-10 制作3D旋转导航练习
