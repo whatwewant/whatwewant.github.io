@@ -57,7 +57,7 @@ gulp.task('sass', function () {
 gulp.task('images', function () {
     gulp.src('src/images/**/*')
         .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
-        .pipe('dist/images')
+        .pipe(gulp.dest('dist/images'))
         .pipe(notify({message: 'Images Complete.'}));
 });
 
@@ -65,6 +65,11 @@ gulp.task('server', function(done) {
   http.createServer(
     st({ path: __dirname + '', index: 'index.html', cache: false })
   ).listen(8081, done);
+});
+
+gulp.task('fonts', function () {
+    gulp.src('src/fonts/**/*')
+        .pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('watch', function () {
