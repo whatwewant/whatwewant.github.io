@@ -1034,3 +1034,359 @@ div span {
         * `both`: 元素动画同时具有forwards和backwards效果.
 
 * 9-10 制作3D旋转导航练习
+
+### 十、布局样式
+* 10-1 多列布局--Columns
+    * Function: CSS Multi Column Layout Module
+    * Syntax: 
+        * `columns: <column-width> || <column-count>;`
+            * `<column-width>`: 主要用来定义多列每列的宽度;
+            * `<column-count>`: 主要用来定义多列中的列数
+
+* 10-2 多列布局--column-width
+    * Function:
+        * `column-width`的使用和CSS中的width属性一样，不过不同的是，column-width属性在定义元素列宽的时候，既可以单独使用，也可以和多列属性中的其他属性配合使用.
+    * Syntax:
+        * `column-width: auto | <length>;`
+            * `auto`: 默认，元素多列的宽度由其他属性决定，比如column-count;
+            * `length`: 正数 + 单位
+
+* 10-3 多列布局--column-count
+    * Function: 列数
+    * Syntax:
+        * `column-count: auto | <integer>;`
+            * `auto`: 默认，表示元素只有一列，其主要依靠浏览器计算自动设置;
+            * `<integer>`: 列数, 正整数
+
+* 10-4 列间距--column-gap
+    * Syntax:
+        * `column-gap: normal | <length>;`
+
+* 10-5 列表边框--column-rule
+    * Function:
+        * 主要用来定义列与列之间的`边框宽度`、`边框样式`和`边框颜色`.但column-rule是不占用任何空间位置，在列与列之间改变其宽度不会改变任何列的位置.
+    * Syntax:
+        * `column-rule: <column-rule-width> | <column-rule-style> | <column-rule-color>;`
+            * `column-width` 类似 `border-width`, 大于等于零的数，也可以是关键字: medium、thick、thin.
+            * `column-rule-style` 类似 `border-style`, 默认值为none, 其他属性值: hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+            * `column-rule-color` 类似 `border-color`, 可以所有颜色，也可以是透明色(transparent);
+
+* 10-6 跨列设置--column-span
+    * Syntax:
+        * `column-span: none | all;`
+            * none : 不跨列;
+            * all : 夸所有列;
+
+* 10-7 盒子模型
+    * 在盒模型中主要包括width、height、border、background、padding和margin这些属性
+    * Syntax:
+        * `box-sizing: content-box | border-box | inherit;`
+            * 定义盒模型的尺寸解析方式
+            * `content-box`: 默认值,也就是元素的宽度(width)和高度(height)等于元素边框(border)加上元素内边距(padding)加上元素内容快读或高度(content width/height).
+            * `border-box`: 重新定义CSS2.1中盒模型组成的模式, 也就是说元素的宽度或高度等于元素内容的宽度或高度。
+
+* 10-8 伸缩布局(一): `Flexbox Box`
+    * 第一，屏幕和浏览器窗口大小发生改变也可以灵活调整布局；
+    * 第二，可以指定伸缩项目沿着主轴或侧轴按比例分配额外空间（伸缩容器额外空间），从而调整伸缩项目的大小；
+    * 第三, 可以指定伸缩项目沿着主轴或侧轴将伸缩容器额外空间，分配到伸缩项目之前、之后或之间；
+    * 第四，可以指定如何将垂直于元素布局轴的额外空间分布到该元素的周围；
+    * 第五，可以控制元素在页面上的布局方向；
+    * 第六，可以按照不同于文档对象模型（DOM）所指定排序方式对屏幕上的元素重新排序。也就是说可以在浏览器渲染中不按照文档流先后顺序重排伸缩项目顺序。
+    * Step:
+        * 1 创建一个flex容器: `display: flex;`
+            * `.flexcontainer {display: -webkit-flex; display: flex;}`
+        * 2 Flex 项目显示
+            * Flex项目是Flex容器的子元素。他们沿着主要轴和横轴定位。默认的是沿着水平轴排列一行。你可以通过flex-direction来改变主轴方向修改为column，其默认值是row。
+        * 3 Flex项目列显示
+            * `.flexcontainer {display: -webkit-flex; display: flex; -wekit-flex-direction: column; flex-direction: column;}`
+        * 4 Flex项目移动到顶部
+            * 主要取决于主轴的方向.如果是垂直方向通过`align-items`设置;如果是水平方向通过`justify-content`设置.
+            * `.flexcontainer {-webkit-flex-direction: colun; flex-direction: column; -webkit-justify-content: flex-start; justify-content: flex-start;}`
+            * `.flexcontainer {display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-align-items: flex-start; align-items: flex-start;}`
+
+* 10-9 伸缩布局(二)
+    * 5 Flex项目移到左边
+        * flex项目称动到左边或右边也取决于主轴的方向。如果flex-direction设置为row，设置justify-content控制方向；如果设置为column，设置align-items控制方向。
+        * `.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-justify-content: flex-start; justify-content: flex-start; }`
+        * `.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; }`
+    * 6 Flex项目移动右边
+        * `.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-justify-content: flex-end; justify-content: flex-end; }`
+        * `.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-end; align-items: flex-end; }`
+    * 7 水平垂直居中
+        * 在Flexbox容器中制作水平垂直居中是微不足道的。设置justify-content或者align-items为center。另外根据主轴的方向设置flex-direction为row或column。
+        * `.flexcontainer {display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;}`
+        * `.flexcontainer {display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column;}`
+    * 8 Flex项目实现自动伸缩
+        * 可以自定义一个flex项目，如何相对于flex容器实现自动的伸缩。需要给每个flex项目设置flex属性设置需要伸缩的值.
+        * `.bigitem {-webkit-flex: 200; flex: 200;}`
+        * `.smallitem {-webkit-flex: 100; flex: 100;}`
+
+### 十一、Media Queries 与 Responsive 设计
+* 11-1 Media Queries -- 媒体类型(一)
+    * 一、媒体类型
+        * 媒体类型(Media Type)在CSS2中是一个常见的属性，也是一个非常有用的属性，可以通过媒体类型对不同的设备指定不同的样式.
+        * 常见的类型 `all(全部)`、`screen(屏幕)`、`print(页面打印或打印预览模式)`
+
+* 11-2 Media Queries -- 媒体类型(二)
+    * 媒体类型的引用方法:
+        * `link标签`
+        * `@import`
+        * CSS3新增的`@media`
+    * `link`
+        * Function: link方法引入媒体类型其实是在<link>标签引用样式的时候，通过link标签中的`media`属性来指定不同的媒体类型。
+        * Example:
+            * <link rel="stylesheet" type="text/css" href="style.css" `media="screen"` />
+            * <link rel="stylesheet" type="text/css" href="style.css" `media="print"` />
+    * `@import`
+        * Function:
+            * @import 可以引用样式文件，通用也可以引用媒体类型.
+            * @import引入媒体有两种方式.一是在样式中通过@import调用另一个样式；另一种是在<head></head>标签中的<style></style>中引入.
+        * Example:
+            * `@importurl(reset.css) screen;`
+            * `@importurl(print.css) print;`
+            * `<head><style type="text/css">@importurl(style.css) all;</style></head>`
+    * `@media`
+        * Function:
+            * @media 是CSS3中新引进的一个特性，被称为媒体查询.
+            * 在页面中也可以通过这个属性来引入媒体类型.
+            * @media引入媒体类型和@import有点类似.
+            
+```
+/* (1) 在样式文件中引用媒体类型 */
+@media screen {
+    选择器{....}
+}
+
+/* (2) 使用@media引入媒体类型的方式*/
+<head>
+    <style type="text/css">
+        @media screen {
+            选择器 {
+                ....
+            }
+        }
+    </style>
+</head>
+```
+
+* 11-3 Media Queries 使用方法
+    * Syntax:
+        * `@media 媒体类型 and (媒体特性) [ and (媒体特性) ...] { 样式 }`
+            * 媒体类型: 也称设备类型, screen, all, print
+            * 媒体特性: max-width: 480px;
+                * 媒体特性是通过`min/max`来表示大于等于或小于作为逻辑判断，而不是使用<和>符号来判断.
+
+```
+/* 1. 最大宽度 max-width */
+/* 意思是指媒体类型小于等于指定的宽度时，样式生效 */
+/* 案例: 当屏幕小于或等于480px时, 页面中的广告区块(.ads)都被隐藏. */
+@media screen and (max-width: 480px) {
+    .ads {
+        display: none;
+    }
+}
+```
+
+```
+/* 2.最小宽度: min-width */
+/* 指媒体类型大于等于指定宽度时，样式生效. */
+/* 案例: 当屏幕大于等于900px时，容器".wrapper"的宽度为980px. */
+@media screen and (min-width: 900px) {
+    .wrapper {
+        width: 980px;
+    }
+}
+```
+
+```
+/* 3.多个媒体特性使用 */
+/* and 关键字连接多个媒体特性 */
+/* 案例: 当屏幕600px-900px之间时, body的背景色渲染为"#f5f5f5". */
+@media screen and (min-width: 600px) and
+ (max-width: 900px) {
+    body {
+        background-color: #f5f5f5;
+    }
+ }
+```
+
+```
+/* 4.设备屏幕的输出宽度Device Width */
+/* */
+<link rel="stylesheet" media="screen and (max-width: 480px)" href="iphone.css" />
+```
+
+```
+/* 5.not关键词 */
+/* 使用关键字noy是用来排除某种指定的媒体类型. */
+@media not print and (max-width: 1200px) { 样式 }
+```
+
+```
+/* 6.only关键词 */
+/* only用来指定某种特定的媒体类型, 可以用来排除不支持媒体查询的浏览器. 其实only很多时候是用来对那些不支持Media Query但却支持Media Type的设备隐藏样式表的.其主要有: 支持媒体特性的设备，正常调用样式，此时就当only不存在; 不支持媒体特性但支持媒体类型的设备，这样就会不读样式，因为其先会读取only而不是screen; 另外不支持Media Query的浏览器, 不论是否支持only, 样式都不会被采用. */
+<link rel="stylesheet" media="only screen and (max-device-width: 240px)" href="android240.css" />
+
+/* 在Media Query中如果没有明确指定Media Type, 那么其默认为all. */
+<link rel="stylesheet" media="(min-width: 701px) and (max-width: 900px)" href="mediu.css" />
+
+/* 另外在样式中，还可以使用多条语句来将同一个样式应用于不同的媒体类型和媒体特性 */
+<link rel="stylesheet" type="text/css" href="style.css" media="handheld and (max-width: 480px), screen and (min-width: 960px)"
+```
+
+* 11-4 Responsive 设计(一)
+    * 响应式设计:(3个条件)
+        * 网站必须建立灵活的网格基础;
+        * 引用到网站的图片必须是可伸缩的;
+        * 不同的显示分隔，需要在Media Queries上写不同样式;
+    * Responsive 术语:
+        * 1 `流体网格`: 将每个网格各自使用百分比来控制网格大学.
+        * 2 `弹性图片`: 不给图片设置固定尺寸，而是根据`流体网格`进行缩放，用于适应各种网格的尺寸。
+            * `img {max-width: 100%;}`
+        * 3 `媒体查询`: Responsive设计离开了Media Queries就失去了意义.
+
+```
+/* 为每个断点提供不同的图片，这是比较头疼的，因为Media Queries并不能改变图片的"src"的属性值.*/
+/* 解决方法: 使用background-image给元素使用背景图片，显示/隐藏父元素，给父元素使用不同的图片，然后通过Media Queries来控制这些图片显示或隐藏.*/
+<img src="image.jpg" data-src-600px="image-600px.jpg" data-src-800px="image-800px.jpg" alt="" />
+
+@media (min-device-width: 600px) {
+    img[data-src-600px] {
+        content: attr(data-src-600px, url);
+    }
+}
+@media (min-device-width: 800px) {
+    img[data-src-800px] {
+        content: attr(data-src-800px, url);
+    }
+}
+                
+```
+
+* 11-5 Responsive 设计(二)
+    * 4 `屏幕分辨率`
+    * 5 `主要断点`
+
+* 11-6 Responsive 布局技巧
+    * 在Responsive布局中，可以毫无保留的丢弃:
+        * 1 少用无关要紧的div
+        * 2 不要使用内联元素(inline)
+        * 3 尽量少用js或flash
+        * 4 丢弃没用的绝对定位和浮动样式
+        * 5 摒弃任何冗余结构和不要使用100%设置
+    * 对Responsive布局有帮助:
+        * 1 使用HTML5 Doctype和相关指南
+        * 2 重置好你的样式(reset.css)
+        * 3 一个简单的有意义的核心布局;
+        * 4 给重要的网页元素使用简单的技巧，比如导航次啊当之类元素.
+
+* 11-7 Responsive 设计 -- meta标签
+    * Function: 
+        * 在Responsive设计中如果没有meta标签，你就是蹩脚，响应式设计就是空谈.
+        * `meta`标签被称为`可视区域meta标签`.
+    * Syntax:
+        * `<meta name="viewport" content="" />`
+            * content属性值，用来处理可视区域:
+                * width: 可视区域高度，可以是数字或关键字device-width
+                * height: ... 数字或device-height
+                * initial-scale: 页面首次被显示时可视区域的缩放级别，取值为1.0时，将使页面按实际显示，无任何缩放.
+                * minamum-scale: 可视区域的最小缩放级别，表示用户可以将页面缩小的程度，取值为1.0时，禁止用户缩小至实际尺寸以下.
+                * maximum-scale
+                * user-scaleable: 指定用户是否可以对页面进行缩放，设置为yes表示允许缩放, no为禁止缩放.
+
+```
+在实际项目中，为了让Responsive设计在智能设备中能显示正常，也就是浏览Web页面适应屏幕的大小，显示在屏幕上，可以通过这个可视区域的meta标签进行重置，告诉他使用设备的宽度为视图的宽度，也就是说禁止其默认的自适应页面的效果
+<meta name="viewport" content="width=device-with,intial-scale=1.0" />
+```
+
+* 11-8 Responsive 设计 -- 不同设备的分辨率设置
+
+```
+/* 1.1024显屏 */
+@media screen and (max-width: 1024px) {
+    /* style code */
+}
+```
+
+```
+/* 2.800px显屏 */
+@media screen and (max-width: 800px) {
+    /* style code */
+}
+```
+
+```
+/* 3.640px显屏 */
+@media screen and (max-width: 640px) {
+    /* style code */
+}
+```
+
+```
+/* 4.iPad 横屏显屏 */
+@media screen and (max-device-width: 1024px) and (orientation: landscape) {
+    /* style code */
+}
+```
+
+```
+/* 5.iPad 竖屏 */
+@media screen and (max-device-widthL 768px) and (orientation: portrait) {
+    /* style code */
+}
+```
+
+```
+/* 6.iPhone 和 SmartPhones */
+@media screen and (min-device-width: 320px) and (min-device-width: 480px) {
+    /* style code */
+}
+```
+
+### 十二、用户界面与其他重要属性
+* 12-1 自由缩放属性resize
+    * Function: Css3新特性, resize允许用户通过拖地的方式来修改元素的尺寸来改变元素大小.
+    * Syntax:
+        * `resize: none | both | horizontal | vertical | inherit;`
+            * none: 用户不能拖动元素修改尺寸.
+            * both: 可以拖动元素修改元素的宽度和高度
+            * horizontal: 只能改变宽度
+            * vertical
+
+```css
+textarea {
+    -webkit-resize: horizontal;
+    -moz-resize: horizontal;
+    -o-resize: horizontal;
+    -ms-resize: horizontal;
+    resize: horizontal;
+}
+```
+
+* 12-2 CSS3外轮廓属性
+    * `外轮廓outline`在页面中呈现的效果和`边框border`呈现的效果机器相似，但和元素边框不同的是，外轮廓不沾永网页布局空间,不一定是举行，外轮廓属于动态样式，只有元素货渠道焦点或被激活时呈现.
+    * Syntax:
+        * `outline: [outline-color] || [outline-style] || [outline-width] || [outline-offset] || inherit;`
+        * outline属性和border类似
+        * outline-offset: 定义轮廓边框的偏移位置的数值，此值可以取负数值。当此参数的值为正数值，表示轮廓边框向外偏离多少个像素；当此参数的值为负数值，表示轮廓边框向内偏移多少个像素。
+
+* 12-3 CSS 生成内容: `content`
+    * Function:
+        * `content`通过结合`::before`和`::after`来实现
+        * 对input和img不起作用
+    * Syntax:
+        * `content: none;` : 不生成任何内容
+        * `content: attr(...);`: 插入标签属性值
+        * `content: URL;`: 使用指定的绝对或相对地址插入一个外部资源(图像、声频、视频或浏览器支持的任何资源)
+        * `content: STRING;`: 插入字符串
+
+```
+/* 这里的title是该标签的属性值，不是title标签*/
+/* attr(data-*)这样用法比较好 */
+a::after {
+    content: attr(title);
+    color: #f00;
+}
+```
+
+* 12-4 制作3D旋转视频
