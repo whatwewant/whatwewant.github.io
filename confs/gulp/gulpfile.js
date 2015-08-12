@@ -78,6 +78,7 @@ gulp.task('watch', function () {
     gulp.watch('src/**/*.less', ['less']);
     gulp.watch('src/**/*.scss', ['sass']);
     gulp.watch('src/images/*', ['images']);
+    gulp.watch('src/fonts/*', ['fonts']);
 
     // listen dist/**
     livereload.listen();
