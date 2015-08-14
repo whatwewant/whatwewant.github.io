@@ -313,6 +313,8 @@ download_log openssh-client
 download_log virtualbox
 # VBoxGuestAdditions
 # 	http://download.virtualbox.org/virtualbox
+# add usb support
+sudo usermod -a -G vboxusers $USER
 
 # openjdk
 download_log openjdk-7-jdk
