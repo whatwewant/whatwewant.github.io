@@ -1,5 +1,6 @@
 /* 
  * gulp
+ * 建议使用Google Chrome, 并安装gulp-livereload扩展
  * */
 var gulp = require('gulp');
 var gutil = require('gulp-util'); // 字体颜色
@@ -17,6 +18,12 @@ var sourcemaps = require('gulp-sourcemaps'); // js 空白问题帮助
 var st = require('st');
 var http = require('http');
 // var watchPath = require('gulp-watch-path'); // 监测改动
+
+// config parameters
+var config = {
+    server: '127.0.0.1',
+    server_port: 8081
+};
 
 gulp.task('uglify', function () {
     gulp.src('src/js/**/*.js')
@@ -70,7 +77,7 @@ gulp.task('images', function () {
 gulp.task('server', function(done) {
   http.createServer(
     st({ path: __dirname + '', index: 'index.html', cache: false })
-  ).listen(8081, done);
+  ).listen(config.server_port, done);
 });
 
 gulp.task('fonts', function () {
@@ -90,6 +97,13 @@ gulp.task('watch', function () {
     livereload.listen();
     gulp.watch(['dist/**']).on('change', livereload.changed);
     gulp.watch(['*.html']).on('change', livereload.changed);
+
+    // tips
+    console.log("");
+    console.log("*******************************");
+    console.log("* Visit http://" + config.server + ":" + config.server_port+ " *");
+    console.log("*******************************");
+    console.log("");
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['server', 'watch']);
