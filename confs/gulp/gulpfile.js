@@ -22,6 +22,7 @@ gulp.task('uglify', function () {
     gulp.src('src/js/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
+        // final product
         // .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write())
@@ -32,6 +33,8 @@ gulp.task('uglify', function () {
 gulp.task('minifyCss', function () {
     gulp.src('src/css/**/*.css')
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        // final product
+        // .pipe(concat('main.css'))
         .pipe(minifyCss())
         .pipe(gulp.dest('dist/css'))
         .pipe(notify({message: 'MinifyCss Complete.'}));
@@ -50,7 +53,8 @@ gulp.task('sass', function () {
                 console.error('Error!', err.message);
             })
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('src/css'))
+        // .pipe(gulp.dest('dist/css'))
         .pipe(notify({message: 'Sass Complete.'}));
 });
 
