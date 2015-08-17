@@ -53,7 +53,9 @@ gulp.task('sass', function () {
                 console.error('Error!', err.message);
             })
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        // compress css when you enable the follow line
         .pipe(gulp.dest('src/css'))
+        // if you don't want to compress css, enable it and disable last line
         // .pipe(gulp.dest('dist/css'))
         .pipe(notify({message: 'Sass Complete.'}));
 });
