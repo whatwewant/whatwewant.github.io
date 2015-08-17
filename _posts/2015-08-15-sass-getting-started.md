@@ -414,3 +414,545 @@ p {
             * @at-root == @at-root (with: rule)
         * `media`: 表示media
         * `support`
+
+```
+// sass style
+// ****************************************
+// 跳出父级元素嵌套
+@media print {
+    .parent1 {
+        color: #f00;
+        @at-root .child1 {
+            width: 200px;
+        }
+    }
+}
+
+// 跳出media嵌套，父级有效
+@media print {
+    .parent2 {
+        color: #f00;
+
+        @at-root (widthout: media) {
+            .child2 {
+                width: 200px;
+            }
+        }
+    }
+}
+
+// 跳出media和父级
+@media print {
+    .parent3 {
+        color: #f00;
+
+        @at-root (without: all) {
+            .child3 {
+                width: 200px;
+            }
+        }
+    }
+}
+
+
+// css style
+// *******************************
+@meida print {
+    .parent1 {
+        color: #f00;
+    }
+    .child1 {
+        width: 200px;
+    }
+}
+
+@media print {
+    .parent2 {
+        color: #f00;
+    }
+}
+
+.parent2 .child2 {
+    width: 200px;
+}
+
+@media print {
+    .parent3 {
+        color: #f00;
+    }
+}
+
+.child3 {
+    width: 200px;
+}
+```
+
+* `@at-root` 与 `&`配合使用
+
+```
+// sass style
+// ******************************
+.child {
+    @at-root .parent & {
+        color: #f00;
+    }
+}
+
+// css style
+// ******************************
+.parent .child {
+    color: #f00;
+}
+```
+
+* 应用于`@keyframes`
+
+```
+// sass style
+// ******************************
+.demo {
+    ...
+    animation: motion 3s infinite;
+
+    @at-root {
+        @keyframes motion {
+            ...
+        }
+    }
+}
+
+// css style
+// ********************************
+.demo {
+    ...
+    animation: motion 3s infinite;
+}
+
+@keyframes motion {
+    ...
+}
+```
+
+### 七、`混合(mixin)`
+* 关于`@mixin`与`@include`
+    * sass中使用`@mixin`声明混合，可以传递参数，参数以`$`符号开始，多个参数以逗号分开，也可以给参数设置默认值.
+    * 声明`@mixin`通过`@include`来调用
+* `无参数mixin`
+
+```
+// sass style
+// ****************************
+@mixin center-block {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.demo {
+    @include center-block;
+}
+
+// css style
+// ****************************
+.demo {
+    margin-left: auto;
+    margin-right: auto;
+}
+```
+
+* `有参数mixin`
+
+```
+// sass style
+// ****************************
+@mixin opacity($opacity:50) {
+    opacity: $opacity / 100;
+    filter: alpha(opacity=$opacity);
+}
+
+// sass style
+// ****************************
+.opacity {
+    @include opacity; // 参数使用默认值
+}
+.opacity-80 {
+    @include opacity(80); // 传递参数
+}
+```
+
+* `多个参数mixin`
+    * 调用时可直接传入值。如`@include`传入参数的个数小于`@mixin`定义参数的个数，则按照顺序表示，后面不足的使用默认值，如没有默认值。则报错。
+    * 除此之外还可以选择性的传入参数，使用参数名与值同时传入.
+
+```
+// sass style
+// *******************************
+@mixin horizontal-line($border: 1px dashed #ccc, $padding: 10px) {
+    border-bottom: $border;
+    padding-top: $padding;
+    padding-bottom: $padding;
+}
+.imgtext-h li {
+    @include horizontal-line(1px solid #ccc);
+}
+.imgtext-h--product li {
+    @include horizontal-line($padding: 15px);
+}
+
+// css style
+// *******************************
+.imgtext-h li {
+    border-bottom: 1px solid #cccccc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.imgtext-h--product li {
+    border-bottom: 1px dashed #cccccc;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+```
+
+* `多组值参数mixin`
+    * 如果一个参数可以有多组值。如box-shadow、transition等，那么参数则需要在变量后加三个点表示, 如`$variables...`
+
+```
+// sass style
+// ********************************
+// box-shadow 可以有多组值，所以在变量参数后面添加...
+@mix box-shadow ($shadow...) {
+    -webkit-box-shadow:$shadow;
+    box-shadow: $shadow;
+}
+.box {
+    border: 1px solid #ccc;
+    @include box-shadow(0 2px 2px rgba(0, 0, 0, 3), 0 3px 3px rgba(0, 0, 0, .3), 0 4px 4px rgba(0, 0, 0, .3));
+}
+
+// css style
+// *********************************
+.box {
+    border: 1px solid #ccc;
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.3),0 3px 3px rgba(0,0,0,.3)0 4px 4px rgba(0,0,0,.3);
+    box-shadow: 0 2px 2px rgba(0,0,0,.3),0 3px 3px rgba(0,0,0,.3)0 4px 4px rgba(0,0,0,.3);
+}
+```
+
+* `@content`
+    * 可以用来解决css3的@media等带来的问题。
+    * 它可以使用`@mixin`接收一整块样式, 接受的样式从`@content`开始.
+
+```
+// sass style
+// ********************************
+@mixin max-screen($res) {
+    @media only screen and (max-width: $res) {
+        @content;
+    }
+}
+
+@include max-screen(480px) {
+    body {
+        color: red;
+    }
+}
+
+// css style
+// **********************************
+@media only screen and (max-width: 480px) {
+    body { color: red; }
+}
+```
+
+### 八、继承
+* 定义:
+    * sass中，选择器继承可以让选择器继承另一个选择器的所有样式, 并联合声明.
+    * 使用选择器的继承，要使用关键字`@extend`，后面紧跟需要继承的选择器.
+
+```
+// sass style
+// **********************************
+h1 {
+    border: 4px solid #ff9aa9;
+}
+.speaker {
+    @extend h1;
+    border-width: 2px;
+}
+
+// css style
+// **********************************
+h1,.speaker {
+    border: 4px solid #ff9aa9;
+}
+.speaker {
+    border-width: 2px;
+}
+```
+
+#### 占位选择器`%`
+* 定义:
+    * 优势: 如果不调用则不会有任何多余的css文件,避免了以前在一些基础的文件中定义了很多基础的样式，然后在实际应用中不管是否使用了`@extend`去继承相应的样式，都会解析出来所有的样式.
+    * 占位选择器以`%`标识定义, 通过`@extend`调用.
+
+```
+// sass style
+// **************************
+%ir {
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0px;
+}
+%clearfix {
+    @if $lte 7 {
+        *zoom: 1;
+    }
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+        font: 0/0 a;
+    }
+    &:after {
+        clear: both;
+    }
+}
+#header {
+    h1 {
+        @extend %ir;
+        width: 300px;
+    }
+}
+.ir {
+    @extend %ir;
+}
+
+// css style
+// ******************
+#header h1,
+.ir {
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+.header h1 {
+    width: 300px;
+}
+
+// ****************
+// 
+  如上代码，定义了两个占位选择器%ir和%clearfix, 其中%clearfix并没有调用，所以解析出来的css样式也就没有clearfix部分.
+  占位选择器的出现，使得css样式跟腱简练可控，没有多余.
+  PS: 在@media中暂时不能使用@extend @media外的代码片段, 也就是站为选择器必须定义在@media内部.
+```
+
+### 九、`函数`
+* 定义:
+    * sass定义了很多函数可供使用，当然也可以自定义函数.
+    * 以`@function`开始, [官方](http://sass-lang.com/documentation/Sass/Script/Functions.html)
+    * 实际项目组，我们使用最多的是颜色函数，二颜色函数中又以`lignten`(减淡)和`darken`(加深)最为常用.
+    * `lighten($color, $amount)` 和 `darken($color, $amount)`
+        * $color: 颜色值
+        * $amount: 百分比
+
+```
+// sass style
+// ************************
+$baseFontSize:  10px !default;
+$gray:          #ccc !default;
+
+// pixels to rems
+@funtion px2Rem($px) {
+    @return $px / $baseFontSIze * 1rem;
+}
+
+body {
+    font-size: $baseFontSIze;
+    color: lighten($gray, 10%);
+}
+.test {
+    font-size: px2Rem(16px);
+    color: darken($gray, 10%);
+}
+
+// css style
+// ******************************
+body {
+    font-size: 10px;
+    color: #E6E6E6;
+}
+.test {
+    font-size: 1.6rem;
+    color: #B3B3B3;
+}
+```
+
+### 十、`运算`
+* 定义:
+    * sass具有运算的特性，可以对数值型的Value(数字、颜色、变量等)进行加减乘除四则运算.
+    * 注意: `运算符前后请留一个空格，否则报错.`
+
+```
+$baseFontSize:      14px !default;
+$baseLineHeight:    1.5 !default;
+$baseGap:           $baseFontSize * $baseLineHeight !default;
+$halfBaseGap:       $baseGap / 2 !default;
+$smallFontSize:     $baseFontSize - 2px !default;
+
+// grid
+$_columns:          12 !default;    // Total number of columns
+$_column-width:     60px !default;  // Width of a single column
+$_gutter:           20px !default;  // Width of the gutter
+$_gridsystem-width: $_column * ($_column-width + $_gutter);
+```
+
+### 十一、`条件判断及循环`
+
+#### `@if判断`
+* `@if`可以一个条件单独使用，也可以和`@else`结合多条件使用
+
+```
+// sass style
+// ************************************
+$lte7: true;
+$type: monster;
+.ib {
+    display: inline-block;
+    @if $lte7 {
+        *display: inline;
+        *zoom: 1;
+    }
+}
+p {
+    @if $type == ocean {
+        color: blue;
+    } @else if $type == matador {
+        color: red;
+    } @else if $type == monster {
+        color: green;
+    } @else {
+        color: black;
+    }
+}
+
+// css style
+// ***********************
+.ib {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+p {
+    color: green;
+}
+```
+
+#### `三目判断`
+* Syntax:
+    * `if ($condition, $if_true_value, $if_false_value)`
+        * 如果$condition为true, 则值为$if_true_value; 否则为$if_false_value
+
+```
+if(true, 1px, 2px) => 1px
+if(false, 1px, 2px) => 2px
+```
+
+#### `for循环`
+* 两种Syntax:
+    * `@for $var from <start> through <end> { ... }`
+    * `@for $var from <start> to <end> { ... }`
+        * $var为变量
+        * start为起始值，end为解数值
+        * 注意: `throught包含end这个数，即<=; to不包含end, 即<`
+
+```
+// sass style
+// *************************
+@for $i from 1 through 3 {
+    .item-#{$i} { width: 2em * $i; }
+}
+
+// css style
+// *************************
+.item-1 {
+    width: 2em;
+}
+.item-2 {
+    width: 4em;
+}
+.item-3 {
+    width: 6em;
+}
+```
+
+#### `@each循环`
+* Syntax:
+    * `@each $var in <list or map> { ... }`
+
+* 单个字段list数据循环
+
+```
+$animal-list: puma, sea-slug;
+$each $animal in $animal-list {
+    .#{$animal}-icon {
+        background-image: url('/images/#{animal}.png');
+    }
+}
+
+// css style
+// **************************
+.puma-icon {
+    background-image: url('/images/puma.png');
+}
+.sea-slug-icon {
+    background-image: url('/images/sea-slug.png');
+}
+```
+
+* 多个字段list数据循环
+
+```
+// sass style
+// *********************************
+$animal-data: (puma, black, default), (sea-slug, blue, pointer);
+@each $animal, $color, $cursor in $animal-data {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        border: 2px solid $color;
+        cursor: $cursor;
+    }
+}
+
+// css style
+// *********************************
+.puma-icon {
+    background-image: url('/images/puma.png');
+    border: 2px solid black;
+    cursor: default;
+}
+.sea-slug-icon {
+    background-image: url('/images/sea-slug.png');
+    border: 2px solid blue;
+    cursor: pointer;
+}
+```
+
+* 多个字段map数据循环
+
+```
+// sass style
+// ********************************
+$headings: (h1: 2em, h2:1.5em, h3: 1.2em);
+@each $header, $size in $headings {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+// css style
+// ********************************
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+```
