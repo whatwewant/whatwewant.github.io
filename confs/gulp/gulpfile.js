@@ -22,7 +22,8 @@ var http = require('http');
 // config parameters
 var config = {
     server: '127.0.0.1',
-    server_port: 8081
+    server_ports: [8000, 8080, 8088, 8888, 
+                    4000, 3000, 12345, 2345, 9000]
 };
 
 gulp.task('uglify', function () {
@@ -75,9 +76,26 @@ gulp.task('images', function () {
 });
 
 gulp.task('server', function(done) {
-  http.createServer(
-    st({ path: __dirname + '', index: 'index.html', cache: false })
-  ).listen(config.server_port, done);
+    var port = null;
+    for (var i=0; i<config.server_ports.length; ++i) {
+        port = config.server_ports[i];
+        try {
+            http.createServer(
+                st({ path: __dirname + '', index: 'index.html', cache: false })
+            ).listen(port, done);
+
+            break;
+        } catch (ex) {
+            console.error("Server Error", ex.message);
+        }
+    }
+
+    // tips
+    console.log("");
+    console.log("*******************************");
+    console.log("* Visit http://" + config.server + ":" + port+ " *");
+    console.log("*******************************");
+    console.log("");
 });
 
 gulp.task('fonts', function () {
@@ -98,12 +116,6 @@ gulp.task('watch', function () {
     gulp.watch(['dist/**']).on('change', livereload.changed);
     gulp.watch(['*.html']).on('change', livereload.changed);
 
-    // tips
-    console.log("");
-    console.log("*******************************");
-    console.log("* Visit http://" + config.server + ":" + config.server_port+ " *");
-    console.log("*******************************");
-    console.log("");
 });
 
 gulp.task('default', ['server', 'watch']);
