@@ -113,8 +113,8 @@ gulp.task('react', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('src/**/*.js', ['uglify']);
-    gulp.watch('src/**/*.jsx', ['react']);
+    gulp.watch('src/js/*.js', ['uglify']);
+    gulp.watch('src/jsx/*.js', ['react']);
     gulp.watch('src/**/*.css', ['minifyCss']);
     gulp.watch('src/**/*.less', ['less']);
     gulp.watch('src/**/*.scss', ['sass']);
