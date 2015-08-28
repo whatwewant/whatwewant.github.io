@@ -18,6 +18,7 @@ var sourcemaps = require('gulp-sourcemaps'); // js 空白问题帮助
 var st = require('st');
 var http = require('http');
 // var watchPath = require('gulp-watch-path'); // 监测改动
+var react = require('gulp-react')
 
 // config parameters
 var config = {
@@ -103,8 +104,17 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest('dist/fonts'));
 });
 
+gulp.task('react', function () {
+    return gulp.src('src/jsx/**/*')
+        .pipe(sourcemaps.init())
+        .pipe(react())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('src/js'));
+});
+
 gulp.task('watch', function () {
     gulp.watch('src/**/*.js', ['uglify']);
+    gulp.watch('src/**/*.jsx', ['react']);
     gulp.watch('src/**/*.css', ['minifyCss']);
     gulp.watch('src/**/*.less', ['less']);
     gulp.watch('src/**/*.scss', ['sass']);
