@@ -35,8 +35,8 @@ gulp.task('uglify', function () {
         // .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/js'))
-        .pipe(notify({message: 'Uglify Js Complete.'}));
+        .pipe(gulp.dest('dist/js'));
+        // .pipe(notify({message: 'Uglify Js Complete.'}));
 });
 
 gulp.task('minifyCss', function () {
@@ -105,7 +105,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('react', function () {
-    return gulp.src('src/jsx/**/*')
+    return gulp.src('src/jsx/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(react())
         .pipe(sourcemaps.write('.'))
@@ -113,8 +113,8 @@ gulp.task('react', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('src/js/*.js', ['uglify']);
-    gulp.watch('src/jsx/*.js', ['react']);
+    gulp.watch('src/js/**/*.js', ['uglify']);
+    gulp.watch('src/jsx/**/*.js', ['react']);
     gulp.watch('src/**/*.css', ['minifyCss']);
     gulp.watch('src/**/*.less', ['less']);
     gulp.watch('src/**/*.scss', ['sass']);
