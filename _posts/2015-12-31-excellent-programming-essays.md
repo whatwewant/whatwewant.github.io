@@ -9,6 +9,12 @@ tags: [collections]
 
 {% include JB/setup %}
 
+### 9 月
+* 2015-09-05
+    * [How-to setup Webpack on an ES6 React Application with SASS?](http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html)
+    * [Python Enhancement Proposals](https://www.python.org/dev/peps/)
+        * 强烈建议阅读，包含原理与事件
+
 ### 8 月
 * 2015-08-31
     * [Online Tools](http://tool.lu/)
