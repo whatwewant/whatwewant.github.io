@@ -332,15 +332,69 @@ download_log tree
 download_log unrar
 
 # input method
-download_log fcitx fcitx-googlepinyin
+download_log fcitx 
+# download_log fcitx-googlepinyin
 # fonts
 download_log ttf-wqy-zenhei
 
 # For android studio 
 download_log lib32z1
 
-# System Tools
-download_log fping hping3 htop nmap
+####################################
+# System Tools Begin
+####################################
+download_log fping hping3 htop nmap 
+
+# like GUI for `traceroute`
+download_log mtr 
+
+# more info than `top` and `free`
+download_log glances
+
+# 查找正在使用带宽的套接字连接或进程
+download_log iftop # or nethogs
+
+# `ab` 可以简单粗暴的检测Web服务器的性能.更复杂的负载测试,使用`siege`
+# 测试www.baidu.com的/的请求接收能力
+# ab -c 1000 -n 1000 http://www.baidu.com/
+
+# 更复杂的网络调试: wireshark / tshark / ngrep
+
+#   了解 strace 和 ltrace: 当你想知道程序运行失败、挂起甚至奔溃的原因
+# 或者你想对性能有个总体的了解。
+# 注意 profile 参数(-c)和附加到一个运行的进程参数(-p).
+
+# ldd 用来检查共享库
+# 如: ldd `which nc`
+
+# 知道如何用 gdb 来调试运行程序并获取堆栈轨迹.
+
+# 学会使用/proc
+# 它在调试正在出现的问题的时候会效果惊人
+# 比如: /proc/cpuinfo, /proc/meminfo, /proc/cmdline
+#       /proc/xxx/cwd, /proc/xxx/exe, /proc/xx/fd/, /proc/xxx/smaps
+
+# 如果想调试已经发生的问题，sar很管用.
+# sar 会列出 CPU、内存、网络等历史统计数据.
+
+# 更深层的系统分析以及性能分析, 看stap(SystemTap), perf 以及 sysdig
+
+# 查看当前使用的系统, 使用 uname 或者 uname -a (Unix/Kernel信息)
+#  或者 lsb_release -a (Linux 发行版信息)
+
+# dmesg: 硬件或驱动问题
+
+# More quickly than `du -sh`
+download_log ncdu
+
+# `lsblk` to show block(mount) info
+
+# Web
+download_log httpie # Command: http/https
+
+####################################
+# System Tools End
+####################################
 
 # Install Goagent
 # https://wiki.archlinux.org/index.php/GoAgent_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
