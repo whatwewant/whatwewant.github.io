@@ -10,6 +10,9 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 9 月
+* 2015-0907
+    * [这篇文章可以帮你掌握命令行的艺术](http://blog.jobbole.com/90364/)
+        * `如果你使用Linux, 这篇文章必读`
 * 2015-09-05
     * [How-to setup Webpack on an ES6 React Application with SASS?](http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html)
     * [Python Enhancement Proposals](https://www.python.org/dev/peps/)
