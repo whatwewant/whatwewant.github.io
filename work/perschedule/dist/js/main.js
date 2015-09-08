@@ -35,6 +35,9 @@
                             // parent.fullData = data;
                             parent.name = data.data.songList[0].songName;
                             return parent;
+                        } else if (data.errorCode == '22232'){
+                            $(".music-play-error").html('Sorry, it\'s Only provided for Chinese.');
+                            $(".music-play-error").show();
                         }
 
                         console.log("See " + this.url + " errorCode !");
