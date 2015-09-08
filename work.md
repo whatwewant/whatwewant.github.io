@@ -6,7 +6,7 @@ group: navigation
 comments: false
 ---
 {% include JB/setup %}
-### 0. [Only My Schedule For Sometimes.](https://raw.githubusercontent.com/whatwewant/Schedule/master/index.html)
+### 0. [Only My Schedule For Sometimes.]({{ site-url }}/work/schedule)
 
 ### 2. [PhotoWall(2015.07)]({{ site.url }}/work/photowall) <a href="https://github.com/whatwewant/PhotoWall" target="_blank" title="Github"><i class="icon-large icon-fixed-width icon-github"></i></a>
 
