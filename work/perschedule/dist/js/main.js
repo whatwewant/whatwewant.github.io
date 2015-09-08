@@ -22,7 +22,7 @@
                 $.ajax({
                     url: baseUrl + parent.songId,
                     method: 'GET',
-                    dataType: 'json',
+                    dataType: 'jsonp',
                     success: function (data) {
                         if (data.errorCode == '22000') {
                             playMusic.play({
