@@ -266,7 +266,7 @@
                     }
 
                     tr.className = "time-on";
-                    window.location.href = "/index.html#" + tr.id;
+                    window.location.href = "#" + tr.id;
                     // if (flag) {
                     //    showEvent();
                     // }
