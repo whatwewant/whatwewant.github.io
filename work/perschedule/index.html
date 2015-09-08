@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="dist/js/jquery-1.11.3.min.js" ></script>
+        <script type="text/javascript" src="dist/js/bootstrap.min.js" ></script>
+        <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="dist/css/default-sass.css" />
+    </head>
+    <body>
+        <div class="container">
+            <table>
+                <caption>
+                    <h1>Schedule Table</h1>
+                </caption>
+                <tr id="line-1">
+                    <th></th>
+                    <th>Time</th>
+                    <th>Action</th>
+                </tr> 
+                <tr id="line-2" data-time-begin="06:00", data-time-end="06:10">
+                    <td rowspan="10" class="center morning splitter">Morning</td>
+                    <td>06:00</td>
+                    <td>Get Up ! It's the good beginning of a day! I'll have 10 minutes for washing. </td>
+                </tr>
+                <tr id="line-3" data-time-begin="06:10", data-time-end="06:20">
+                    <td>06:10 - 06:20</td>
+                    <td>10 minutes for <span class="important-event">English vocabulary and clauses.</span></td>
+                </tr>
+                <tr id="line-4" data-time-begin="06:20", data-time-end="06:30">
+                    <td>06:20 - 06:30</td>
+                    <td>10 minutes for <span class="important-event">Mathematical Formula. </span></td>
+                </tr>
+                <tr id="line-5" data-time-begin="06:30", data-time-end="06:40">
+                    <td>06:30 - 06:40</td>
+                    <td>10 minutes for <span class="important-event">10 new english words. </span></td>
+                </tr>
+                <tr id="line-6" data-time-begin="06:40", data-time-end="07:00">
+                    <td>06:40 - 07:00</td>
+                    <td>20 minutes for having breakfest.</td>
+                </tr>
+                <tr id="line-7" data-time-begin="07:00", data-time-end="07:10">
+                    <td>07:00</td>
+                    <td>Get out of door ...</td>
+                </tr>
+                <tr id="line-8" data-time-begin="07:10", data-time-end="09:00">
+                    <td>07:10 - 09:00</td>
+                    <td class="important-event">Math Review</td>
+                </tr>
+                <tr id="line-9" data-time-begin="09:00", data-time-end="10:00">
+                    <td>09:10 - 10:00</td>
+                    <td class="important-event">English Review</td>
+                </tr>
+                <tr id="line-10" data-time-begin="10:00", data-time-end="11:00">
+                    <td>10:10 - 11:00</td>
+                    <td class="important-event">Datastruct Review</td>
+                </tr>
+                <tr id="line-11" data-time-begin="11:00", data-time-end="12:00">
+                    <td class="splitter">11:10 - 12:00</td>
+                    <td class="splitter">Having Lunch</td>
+                </tr>
+                <tr id="line-12" data-time-begin="12:00", data-time-end="12:30">
+                    <td rowspan="2" class="noon splitter">Noon</td>
+                    <td>12:00 - 12:30</td>
+                    <td>Free ...</td>
+                </tr>
+                <tr id="line-13" data-time-begin="12:30", data-time-end="13:00">
+                    <td class="splitter">12:30 - 13:00</td>
+                    <td class="important-event splitter">Having a short sleep</td>
+                </tr>
+                <tr id="line-14" data-time-begin="13:00", data-time-end="13:10">
+                    <td rowspan="7" class="afternoon splitter">Afternoon</td>
+                    <td>13:00 - 13:10</td>
+                    <td>Wash face to stay awake.</td>
+                </tr>
+                <tr id="line-15" data-time-begin="13:10", data-time-end="13:30">
+                    <td>13:10 - 13:30</td>
+                    <td>Review the 10 new English words.</td>
+                </tr>
+                <tr id="line-16" data-time-begin="13:30", data-time-end="15:00">
+                    <td>13:30 - 15:00</td>
+                    <td class="important-event">Math Review</td>
+                </tr>
+                <tr id="line-17" data-time-begin="15:00", data-time-end="16:00">
+                    <td>15:10 - 16:00</td>
+                    <td class="important-event">English Review</td>
+                </tr>
+                <tr id="line-18" data-time-begin="16:00", data-time-end="17:30">
+                    <td>16:00 - 17:30</td>
+                    <td class="important-event">Math Review</td>
+                </tr>
+                <tr id="line-19" data-time-begin="17:30", data-time-end="18:00">
+                    <td>17:30 - 18:00</td>
+                    <td>Having Dinner</td>
+                </tr>
+                <tr id="line-20" data-time-begin="18:00", data-time-end="18:30">
+                    <td class="splitter">18:00 - 18:30</td>
+                    <td class="splitter important-event">Take a short sleep.</td>
+                </tr>
+                <tr id="line-21" data-time-begin="18:30", data-time-end="18:40">
+                    <td rowspan="9" class="evening">Evening</td>
+                    <td>18:30 - 18:40</td>
+                    <td>Wash face to stay awake.</td>
+                </tr>
+                <tr id="line-22" data-time-begin="18:40", data-time-end="19:30">
+                    <td>18:40 - 19:30</td>
+                    <td class="important-event">English Review</td>
+                </tr>
+                <tr id="line-23" data-time-begin="19:30", data-time-end="20:00">
+                    <td>19:30 - 20:00</td>
+                    <td class="important-event">Math Review</td>
+                </tr>
+                <tr id="line-24" data-time-begin="20:00", data-time-end="21:00">
+                    <td>20:00 - 21:00</td>
+                    <td>Free ...</td>
+                </tr>
+                <tr id="line-25" data-time-begin="21:00", data-time-end="22:00">
+                    <td>21:00 - 22:00</td>
+                    <td class="important-event">Math Review</td>
+                </tr>
+                <tr id="line-26" data-time-begin="22:00", data-time-end="22:30">
+                    <td>22:00 - 22:30</td>
+                    <td>Take a shower and wash clothes.</td>
+                </tr>
+                <tr id="line-27" data-time-begin="22:30", data-time-end="22:50">
+                    <td>22:30 - 22:50</td>
+                    <td class="important-event">Review Mathematical Formula + English new word + Datastructure</td>
+                </tr>
+                <tr id="line-28" data-time-begin="22:50", data-time-end="23:00">
+                    <td>22:50 - 23:00</td>
+                    <td class="important-event">Drinking milk and shutdown all electrics...</td>
+                </tr>
+                <tr id="line-29" data-time-begin="23:00", data-time-end="23:50">
+                    <td>23:00 - </td>
+                    <td class="important-event">Good Night today !</td>
+                </tr>
+            </table>
+            <div id="bg_music"></div>
+        </div>
+        <!-- Modal -->
+        <button id="event-alert-btn" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-event-alert-modal">Now You Need Do Something !</button>
+
+        <div class="modal fade bs-event-alert-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><s=pan class="sr-only">Close</span></button>
+                    <h3 class="modal-title">Now You Need Do Something !</h3>
+                    <h4 class="modal-title music-play-error">Music Play Error ! It maybe caused by the failure of local network.</h4>
+                </div>
+                <div class="modal-body">
+                    <h1 id="event-show" style="text-align: center;">Nothing to do.</h1>
+                </div>
+                <div class="modal-footer">
+                    <button id="event-close-btn" type="button" class="btn btn-default" data-dismiss="modal">Close(10)</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <script type="text/javascript" src="/dist/js/main.js" ></script>
+    </body>
+</html>

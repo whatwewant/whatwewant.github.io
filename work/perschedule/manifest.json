@@ -1,0 +1,23 @@
+{
+   "background": {
+      "scripts": [ "dist/js/background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "icons/128.png"
+   },
+   "content_scripts": [ {
+      "js": [ "dist/js/main.js", "dist/js/jquery-1.11.3.min.js" ],
+      "matches": [ "http://*/", "http://*/*", "https://*/", "https://*/**" ]
+   } ],
+   "description": "我的作息时间表",
+   "icons": {
+      "128": "icons/128.png",
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsk8u+0pP+LcbQDzUTkDK171wqh8Litr/C0Zgtw+mdZCMj0/YWUIW29+3VLlB3FvTZoetD0G7Cz/jVqe3Y1aMnaKqgyFUuzu2lX2Cp+6yGOBEQZkl8+gUGvRF945QE4BiksNb0B4mKcTPe7nKZ5ieFFDi800qi2aPojUKkKn96z/hnFonCw0NYtzKzCMO7b4XxEgd8dgu0U06fc7sOTJ3nap5rh0Nsv/sJFtAxznd/Ihs8wGkXDRHnpbzD2ci1oziiBvLft819JNC1MlMZ1u0B9CM/W3YZj/370fpnWRfBis45xgnmBmnvIzuuIobjcAJBlAHc2+v8kfQwLOy3UdLFQIDAQAB",
+   "manifest_version": 2,
+   "name": "Study Schedule",
+   "permissions": [ "http://*/" ],
+   "version": "1.0.3"
+}
