@@ -122,7 +122,7 @@
                     },
                     name: "晚安瞄"
                 },
-                random: [
+                public: [
                     "http://yinyueshiting.baidu.com/data2/music/132087971/13105874279200128.mp3?xcode=329c31944e2abc019d88bb873c3ec0e5",
                     "http://7xljtg.com1.z0.glb.clouddn.com/走在冷风中--刘思涵.mp3",
                     "http://7xljtg.com1.z0.glb.clouddn.com/好久不见--陈奕迅.mp3",
@@ -144,12 +144,15 @@
             },
             getSourceCode: function (options) {
                 var spectionField = this.source[options.beginTime];
+                if (options.beginTime == 'public') {
+                    var id = Math.floor(Math.random() * this.source.public.length);
+                    var source_code = '<audio src="' 
+                        + this.source.public[id]
+                        + '" autoplay="autoplay"></autoplay>';
+                    return options.selector.append(source_code);
+                }
+
                 if (! spectionField) {
-                    // var id = Math.floor(Math.random() * this.source.random.length);
-                    // var source_code = '<audio src="' 
-                    //    + this.source.random[id]
-                    //    + '" autoplay="autoplay"></autoplay>';
-                    // options.selector.append(source_code);
                     return this.source
                                 .randomBd
                                 .play();
@@ -180,6 +183,16 @@
 
                 selector = this.selector();
                 selector.html("");
+
+                if (window.location.host.indexOf(".") != -1 &&
+                        window.location.host.indexOf("music.baidu.com") != 0) {
+                            
+                            this.getSourceCode({
+                                selector: selector,
+                                beginTime: 'public'
+                            });
+                            return ;
+                        }
 
                 if (options.url) {
                     setTimeout(function () {
@@ -237,6 +250,9 @@
 
                 if (now >= bh && now < eh) {
                     function showEvent () {
+                        // hide alert
+                        $(".music-play-error").hide();
+
                         if (tr.children.length > 2) {
                             $("#event-show").html(tr.children[2].innerText);
                         }
