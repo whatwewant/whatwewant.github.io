@@ -37,6 +37,7 @@ git clone $URL $SRC_DIR_FINAL
 # configure
 cd $SRC_DIR_FINAL
 git submodule update --init
+cd $SRC_DIR_FINAL
 ./autogen.ssh
 ./configure --enable-static --sysconfdir=/etc
 
