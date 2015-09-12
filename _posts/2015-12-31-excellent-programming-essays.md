@@ -10,7 +10,11 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 9 月
-* 2015-0907
+* 2015-09-12
+    * [React Webpack Cookbook](https://fakefish.github.io/react-webpack-cookbook/index.html)
+    * [理解JavaScript的原型链和继承](http://blog.oyanglul.us/javascript/understand-prototype.html)
+    * [Flex布局](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+* 2015-09-07
     * [这篇文章可以帮你掌握命令行的艺术](http://blog.jobbole.com/90364/)
         * `如果你使用Linux, 这篇文章必读`
 * 2015-09-05
