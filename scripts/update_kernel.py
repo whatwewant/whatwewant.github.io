@@ -149,7 +149,7 @@ def download_kernel(nd=n_download):
     base_url, type_kernels = \
             get_lastest_unstable_kernel_by_system(kernel_type)
     print('Downloading kernel files ...')
-    print('Dir: {0}, Files: '.format(SRC_DI))
+    print('Dir: {0}, Files: '.format(SRC_DIR))
     for each in type_kernels:
         print('    {0}'.format(each))
     files = []
