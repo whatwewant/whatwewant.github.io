@@ -27,3 +27,6 @@ COPY config_desktop_shortcuts.sh config_desktop_shortcuts
 
 # 5. wifi ap
 COPY ./Commands/wifi.sh wifi
+
+# 6. update_kernel
+COPY ./update_kernel.py update_kernel

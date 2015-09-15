@@ -55,6 +55,7 @@ pipLog requests # grequests
 # pipLog django djangorestframework
 # pipLog flask
 pipLog qduTAportal qdudomportal simplefileserver
+pipLog downloadhelper
 pipLog speedtest-cli
 pipLog BeautifulSoup4
 # mysql cli
