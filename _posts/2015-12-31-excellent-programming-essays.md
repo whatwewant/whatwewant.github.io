@@ -10,6 +10,9 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 9 月
+* 2015-09-13
+    * [adb 常用命令](http://blog.csdn.net/wanglin_lin/article/details/48165447)
+    * [Android 逆向工程工具集](http://top.jobbole.com/24707/)
 * 2015-09-12
     * [React Webpack Cookbook](https://fakefish.github.io/react-webpack-cookbook/index.html)
     * [理解JavaScript的原型链和继承](http://blog.oyanglul.us/javascript/understand-prototype.html)
