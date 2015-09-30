@@ -553,3 +553,20 @@ make package/openwrt-clients/njit/njit8021xclient/compile V=99
     * 尝试: `make V=99`
 * 6、路由器电源灯不亮 和 无线没有开启
     * 见`五、为HuaWei HG255D修改配置`
+
+### 十二、某些软件BUG
+* 1 编译`tesseract`
+    * Problem 1:
+        *** No rule to make target `../src/liblept.la', needed by `adaptnorm_reg'.  Stop.
+        * [解决办法](https://dev.openwrt.org/ticket/18355)
+        * File: `package/feeds/oldpackages/leptonica/Makefile`
+
+```bash
+    PKG_NAME:=leptonica
+    PKG_VERSION:=1.71
+    PKG_RELEASE:=1
+    
+    PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+    PKG_SOURCE_URL:=http://www.leptonica.org/source/
+    PKG_MD5SUM:=790f34d682e6150c12c54bfe4a824f7f
+```
