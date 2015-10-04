@@ -19,7 +19,7 @@ tags: [insertsort, sort, algorithm]
 
 ### 二、基础: 有序列表插入单个元素
 
-```
+```c
 /*
  * 这里: a[0...n-2]为有序元素, a[n-1]为无序的
  * Why:
@@ -126,7 +126,7 @@ void InsertSort(int a[], int n) {
 
 #### (2)、递归法
 
-```
+```c
 /**
     数组a, 有n个元素, a[0...n-1]
 */
