@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "八种排序算法之直接插入排序(InsertSort) 1"
+title: "八种排序算法之直接插入排序(StraightInsertSort) 1"
 keywords: ["insertsort"]
 description: ""
 category: "algorithm"
