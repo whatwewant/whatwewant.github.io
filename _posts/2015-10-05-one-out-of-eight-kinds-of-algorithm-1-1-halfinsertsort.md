@@ -69,9 +69,10 @@ void BinaryInsertSort(int a[], int n) {
                 low  = middle + 1;
         }
 
-        // 找到存放哨兵guard值的位置: high + 1
-        // 那么将a[high+1...n-1]后移一位
+        // 找到存放哨兵guard值(其实是a[i]的值)的位置: high + 1
+        // 那么将a[high+1...i-1]后移一位 -> a[high+2...i]
         // 再将guard插入a[high+1]
+        // 因为guard是a[i], 所以不会存在溢出或覆盖问题
         for (int j=i-1; j>high; j--)
             a[j+1] = a[j];
 
