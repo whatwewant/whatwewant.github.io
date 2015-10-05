@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "八种排序算法之冒泡排序(Bubble Sort) 2"
+title: "八种排序算法之3 冒泡排序(Bubble Sort)"
 keywords: [""]
 description: ""
 category: "algorithm"

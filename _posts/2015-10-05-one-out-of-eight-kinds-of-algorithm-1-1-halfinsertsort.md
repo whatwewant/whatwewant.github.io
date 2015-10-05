@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "八种排序算法之折半插入排序(Binary Insert Sort) 1-2"
+title: "八种排序算法之1-2 折半插入排序(Binary Insert Sort)"
 keywords: [""]
 description: ""
 category: "algorithm"
