@@ -9,7 +9,7 @@ tags: [binaryinsertsort, sort, algorithm]
 {% include JB/setup %}
 
 ### 一、基本思想
-* 在[直接插入插入]({{site.url}}/2015/10/04/One-out-of-eight-kinds-of-algorithm-1-insertsort.html)排序的基础上，与其通过从后往前一一比较(或比较交换交换), 折半插入排序则利用`折半查找(BinarySearch)`的(low, high)确定带插入的数字的位置hight+1，是比middle小(左半部分)还是大(右半部分)
+* 在[直接插入排序]({{site.url}}/2015/10/04/One-out-of-eight-kinds-of-algorithm-1-insertsort.html)的基础上，与其通过从后往前一一比较(或比较交换交换), 折半插入排序则利用`折半查找(BinarySearch)`的(low, high)确定带插入的数字的位置hight+1，是比middle小(左半部分)还是大(右半部分)
 
 ### 二、基础: 折半查找法+直接插入排序
 
