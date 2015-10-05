@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "八种排序算法之希尔排序(Shell Sort) 2"
+title: "八种排序算法之2 希尔排序(Shell Sort)"
 keywords: [""]
 description: ""
 category: "algorithm"
