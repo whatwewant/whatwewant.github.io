@@ -136,9 +136,12 @@ void MakeMinHeap(int array[], int len) {
 void MinHeapSort(int array[], int len) {
     // 在排序前必须进行堆化数组, 构成堆以后再继续从最后一个节点开始修正
     MakeMinHeap(array, len);
+    cout << "MinHeap: ";
+    display(array, len);
     // 每次将堆的根节点(最小)放在数组相对最后面, 构成递减序列
     // 而将根节点放在相对最后面用的是:
     //     根节点和相对最后一个元素然交换, 就相当于堆的删除操作(后重新构成堆)，但并非真的删除.
+    cout << "每次堆化后根节点: " << array[0] << endl;
     for (int i=len-1; i>=1; i--) {
         // cout << array[i] << " " << array[0] << endl;
         Swap(array[i], array[0]);
@@ -150,9 +153,11 @@ void MinHeapSort(int array[], int len) {
 void test() {
     int a[] = {9, 12, 17, 30, 50, 20, 60, 65, 4, 19};
     int len = sizeof(a) / sizeof(int);
+    cout << "Source: ";
     display(a, len);
     // MakeMinHeap(a, len);
     MinHeapSort(a, len);
+    cout << "After MinHeapSort: ";
     display(a, len);
 }
 
