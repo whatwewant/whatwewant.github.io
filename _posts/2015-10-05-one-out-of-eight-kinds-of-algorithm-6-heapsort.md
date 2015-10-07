@@ -153,7 +153,9 @@ void MinHeapDeleteNumber(int array[], int len) {
 
 #### (4)堆化数组
 * 从最后一个带子结点的节点开始向上堆化调整
-ort(int array[], int len) {
+
+```c
+void MinHeapSort(int array[], int len) {
     // 在排序前必须进行堆化数组, 构成堆以后再继续从最后一个节点开始修正
     MakeMinHeap(array, len);
     // 每次将堆的根节点(最小)放在数组相对最后面, 构成递减序列
