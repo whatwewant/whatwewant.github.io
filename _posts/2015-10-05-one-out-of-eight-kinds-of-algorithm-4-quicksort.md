@@ -21,6 +21,7 @@ tags: [quicksort, sort, algorithm]
 ### 二、基础: 分治法
 * 分治法(Divide And Conquer Method)
 * `待续: 独立一篇文章写写`
+* 写好了: `[分治法]({{site.url}}/2015/10/08/divide-and-conquer-method.md)`
 
 ### 三、解题方法
 
