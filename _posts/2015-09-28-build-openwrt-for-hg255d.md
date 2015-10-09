@@ -3,8 +3,8 @@ layout: post
 title: "为HuaWei HG255D 路由器编译 Openwrt 固件"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: "linux"
+tags: [linux, openwrt, hg255d, router]
 ---
 {% include JB/setup %}
 
