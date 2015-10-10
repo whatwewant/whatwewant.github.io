@@ -9,6 +9,13 @@ tags: [collections]
 
 {% include JB/setup %}
 
+### 10 月
+* 2015-10-10
+    * [HTTPS证书生成原理和部署细节](http://www.barretlee.com/blog/2015/10/05/how-to-build-a-https-server/)
+    * [HTTP 缓存](http://ljinkai.github.io/2015/08/13/http-cache/)
+    * [八大排序算法的Python实现](http://www.2liang.me/archives/257)
+    * [HTTP 协议详解](http://liberize.me/tech/http-protocol.html)
+
 ### 9 月
 * 2015-09-13
     * [adb 常用命令](http://blog.csdn.net/wanglin_lin/article/details/48165447)
