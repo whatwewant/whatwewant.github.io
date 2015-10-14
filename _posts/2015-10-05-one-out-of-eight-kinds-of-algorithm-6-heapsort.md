@@ -9,6 +9,9 @@ tags: [heapsort, sort, algorithm]
 {% include JB/setup %}
 
 ### 一、基本思想
+* 先堆化，然后利用堆的性质排序.
+    * 最大堆: 根节点最大
+    * 最小堆: 根节点最小
 
 ### 二、基础: 堆(Heap)
 
