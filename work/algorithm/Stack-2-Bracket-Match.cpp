@@ -20,6 +20,12 @@ void init() {
     BRACKETS_VALUE['{'] = -3; BRACKETS_VALUE['}'] = 3;
 }
 
+/**
+ * @Desc 括号匹配
+ * @param   s 输入的括号字符串
+ * @return  true 括号匹配
+ *          false 括号不匹配
+ */
 bool BracketsMatch(char *s) {
     // 初始化BRACKETS_VALUE, 方便比较左右括号
     // 左括号为负值，右括号为正值
@@ -39,12 +45,15 @@ bool BracketsMatch(char *s) {
         else {
             if (storeLeft.empty() || \
                     BRACKETS_VALUE[s[i]] + BRACKETS_VALUE[storeLeft.top()] != 0)
+                // 括号不匹配
                 return false;
             storeLeft.pop();
         }
     }
     if (! storeLeft.empty())
+        // 括号不匹配
         return false;
+    // 括号匹配
     return true;
 }
 

@@ -33,6 +33,12 @@ void init() {
     BRACKETS_VALUE['{'] = -3; BRACKETS_VALUE['}'] = 3;
 }
 
+/**
+ * @Desc 括号匹配
+ * @param   s 输入的括号字符串
+ * @return  true 括号匹配
+ *          false 括号不匹配
+ */
 bool BracketsMatch(char *s) {
     // 初始化BRACKETS_VALUE, 方便比较左右括号
     // 左括号为负值，右括号为正值
@@ -51,13 +57,15 @@ bool BracketsMatch(char *s) {
         //   如果匹配出栈，扫描下一个字符
         else {
             if (storeLeft.empty() || \
-                    BRACKETS_VALUE[s[i]] + BRACKETS_VALUE[storeLeft.top()] != 0)
+                    BRACKETS_VALUE[s[i]]+BRACKETS_VALUE[storeLeft.top()]!=0)
+                // 括号不匹配
                 return false;
             storeLeft.pop();
         }
     }
     // Step 4: 栈是否为空 ? 匹配 : 不匹配;
     if (! storeLeft.empty())
+        // 括号不匹配
         return false;
     return true;
 }
