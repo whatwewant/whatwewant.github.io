@@ -21,6 +21,7 @@ using namespace std;
                 2xPn-1(x)-2(n-1)Pn-2(x) n>1
 */
 
+// 递归栈
 // StackOverwriteRecursion
 double P(int n, double x) {
     struct stack {
