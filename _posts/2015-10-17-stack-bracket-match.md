@@ -3,8 +3,8 @@ layout: post
 title: "栈应用 - 括号匹配"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: "algorithm"
+tags: [algorithm, 数据结构, stack]
 ---
 {% include JB/setup %}
 
