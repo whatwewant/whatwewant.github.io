@@ -71,4 +71,5 @@ bool BracketsMatch(char *s) {
 }
 ```
 
-### 四、[实例]({{site.url}}/work/algorithm/Stack-2-Bracket-Match.cpp)
+### 四、实例
+* [地址]({{site.url}}/work/algorithm/Stack-2-Bracket-Match.cpp)
