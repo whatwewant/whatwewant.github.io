@@ -44,6 +44,13 @@ def get_processor():
     print("Processor: i386")
     return 'i386'
 
+def get_kernel_version():
+    full_kernel_version = platform.release()
+    if not full_kernel_version:
+        print('Error: Cannot Get OS Kernel Version.')
+        return None
+    return full_kernel_version.split('-')[0]
+
 def get_all_kernels():
     print("Get All Kernels ... From {0}".format(BASE_URL))
     try:
@@ -98,7 +105,13 @@ def get_lastest_unstable_kernel():
     if not kernels:
         print("Error: Cannot Get Unstable Kernels.Please Check Network.")
         sys.exit(-1)
+    # print("Latest to release kernel: {0}".format(kernels[0]))
+    latest_kernel_version = kernels[0].split('-')[0].replace('v', '')
     print("Latest to release kernel: {0}".format(kernels[0]))
+    if latest_kernel_version in [get_kernel_version()]:
+        print('Current Linux Kernel({0}) is Lastest!'\
+                .format(latest_kernel_version))
+        sys.exit(0)
     return kernels[0]
 
 def get_lastest_unstable_generic():
