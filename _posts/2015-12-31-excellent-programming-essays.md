@@ -10,6 +10,8 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 10 月
+* 2015-10-20
+    * [用 Python 从零开始写一个简单的解释器](http://python.jobbole.com/82423/)
 * 2015-10-10
     * [HTTPS证书生成原理和部署细节](http://www.barretlee.com/blog/2015/10/05/how-to-build-a-https-server/)
     * [HTTP 缓存](http://ljinkai.github.io/2015/08/13/http-cache/)
