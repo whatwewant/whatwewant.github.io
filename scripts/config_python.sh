@@ -60,6 +60,8 @@ pipLog speedtest-cli
 pipLog BeautifulSoup4
 # mysql cli
 pipLog mycli
+# shell
+pipLog sh
 
 # virtualenvwrapper
 [[ -f "$HOME/.zshrc" ]] && \
