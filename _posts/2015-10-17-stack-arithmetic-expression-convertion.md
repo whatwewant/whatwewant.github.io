@@ -96,4 +96,4 @@ nfixExpression2Postfix(string s) {
 ```
 
 ### 四、实例
-* [例子]({{site.url}/work/algorithm/Stack-1-Arithmetic-Expression-Conversion.cpp})
+* [例子]({{site.url}}/work/algorithm/Stack-1-Arithmetic-Expression-Conversion.cpp})
