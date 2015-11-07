@@ -45,12 +45,16 @@ def recursion(path='.'):
         if os.path.isdir(child):
             recursion(child)
 
-def main():
+def main(path='.'):
     print('start ...')
-    recursion('.')
+    recursion(path)
     if count == 0:
         print('No Files And Dirs.')
     print('done.')
 
 if __name__ == '__main__':
-    main()
+    import sys
+    if len(sys.args) <= 1:
+        main('.')
+    else:
+        main(sys.args[1])

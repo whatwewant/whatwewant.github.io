@@ -165,6 +165,15 @@ def download_kernel(nd=n_download):
     kernel_type = get_processor()
     base_url, type_kernels = \
             get_lastest_unstable_kernel_by_system(kernel_type)
+    if len(type_kernels) != 3:
+        print('******************************')
+        print('*    Need 3 Kernel Files     *')
+        print('******************************')
+        for _ in type_kernels:
+            print('* File: {} *'.format(_))
+        print('******************************')
+        print('Error: Lack of Kernel Files')
+        sys.exit(-1)
     print('Downloading kernel files ...')
     print('Dir: {0}, Files: '.format(SRC_DIR))
     for each in type_kernels:
