@@ -28,15 +28,23 @@ Menu () {
     echo ""
     echo "Option: "
     echo " -c filename  Load UserName and Password From file."
+    echo " -g, --global Load Wifi Infomation From Global Config"
     echo " -l speed     Limit speed, (MTU = 1500 Byte = 1.46 KB), such 100 = 100*1.46 KB."
-    echo " -i interface In Interface"
-    echo " -o interface Out Interface"
+    echo " -i interface In Interface (Source) (Default: eth0)"
+    echo " -n SSID(Wifi Name)"
+    echo " -o interface Out Interface (Destination)(Default: wlan0)"
+    echo " -p SSID Password"
+    echo " -r Set or Reset Global Config"
     echo ""
     echo "Example:"
     echo "  wifi on/off"
     echo "  wifi on -g"
     echo "  wifi on --limit 300"
     echo "  wifi --limit 300"
+    echo "  wifi start -i wlan0 -o wlan2"
+    echo "  wifi start -n cWifi -p password_string"
+    echo "  wifi start -i wlan0 -o wlan2 -n cWifi -p password_string"
+    echo "  wifi off"
 }
 
 getUser () {
@@ -84,7 +92,11 @@ get_args_list () {
 
 run () {
     case ${args_list[1]} in
-        "" | start | on)
+        "")
+            Menu
+            exit -1
+            ;;
+        start | on)
             ps -e | grep -i create_ap >> /dev/null 2>&1
             [[ "$?" = "0" ]] && \
                 echo "WIFI Already starts. You can restart it Manually." && \
@@ -99,16 +111,20 @@ run () {
             wifi_iptable_drop=$(sudo iptables -L FORWARD --line-number | grep -i ${WIFI_IPTABLE} | head -n 1 | awk '{print $1}')
             [[ "$wifi_iptable_drop" != "" ]] && \
                 sudo iptables -D FORWARD ${wifi_iptable_drop} >> /dev/null 2>&1
+            local OLD_INFO_FILE=$WIFI_INFO_FILE
+            [[ ! -f "$WIFI_INFO_FILE" ]] && WIFI_INFO_FILE=$wifi_file_name
             if [[ -f "$WIFI_INFO_FILE" ]]; then
-                local tt=$(cat /tmp/wifi_info | grep -i "TO_NIC" | awk -F '"' '{print $4}')
+                local tt=$(cat $WIFI_INFO_FILE | grep -i "TO_NIC" | awk -F '"' '{print $4}')
                 if [ "$tt" != "" ]; then
                     TO_NETWORK_INTERFACE=$tt
                 fi
             fi
             sudo create_ap --stop $TO_NETWORK_INTERFACE >> $ERROR_LOG 2>&1
+            sleep 2
             [[ "$?" != "0" ]] && \
                 echo "Failed to stop ..." && \
                 echo "Look at log ${ERROR_LOG}" || \
+                rm -rf $OLD_INFO_FILE >> /dev/null 2>&1 && \
                 echo "Stop Success."
             exit 0
             ;;
@@ -133,7 +149,11 @@ run () {
         info)
             ps -e | grep -i create_ap >> /dev/null 2>&1
             [[ "$?" != "0" ]] && echo "WIFI State: OFF" || \
-                (echo "WIFI State: ON" && cat $WIFI_INFO_FILE)
+                (
+                    echo "WIFI State: ON" && \
+                    [ ! -f "$WIFI_INFO_FILE" ] && WIFI_INFO_FILE=$wifi_file_name && \
+                    cat $WIFI_INFO_FILE
+                )
             exit 0
             ;;
         state)
@@ -186,26 +206,42 @@ run () {
                 WIFI_CHANNEL=${args_list[$((++index))]}
                 continue
                 ;;
-            -g | --static)
+            -g | --static | --global)
+                if [ ! $UID -eq 0 ]; then
+                    echo "You must run it as root."
+                    exit -1
+                fi
                 WIFI_INFO_FILE=$wifi_file_name
                 [[ ! -f "${wifi_file_name}" ]] && \
                     sudo mkdir -p $wifi_file_dir && \
                     echo "First Arrive, You need write some info." && \
-                    read -p "Wifi SSID: " WIFI_NAME && \
-                    read -p "Wifi PASSOWRD: " WIFI_PASSWORD && \
+                    read -p "Wifi SSID (Default: colewifi_new): " WIFI_NAME && \
+                        WIFI_NAME=${WIFI_NAME:-colewifi_new} && \
+                    read -p "Wifi PASSOWRD (Default: colewifi_new): " WIFI_PASSWORD &&
+                        WIFI_PASSWORD=${WIFI_PASSWORD:-colewifi_new} && \
+                    read -p "Source NIC (Default: eth0): " FROM_NETWORK_INTERFACE && \
+                        FROM_NETWORK_INTERFACE=${FROM_NETWORK_INTERFACE:-eth0} && \
+                    read -p "Destination NIC (Default: wlan0): " TO_NETWORK_INTERFACE && \
+                        TO_NETWORK_INTERFACE=${TO_NETWORK_INTERFACE:-wlan0} && \
                     sudo touch $wifi_file_name && \
                     sudo chown $USER:$USER $wifi_file_name && \
                     echo "{" > $WIFI_INFO_FILE && \
                     echo "  \"WIFI_NAME\": \"$WIFI_NAME\"," >> $WIFI_INFO_FILE && \
                     echo "  \"WIFI_PASSWORD\": \"$WIFI_PASSWORD\"" >> $WIFI_INFO_FILE && \
+                    echo "  \"WIFI_MAC\": \"$MAC_ADDRESS\"," >> $WIFI_INFO_FILE && \
+                    echo "  \"FROM_NIC\": \"$FROM_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE && \
+                    echo "  \"TO_NIC\": \"$TO_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE && \
+                    echo "  \"GATE_WAY\": \"$GATE_WAY\"" >> $WIFI_INFO_FILE && \
                     echo "}" >> $WIFI_INFO_FILE && \
                     echo "" && \
-                    echo "Now restart it." && \
-                    exit 0
-                # 
-                echo "Load Info ..."
-                WIFI_NAME=$(cat $wifi_file_name | grep -i wifi_name | awk -F '"' '{print $4}')
-                WIFI_PASSWORD=$(cat $wifi_file_name | grep -i wifi_password | awk -F '"' '{print $4}')
+                    echo "Now restart it." || \
+                        echo "Load Info ..." && \
+                        WIFI_NAME=$(cat $wifi_file_name | grep -i wifi_name | awk -F '"' '{print $4}') && \
+                        WIFI_PASSWORD=$(cat $wifi_file_name | grep -i wifi_password | awk -F '"' '{print $4}') && \
+                        WIFI_MAC=$(cat $wifi_file_name | grep -i wifi_mac | awk -F '"' '{print $4}') && \
+                        FROM_NETWORK_INTERFACE=$(cat $wifi_file_name | grep -i from_nic | awk -F '"' '{print $4}') && \
+                        TO_NETWORK_INTERFACE=$(cat $wifi_file_name | grep -i to_nic | awk -F '"' '{print $4}')
+                        GATE_WAY=$(cat $wifi_file_name | grep -i gate_way | awk -F '"' '{print $4}')
                 ;;
             -i | --in)
                 FROM_NETWORK_INTERFACE=${args_list[$((++index))]}
@@ -267,38 +303,57 @@ if [ "$?" != "0" ]; then
     config_create_ap.sh
 fi
 
+# if [ ! $UID -eq 0 ]; then
+#    if [ "$1" = "" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+#        Menu
+#    else
+#        echo "You must run it as root."
+#    fi
+#    exit -1
+# fi
+
 get_args_list ${*}
 run
 
-echo "{" > $WIFI_INFO_FILE
-echo "  \"WIFI_NAME\": \"$WIFI_NAME\"," >> $WIFI_INFO_FILE
-echo "  \"WIFI_PASSWORD\": \"$WIFI_PASSWORD\"," >> $WIFI_INFO_FILE
-echo "  \"WIFI_MAC\": \"$MAC_ADDRESS\"," >> $WIFI_INFO_FILE
-echo "  \"FROM_NIC\": \"$FROM_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE
-echo "  \"TO_NIC\": \"$TO_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE
-echo "  \"GATE_WAY\": \"$GATE_WAY\"" >> $WIFI_INFO_FILE
-echo "}" >> $WIFI_INFO_FILE
-
-sudo create_ap --daemon \
-    -c $WIFI_CHANNEL \
-    $TO_NETWORK_INTERFACE \
-    $FROM_NETWORK_INTERFACE \
-    $WIFI_NAME \
-    $WIFI_PASSWORD \
-    --mac ${MAC_ADDRESS} > $ERROR_LOG 2>&1
-sleep 2
-
-if [ "$?" != "0" ] || [ "$($0 log | grep -i Error)" != "" ]; then
-    echo "Wifi failed to start ..."
-    # echo "Please Look at logfile ${ERROR_LOG}"
-    $0 log
-    exit -1
-else
-    echo ""
-    echo "**********************************"
-    echo "* SSID     : $WIFI_NAME          "
-    echo "* PASSWORD : $WIFI_PASSWORD      "
-    echo "**********************************"
-    echo ""
-    echo "(More Infomation, look at $ERROR_LOG)"
+if [ "$WIFI_INFO_FILE" != "$wifi_file_name"  ]; then
+    echo "{" > $WIFI_INFO_FILE
+    echo "  \"WIFI_NAME\": \"$WIFI_NAME\"," >> $WIFI_INFO_FILE
+    echo "  \"WIFI_PASSWORD\": \"$WIFI_PASSWORD\"," >> $WIFI_INFO_FILE
+    echo "  \"WIFI_MAC\": \"$MAC_ADDRESS\"," >> $WIFI_INFO_FILE
+    echo "  \"FROM_NIC\": \"$FROM_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE
+    echo "  \"TO_NIC\": \"$TO_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE
+    echo "  \"GATE_WAY\": \"$GATE_WAY\"" >> $WIFI_INFO_FILE
+    echo "}" >> $WIFI_INFO_FILE
 fi
+
+if [ ! $UID -eq 0 ]; then
+    echo "You must run it as root."
+else
+    # echo $FROM_NETWORK_INTERFACE
+    # echo $TO_NETWORK_INTERFACE
+    sudo create_ap --daemon \
+        -c $WIFI_CHANNEL \
+        $TO_NETWORK_INTERFACE \
+        $FROM_NETWORK_INTERFACE \
+        $WIFI_NAME \
+        $WIFI_PASSWORD \
+        --mac ${MAC_ADDRESS} > $ERROR_LOG 2>&1
+
+    sleep 2
+
+    if [ "$?" != "0" ] || [ "$($0 log | grep -i Error)" != "" ]; then
+        echo "Wifi failed to start ..."
+        # echo "Please Look at logfile ${ERROR_LOG}"
+        $0 log
+        exit -1
+    else
+        echo ""
+        echo "**********************************"
+        echo "* SSID     : $WIFI_NAME          "
+        echo "* PASSWORD : $WIFI_PASSWORD      "
+        echo "**********************************"
+        echo ""
+        echo "(More Infomation, look at $ERROR_LOG)"
+    fi
+fi
+
