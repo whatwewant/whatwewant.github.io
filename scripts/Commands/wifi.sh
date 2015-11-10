@@ -234,7 +234,7 @@ run () {
                     sudo chown $USER:$USER $wifi_file_name && \
                     echo "{" > $WIFI_INFO_FILE && \
                     echo "  \"WIFI_NAME\": \"$WIFI_NAME\"," >> $WIFI_INFO_FILE && \
-                    echo "  \"WIFI_PASSWORD\": \"$WIFI_PASSWORD\"" >> $WIFI_INFO_FILE && \
+                    echo "  \"WIFI_PASSWORD\": \"$WIFI_PASSWORD\"," >> $WIFI_INFO_FILE && \
                     echo "  \"WIFI_MAC\": \"$MAC_ADDRESS\"," >> $WIFI_INFO_FILE && \
                     echo "  \"FROM_NIC\": \"$FROM_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE && \
                     echo "  \"TO_NIC\": \"$TO_NETWORK_INTERFACE\"," >> $WIFI_INFO_FILE && \
