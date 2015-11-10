@@ -80,11 +80,13 @@ getUser () {
 get_args_list () {
     NUMBER=$#
     args_list[0]=$NUMBER
+    args_list_string=
     local i=1
     while [ $i -le $NUMBER ]; 
     do
         args_list[$i]=$1
-        # echo ${args_list[$i]}
+        [[ "$i" != "restart" ]] && args_list_string="$args_list_string $1"
+        # echo $i: ${args_list[$i]}
         ((++i))
         shift
     done
@@ -132,7 +134,12 @@ run () {
             echo "Restarting Wifi ..."
             $0 stop
             sleep 1
-            $0 start
+            if [ "${args_list[2]}" = "-g" ] || \
+                [ "${args_list[2]}" = "--global" ]; then
+                $0 start -g
+            else
+                $0 start $args_list_string
+            fi
             sleep 2
             $0 info
             exit 0
