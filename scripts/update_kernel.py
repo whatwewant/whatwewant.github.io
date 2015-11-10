@@ -109,8 +109,7 @@ def get_lastest_unstable_kernel():
     latest_kernel_version = kernels[0].split('-')[0].replace('v', '')
     print("Latest to release kernel: {0}".format(kernels[0]))
 
-    if latest_kernel_version in [get_kernel_version().replace('.0', ''), 
-            get_kernel_version()]:
+    if latest_kernel_version in [get_kernel_version().replace('.0', '')]:
         print('Current Linux Kernel({0}) is Lastest!'\
                 .format(get_kernel_version()))
         sys.exit(0)
