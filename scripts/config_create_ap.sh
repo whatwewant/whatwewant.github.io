@@ -21,7 +21,7 @@ $DTool --reinstall git hostapd iptables dnsmasq
 git clone https://github.com/oblique/create_ap.git $PACKAGE_DIR/create_ap
 
 # install
-cd /tmp/create_ap
+cd $PACKAGE_DIR/create_ap
 sudo make install
 
 # end
