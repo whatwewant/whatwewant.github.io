@@ -13,6 +13,7 @@ set -e
 
 VIDEO_PATH=
 AUDIO_NAME=
+OPTION=
 
 checkDepends () {
     which $1 >> /dev/null 2>&1
@@ -27,19 +28,35 @@ depends () {
 }
 
 help() {
-    echo "$0 VideoFullPath [AudioName]"
+    echo "$0 [Options] VideoFullPath [AudioName]"
+    echo ""
+    echo "Options:"
+    echo "  -d,--directory  Extract video soundtracks of the whole directory."
+    echo "  -f,--file       Extract video soundtracks from file.(Default.)"
     exit 0
 }
 
-main () {
-    if [ $# -lt 1 ]; then
-        help;
-    fi
+parseOption () {
+    for arg in "$@";
+    do
+        case $arg in
+            -*)
+                OPTION=${OPTION:-$arg}
+                ;;
+            *)
+                if [ "$VIDEO_PATH" = "" ]; then
+                    VIDEO_PATH=$arg
+                else
+                    AUDIO_NAME=$arg
+                fi
+                ;;
+        esac
+    done
+}
 
-    depends;
-
-    VIDEO_PATH=$1 #"$(echo $1 | sed -r 's/[ ]+/\\ /g')"
-    AUDIO_NAME="$(basename ${2:-"$VIDEO_PATH"}).mp3"
+forOneFile() {
+    local VIDEO_PATH=$1 #"$(echo $1 | sed -r 's/[ ]+/\\ /g')"
+    local AUDIO_NAME="$(basename ${2:-"$VIDEO_PATH"}).mp3"
 
     if [ -e "$AUDIO_NAME" ]; then
         echo "File $AUDIO_NAME already exists."
@@ -66,6 +83,51 @@ main () {
         -of rawaudio "$VIDEO_PATH"
 }
 
+forOneDirectory() {
+    local videoPath=$1
+    if [ -f "$videoPath" ]; then
+        videoPath=$(dirname "$videoPath")
+    fi
+    for each in $videoPath/*;
+    do
+        local fullPath=$each # "$videoPath/$(basename $each)"
+        local nF=$(file -b --mime-type "$fullPath") 
+        case $nF in
+            video*)
+                ;;
+            *)
+                echo "Sorry, $each not a video file."
+                continue
+                ;;
+        esac
+
+        forOneFile "$fullPath" # "$videoPath/$(basename $each)"
+    done
+}
+
+main () {
+    if [ $# -lt 1 ]; then
+        help;
+    fi
+
+    depends;
+
+    parseOption "$@"
+
+    case $OPTION in
+        -d)
+            forOneDirectory "$VIDEO_PATH"
+            ;;
+        -f | "")
+            forOneFile "$VIDEO_PATH" "$AUDIO_NAME"
+            ;;
+        *)
+            echo "Error: "
+            echo "  Unknown Option."
+            help
+            ;;
+    esac
+}
+
 # Entrance
 main "$@";
-
