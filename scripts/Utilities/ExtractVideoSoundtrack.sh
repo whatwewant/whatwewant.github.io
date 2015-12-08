@@ -41,6 +41,19 @@ main () {
     VIDEO_PATH=$1 #"$(echo $1 | sed -r 's/[ ]+/\\ /g')"
     AUDIO_NAME="$(basename ${2:-"$VIDEO_PATH"}).mp3"
 
+    if [ -e "$AUDIO_NAME" ]; then
+        echo "File $AUDIO_NAME already exists."
+        read -p "Are you sure to cover it ? (y/N): " answer
+        # read -p answer
+        case $answer in
+            Y*|y*)
+                ;;
+            *)
+                exit -1
+                ;;
+        esac
+    fi
+
     echo "****************************************************************"
     echo "* Extract Video Soundtrack"
     echo "*     FROM: $(basename $VIDEO_PATH) (Path: $(dirname $VIDEO_PATH))"
