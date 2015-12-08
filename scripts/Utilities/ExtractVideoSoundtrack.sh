@@ -73,7 +73,8 @@ forOneFile() {
 
     echo "****************************************************************"
     echo "* Extract Video Soundtrack"
-    echo "*     FROM: $(basename $VIDEO_PATH) (Path: $(dirname $VIDEO_PATH))"
+    echo "*     FROM: $(basename "$VIDEO_PATH")"
+    echo "*         (Path: $(dirname $VIDEO_PATH))"
     echo "*     TO: $AUDIO_NAME"
     echo "****************************************************************"
     mencoder -o "$AUDIO_NAME" \
