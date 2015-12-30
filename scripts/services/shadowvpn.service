@@ -1,0 +1,12 @@
+[Unit]
+Description=Shadowvpn Client Service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/shadowvpn -c /etc/shadowvpn/client.conf -s restart 
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

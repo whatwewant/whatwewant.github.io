@@ -8,12 +8,28 @@ PACKAGE_DIR=/tmp/src
 CONFIG_DIR=$HOME/.config/Cud
 LOG_FILE=$CONFIG_DIR/INSTALL_PACKAGES_${DATE_TODAY}.log
 
+depends () {
+    command=$1
+    package=$2
+    which $command >> /dev/null 2>&1
+    if [ ! $? -eq 0 ]; then
+        if [ "$package" != "" ]; then
+            downloadLog $package
+        else
+            downloadLog $command
+        fi
+    fi
+}
+
 # FUNCTION
 initialize () {
     sudo ls /tmp >> /dev/null 2>&1
+    . $CURRENT_PATH/BaseFunctionSets.sh
     [[ ! -d $CONFIG_DIR ]] && mkdir -p $CONFIG_DIR
     [[ ! -d $PACKAGE_DIR ]] && mkdir -p $PACKAGE_DIR
     export PATH=$CURRENT_PATH:$PATH
+
+    depends pip python-pip
 }
 
 # Ctrl-C to exit
