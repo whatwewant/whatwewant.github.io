@@ -30,3 +30,6 @@ COPY ./Commands/wifi.sh wifi
 
 # 6. update_kernel
 COPY ./update_kernel.py update_kernel
+
+# 7. zshrc 
+copy $CURRENT_PATH/../confs/zshrc $HOME/.zshrc

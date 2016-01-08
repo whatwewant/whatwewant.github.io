@@ -12,7 +12,6 @@ startLog
 
 sudo add-apt-repository -y ppa:noobslab/themes
 sudo add-apt-repository -y ppa:noobslab/apps
-sudo add-apt-repository -y ppa:docky-core/ppa 
 sudo apt-get update
 
 case "$UBUNTU_VERSION" in
@@ -24,15 +23,36 @@ esac
 
 
 ## 安装mac主题
-downloadLog unity-tweak-tool
+# downloadLog unity-tweak-tool
 # downloadLog gnome-tweak-tool
 ## docky
-downloadLog docky
+# downloadLog docky
 ## 添加mac主题源 www.noobslab.com
 # sudo add-apt-repository -y ppa:noobslab/themes
 # sudo apt-get update
 case "$UBUNTU_VERSION" in
+    "15.10")
+        downloadLog macbuntu-icons-v6 macbuntu-ithemes-v6
+        downloadLog slingscold
+        downloadLog mutate
+        downloadLog plank macbuntu-plank-theme-v6
+        downloadLog macbuntu-bscreen-v6
+        cd && wget -O Mac.po http://drive.noobslab.com/data/Mac-15.10/change-name-on-panel/mac.po
+        cd /usr/share/locale/en/LC_MESSAGES; sudo msgfmt -o unity.mo ~/Mac.po;rm ~/Mac.po;cd
+        wget -O launcher_bfb.png http://drive.noobslab.com/data/Mac-15.10/launcher-logo/apple/launcher_bfb.png
+        sudo mv launcher_bfb.png /usr/share/unity/icons/
+        downloadLog unity-tweak-tool
+        # sudo apt-get install gnome-tweak-tool
+        downloadLog libreoffice-style-sifr
+        wget -O mac-fonts.zip http://drive.noobslab.com/data/Mac-15.10/macfonts.zip
+        sudo unzip mac-fonts.zip -d /usr/share/fonts; rm mac-fonts.zip
+        sudo fc-cache -f -v
+        downloadLog macbuntu-lightdm-v6
+        ;;
     "14.04")
+        sudo add-apt-repository -y ppa:docky-core/ppa 
+        downloadLog unity-tweak-tool
+        downloadLog docky
         # Replace 'Ubuntu Desktop' text with 'Mac' on the Panel
         cd /usr/share/locale/en/LC_MESSAGES/
         sudo msgfmt -o unity.mo ${script_path}/../icons/Mac.po
@@ -52,6 +72,9 @@ case "$UBUNTU_VERSION" in
 	    downloadLog indicator-synapse
         ;;
     "15.04")
+        sudo add-apt-repository -y ppa:docky-core/ppa 
+        downloadLog unity-tweak-tool
+        downloadLog docky
         downloadLog mbuntu-y-ithemes-v5
         downloadLog mbuntu-y-icons-v5
         downloadLog mbuntu-y-docky-skins-v5
@@ -67,12 +90,12 @@ case "$UBUNTU_VERSION" in
         downloadLog libreoffice-style-sifr
         downloadLog mbuntu-y-lightdm-v5
         ;;
-    *)
-	[[ -d "/tmp/Mac_Ubuntu" ]] && rm -rf /tmp/Mac_Ubuntu
-	git clone https://github.com/whatwewant/Mac_Ubuntu /tmp/Mac_Ubuntu
-	cd /tmp/Mac_Ubuntu
-	bash install.sh
-	;;
+    "12.04")
+	    [[ -d "/tmp/Mac_Ubuntu" ]] && rm -rf /tmp/Mac_Ubuntu
+        git clone https://github.com/whatwewant/Mac_Ubuntu /tmp/Mac_Ubuntu
+	    cd /tmp/Mac_Ubuntu
+	    bash install.sh
+	    ;;
 esac
 
 case "$UBUNTU_VERSION" in
