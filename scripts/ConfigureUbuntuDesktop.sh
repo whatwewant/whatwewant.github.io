@@ -449,8 +449,6 @@ config_pcs.sh
 install_shadowsocks_libev.sh
 # install monaco font
 install-monaco-font-ubuntu.sh
-# copy_scripts_to_usr_local_bin
-copy_scripts_to_usr_local_bin.sh
 # docker
 install_docker.sh
 # install sogou input method
@@ -467,6 +465,8 @@ install_webstorm.sh &
 install_IntelliJIdea.sh &
 # Eclipse
 install_eclipse.sh &
+# copy_scripts_to_usr_local_bin
+copy_scripts_to_usr_local_bin.sh
 
 # 安装Brackets.io , html, js
 # http://brackets.io
