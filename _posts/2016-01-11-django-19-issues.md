@@ -8,7 +8,7 @@ tags: ["django", "python", "web"]
 ---
 {% include JB/setup %}
 
-# Issue #1 Django MySQLdb
+### Issue #1 Django MySQLdb
 * Detail:
     * `No module named 'MySQLdb'`
 * Solved:
