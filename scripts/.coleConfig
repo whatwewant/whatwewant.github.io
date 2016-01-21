@@ -1,0 +1,3 @@
+BLOG_DIR=$HOME/.config/git/blog
+SCRIPT_DIR=$BLOG_DIR/scripts
+CONF_DIR=$BLOG_DIR/confs
