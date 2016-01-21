@@ -75,6 +75,7 @@ fi
 # Node Path
 if [ "${NODE_PATH}" = "" ]; then
     NODE_PATH="$HOME/.config/ProgramFiles/node_modules"
+    [[ ! -d $NODE_PATH ]] && mkdir -p $NODE_PATH
     [[ "$SHELL" = "/bin/zsh" ]] && \
         SH_PROFILE=$HOME/.zshrc || \
         SH_PROFILE=$HOME/.bashrc
