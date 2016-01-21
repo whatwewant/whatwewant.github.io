@@ -57,7 +57,7 @@ if [ "$?" != "0" ]; then
     echo ""
 fi
 
-source $SCRIPT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
+# source $SCRIPT_PATH/BaseFunctionSets.sh >> /dev/null 2>&1
 
 nvm --version >> /dev/null 2>&1
 if [ "$?" != "0" ]; then
