@@ -102,7 +102,7 @@ if [ "$PROJ_NAME" != "" ]; then
         exit -1
     fi
     mkdir ${APP_PATH}/${PROJ_NAME}
-    cp -r ${SCRIPT_PATH}/../confs/gulp ${APP_PATH}/${PROJ_NAME}
+    cp -r ${SCRIPT_PATH}/../confs/gulp/* ${APP_PATH}/${PROJ_NAME}
 fi
 
 echo ""
