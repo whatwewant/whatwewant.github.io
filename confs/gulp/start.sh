@@ -9,4 +9,4 @@ if [ "$NODE_PATH" = "" ] && [ ! -d "node_modules" ]; then
     sudo npm install --registry=https://registry.npm.taobao.org
 fi
 
-gulp || (sudo npm install && gulp)
+gulp || (sudo npm install --registry=https://registry.npm.taobao.org && gulp)
