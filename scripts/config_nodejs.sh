@@ -21,7 +21,7 @@ if [ "$?" != "0" ]; then
     source $profile >> /dev/null 2>&1
 fi
 
-which node >> /dev/null
+which nvm >> /dev/null
 if [ "$?" != "0" ]; then
     # sudo apt-get update
     # sudo apt-get install build-essential libssl-dev curl
@@ -32,7 +32,8 @@ if [ "$?" != "0" ]; then
     # test nvm (Node Version manager)
     nvm
     # install node
-    nvm install v0.10.31
+    # nvm install v0.10.31
+    nvm install v5.4.0
     # list node Version
     # nvm node
 fi

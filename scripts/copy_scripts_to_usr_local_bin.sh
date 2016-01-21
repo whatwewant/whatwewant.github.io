@@ -33,3 +33,6 @@ COPY ./update_kernel.py update_kernel
 
 # 7. zshrc 
 cp $CURRENT_PATH/../confs/zshrc $HOME/.zshrc
+
+# 8. gulp_app
+COPY config_gulp_app.sh gulp_app
