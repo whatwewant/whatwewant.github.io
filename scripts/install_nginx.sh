@@ -131,6 +131,7 @@ fi
 # sudo touch $BINARY_DIR/uninstall_nginx
 sudo bash -c "echo -e \" \
     echo \"Uninstall nginx now ...\" \n \
+    sudo killall nginx \n \
     sudo rm -rf $PREFIX \n \
     sudo rm -rf $BINARY_DIR/nginx \n \
     sudo rm -rf $CONF_PATH \n \
