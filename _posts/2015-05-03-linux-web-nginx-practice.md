@@ -41,6 +41,12 @@ tags: [linux, nginx, web, lnmp]
         * php-fpm 是一个守护进程(FastCGI进程管理器)用于替换PHP FastCGI的
         * 大部分附加功能, 对于高负载网站是非常有用的
     * 安装: sudo apt-get install php5-fpm
+    * 开启NGINX的PHP配置(下图)
+    * 测试NGINX配置是否正确:
+        * `$ nginx -t`
+    * 修改php-fpm监听配置(下图)
+    * 重启php-fpm服务:
+        * `$ service php-fpm restart`
     * 安装好后连同上面的nginx一同测试:
         *   现在创建一个探针文件保存在 /usr/share/nginx/html 目录下
         * (这个目录是nginx配置文件中的root目录).
@@ -48,6 +54,32 @@ tags: [linux, nginx, web, lnmp]
         * 添加代码: <? php phpinfo();
     * 启动php5-fpm服务: sudo service php5-fpm start
     * 访问浏览器: http://127.0.0.1/phpinfo.php
+
+    * ISSUE:
+        * `Page Error: file not found`
+        * Solved:
+            * 修改nginx.conf
+            * 修改 `fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;`
+            * 为 `fastcgi_param  SCRIPT_FILENAME  /usr/share/nginx/html$fastcgi_script_name;`
+            * 其中 `/usr/share/nginx/html` 为 nginx 的 html 目录, @TODO 似乎必须是绝对路径
+            * [Stack Overflow 相关问题](http://stackoverflow.com/questions/17808787/file-not-found-when-running-php-with-nginx)
+
+```
+# 开启NGINX的PHP配置
+        location ~ \.php$ {
+            root           html;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+# 修改php-fpm的监听端口，使适应NGINX的PHP配置
+# vim /etc/php5/fpm/pool.d/www.conf
+# 修改
+; listen = /var/run/php5-fpm.sock
+listen = 127.0.0.1:9000
+```
 
 * 4. 组合配置, 互相支持:
     * 1. 让php5支持mysql:
