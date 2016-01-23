@@ -7,7 +7,8 @@ PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
 
 NGINX_VERSION=1.8.0
-NGINX_TAR_GZ=${PACKAGE_DIR}/nginx-${NGINX_VERSION}.tar.gz
+NGINX_TAR_GZ_NAME=nginx-${NGINX_VERSION}.tar.gz
+NGINX_TAR_GZ=${PACKAGE_DIR}/${NGINX_TAR_GZ_NAME}
 # NEED CHECK, @TODO
 NGINX_TAR_GZ_PGP=${NGINX_TAR_GZ}.asc
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
@@ -61,6 +62,41 @@ CONFIG_OPTIONS="
 # --with-select_module 
 # --sbin-path=$BINARY_DIR
 
+echoError() {
+    local reason=$1
+    echo ""
+    echo "Error:"
+    echo "  $reason"
+    echo ""
+}
+
+checkMD5 () {
+    local md5sumResult=$(md5sum ${NGINX_TAR_GZ} | awk '{print $1}')
+    local md5sum_1.7.0=017ca65f0101915143b7211977bb5dd2
+    local md5sum_1.8.0=3ca4a37931e9fa301964b8ce889da8cb
+    local md5sum_1.9.0=487c26cf0470d8869c41a73621847268
+    case $NGINX_VERSION
+        1.9.0)
+            if [ "$md5sumResult" != "$md5sum_1.9.0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.9.0"
+                exit -1
+            fi
+            ;;
+        1.8.0)
+            if [ "$md5sumResult" != "$md5sum_1.8.0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.8.0"
+                exit -1
+            fi
+            ;;
+        1.7.0)
+            if [ "$md5sumResult" != "$md5sum_1.7.0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.7.0"
+                exit -1
+            fi
+            ;;
+    esac
+}
+
 # Update Sources
 sudo apt-get update
 
@@ -92,6 +128,9 @@ if [ ! -f $NGINX_TAR_GZ ]; then
     wget http://nginx.org/download/$NGINX_TAR_GZ -O $NGINX_TAR_GZ
     wget http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
 fi
+# check md5 for nginx-$NGINX_VERSION.tar.gz file
+checkMD5
+
 
 # src
 tar -zxvf ${PACKAGE_DIR}/nginx.tar.gz -C $SRC_DIR
