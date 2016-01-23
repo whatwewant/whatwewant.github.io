@@ -130,11 +130,11 @@ fi
 # fi
 # sudo touch $BINARY_DIR/uninstall_nginx
 sudo bash -c "echo -e \" \
-    echo "Uninstall nginx now ..." \
+    echo "Uninstall nginx now ..." \n \
     sudo rm -rf $PREFIX \n \
     sudo rm -rf $BINARY_DIR/nginx \n \
     sudo rm -rf $CONF_PATH \n \
     sudo rm -rf $NGINX_RUN_FILE_PATH \n \
-    echo "Uninstall nginx OK!"
+    echo "Uninstall nginx OK!" \n \
     \" > $BINARY_DIR/uninstall_nginx"
 sudo chmod a+x $BINARY_DIR/uninstall_nginx
