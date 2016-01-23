@@ -7,7 +7,9 @@ PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
 
 NGINX_VERSION=1.8.0
-NGINX_TAR_GZ=${PACKAGE_DIR}/nginx.tar.gz
+NGINX_TAR_GZ=${PACKAGE_DIR}/nginx-${NGINX_VERSION}.tar.gz
+# NEED CHECK, @TODO
+NGINX_TAR_GZ_PGP=${NGINX_TAR_GZ}.asc
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 ##################################
 # BASE PATHS
@@ -16,7 +18,7 @@ SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 #     Like: ...
 #           root html; # Here is a relative path, $PREFIX/html
 #           ...
-PREFIX=/var/nginx/www # default /usr/local/nginx
+PREFIX=/var/www/nginx # default /usr/local/nginx
 BINARY_DIR=/usr/sbin
 CONF_PATH=/etc/nginx
 NGINX_RUN_FILE_PATH=/var/nginx
@@ -28,6 +30,7 @@ TEMP_PATH=${NGINX_RUN_FILE_PATH}/tmp
 OTHER_PATH=${NGINX_RUN_FILE_PATH}/other
 
 # Config Options
+# More for stable version: http://nginx.org/en/linux_packages.html
 CONFIG_OPTIONS="
     --user=nginx
     --group=nginx
@@ -58,6 +61,9 @@ CONFIG_OPTIONS="
 # --with-select_module 
 # --sbin-path=$BINARY_DIR
 
+# Update Sources
+sudo apt-get update
+
 # build-essential
 $downloadTool build-essential
 
@@ -83,7 +89,8 @@ fi
 
 # tar.gz
 if [ ! -f $NGINX_TAR_GZ ]; then
-    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O $NGINX_TAR_GZ
+    wget http://nginx.org/download/$NGINX_TAR_GZ -O $NGINX_TAR_GZ
+    wget http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
 fi
 
 # src
@@ -105,6 +112,11 @@ make
 
 # install
 sudo make install
+
+# why no create $NGINX_RUN_FILE_PATH/tmp
+if [ ! -d "$NGINX_RUN_FILE_PATH/tmp" ]; then
+    sudo mkdir -p $NGINX_RUN_FILE_PATH/tmp
+fi
 
 # ln sbin
 # if [ -f ${BINARY_DIR}/nginx ]; then
