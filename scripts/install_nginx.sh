@@ -9,9 +9,23 @@ SRC_DIR=$PACKAGE_DIR
 NGINX_VERSION=1.8.0
 NGINX_TAR_GZ=${PACKAGE_DIR}/nginx.tar.gz
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
-PREFIX=/usr
+##################################
+# BASE PATHS
+# PREFIX keeps default server files: like index.html ..
+#   You will use relative path in nginx.conf:server segment
+#     Like: ...
+#           root html; # Here is a relative path, $PREFIX/html
+#           ...
+PREFIX=/var/nginx/www # default /usr/local/nginx
 BINARY_DIR=/usr/sbin
-CONF_PATH=/etc/nginx/nginx.conf
+CONF_PATH=/etc/nginx
+NGINX_RUN_FILE_PATH=/var/nginx
+###################################
+LOG_PATH=${NGINX_RUN_FILE_PATH}/logs
+PID_PATH=${NGINX_RUN_FILE_PATH}/run
+LOCK_PATH=${NGINX_RUN_FILE_PATH}/lock
+TEMP_PATH=${NGINX_RUN_FILE_PATH}/tmp
+OTHER_PATH=${NGINX_RUN_FILE_PATH}/other
 
 # Config Options
 CONFIG_OPTIONS="
@@ -19,20 +33,25 @@ CONFIG_OPTIONS="
     --group=nginx
     --prefix=$PREFIX
     --sbin-path=$BINARY_DIR
-    --conf-path=$CONF_PATH
-    --error-log-path=/var/log/nginx/error.log
-    --pid-path=/var/run/nginx/nginx.pid
-    --with-http_ssl_module
+    --conf-path=${CONF_PATH}/nginx.conf
+    --error-log-path=${LOG_PATH}/error.log
+    --pid-path=${PID_PATH}/nginx.pid
+    --lock-path=${LOCK_PATH}/nginx.lock
+    --http-log-path=${LOG_PATH}/access.log
+    --http-client-body-temp-path=${TEMP_PATH}/client
+    --http-proxy-temp-path=${TEMP_PATH}/proxy
+    --http-fastcgi-temp-path=${TEMP_PATH}/fastcgi
     --with-poll_module
+    --with-http_ssl_module
     --with-http_flv_module
+    --with-http_spdy_module
     --with-http_gzip_static_module
-    --http-log-path=/var/log/nginx/access.log
-    --http-client-body-temp-path=/var/tmp/nginx/client
-    --http-proxy-temp-path=/var/tmp/nginx/proxy
-    --http-fastcgi-temp-path=/var/tmp/nginx/fcgi
+    --with-http_ssl_module
     --with-http_stub_status_module
     --with-http_realip_module
+    --with-pcre-jit
     --with-ipv6
+    --with-debug
 "
 # --with-http_image_filter_module
 # --with-poll_module
@@ -99,10 +118,9 @@ sudo make install
 # fi
 # sudo touch $BINARY_DIR/uninstall_nginx
 sudo bash -c "echo -e \" \
-    sudo rm -rf $PREFIX/nginx \n \
+    sudo rm -rf $PREFIX \n \
     sudo rm -rf $BINARY_DIR/nginx \n \
     sudo rm -rf $CONF_PATH \n \
-    sudo rm -rf /var/run/nginx \n \
-    sudo rm -rf /var/log/nginx \n \
+    sudo rm -rf $NGINX_RUN_FILE_PATH \n \
     \" > $BINARY_DIR/uninstall_nginx"
 sudo chmod a+x $BINARY_DIR/uninstall_nginx
