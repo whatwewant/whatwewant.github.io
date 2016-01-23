@@ -1,12 +1,12 @@
 #!/bin/bash
 
-set -e
+# set -e
 
 downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
 
-NGINX_VERSION=1.6.2
+NGINX_VERSION=1.8.0
 NGINX_TAR_GZ=${PACKAGE_DIR}/nginx.tar.gz
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 PREFIX=/usr
