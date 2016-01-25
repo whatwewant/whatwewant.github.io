@@ -3,8 +3,8 @@ layout: post
 title: "Vsftpd 虚拟用户及其家目录的配置"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: "linux"
+tags: [linux, ftp, vsftpd, 虚拟用户, virtual user]
 ---
 {% include JB/setup %}
 
