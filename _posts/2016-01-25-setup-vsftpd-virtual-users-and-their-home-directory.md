@@ -8,6 +8,10 @@ tags: [linux, ftp, vsftpd, 虚拟用户, virtual user]
 ---
 {% include JB/setup %}
 
+### 参考
+* [How to setup virtual users for vsftpd with access to a specific sub directory?](http://askubuntu.com/questions/575523/how-to-setup-virtual-users-for-vsftpd-with-access-to-a-specific-sub-directory)
+* [在ubuntu下vsftpd建立虚拟用户的详解](http://blog.csdn.net/liangxanhai/article/details/8157922)
+
 ### 一.OS
 * `Ubuntu 14.04`
 
