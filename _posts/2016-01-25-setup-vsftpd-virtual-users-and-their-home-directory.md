@@ -49,6 +49,7 @@ hide_ids=YES
 #  虚拟用户配置 #
 #################
 # !important: 用户配置目录
+# 要自己新建: mkdir -p /etc/vsftp/users_conf
 # 假设已经新建用户, 其用户名为user1
 # 那么配置完$user_config_dir, vsftpd服务会去查找$user_config_dir/user1文件
 # $user_config_dir/user1 这个文件和/etc/vsftpd.conf一样, 所以你可以在这个目录下重新配置每个用户的家目录
@@ -56,7 +57,7 @@ hide_ids=YES
 #   创建目录: mkdir -p /var/www/web_user1 
 #   编写配置文件($user_config_dir/user1文件是自己新建的):
 #         内容为: local_root=/var/www/web_user1
-user_config_dir=/etc/vsftpd_user_conf
+user_config_dir=/etc/vsftpd/users_conf
 
 # PAM服务的名字， 匹配文件: /etc/pam.d/vsftpd
 pam_service_name=vsftpd
@@ -87,9 +88,9 @@ virtual_use_local_privs=YES
 * 4. 添加个本地用户给虚拟用户使用, 这些虚拟用户没有权限使用Shell
     * `useradd --home /home/vsftpd --gid nogroup -m --shell /bin/false vsftpd`
 * 5. 定义每个虚拟用户的访问目录(或叫权限)
-    * 涉及/etc/vsftpd.conf中的user_config_dir变量, 它的值为vsftpd_user_conf
+    * 涉及/etc/vsftpd.conf中的user_config_dir变量, 它的值为/etc/vsftpd/users_conf
     * 创建 $user_config_dir 目录
-        * `mkdir /etc/vsftpd_user_conf`
+        * `mkdir /etc/vsftpd/users_conf`
     * 其他请参考[四.覆盖VSFTPD配置文件(/etc/vsftpd.conf)](#四.覆盖VSFTPD配置文件(/etc/vsftpd.conf))中的配置
 
 ### 六.重启VSFTPD服务
