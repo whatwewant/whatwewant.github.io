@@ -36,3 +36,8 @@ cp $CURRENT_PATH/../confs/zshrc $HOME/.zshrc
 
 # 8. gulp_app
 COPY config_gulp_app.sh gulp_app
+
+# 9. pip source
+[[ ! -d "$HOME/.pip" ]] && mkdir $HOME/.pip \
+    || sudo chown -R $USER:$USER $HOME/.pip
+cp $CURRENT_PATH/../confs/pip.conf $HOME/.pip/pip.conf
