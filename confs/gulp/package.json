@@ -1,22 +1,22 @@
 {
   "name": "gulp-app",
   "version": "1.0.0",
-  "description": "Simple Markdown Editor",
+  "description": "Start A Web Project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/whatwewant/markdown-editor"
+    "url": "https://github.com/whatwewant/*"
   },
   "keywords": [
-    "markdown"
+    "gulp-app"
   ],
   "author": "Cole Smith <tobewhatwewant@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/whatwewant/markdown-editor/issues"
+    "url": "https://github.com/whatwewant/*/issues"
   },
   "devDependencies": {
     "gulp": "~3.8.11",
