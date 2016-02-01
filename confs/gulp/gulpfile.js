@@ -1,4 +1,4 @@
-/* 
+/*
  * gulp
  * 建议使用Google Chrome, 并安装gulp-livereload扩展
  * */
@@ -18,17 +18,18 @@ var sourcemaps = require('gulp-sourcemaps'); // js 空白问题帮助
 var st = require('st');
 var http = require('http');
 // var watchPath = require('gulp-watch-path'); // 监测改动
-var react = require('gulp-react')
+var react = require('gulp-react');
 
 // config parameters
 var config = {
     server: '127.0.0.1',
-    server_ports: [8000, 8080, 8088, 8888, 
+    server_ports: [8000, 8080, 8088, 8888,
                     4000, 3000, 12345, 2345, 9000]
 };
 
 gulp.task('uglify', function () {
-    gulp.src('src/js/**/*.js')
+    if (! gulp.product) {
+      gulp.src('src/js/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         // final product
@@ -37,16 +38,37 @@ gulp.task('uglify', function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'));
         // .pipe(notify({message: 'Uglify Js Complete.'}));
+    } else {
+      gulp.src('src/js/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        // final product
+        .pipe(concat('main.js'))
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('dist/js'));
+        // .pipe(notify({message: 'Uglify Js Complete.'}));
+    }
 });
 
 gulp.task('minifyCss', function () {
-    gulp.src('src/css/**/*.css')
+    if (! gulp.product) {
+      gulp.src('src/css/**/*.css')
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         // final product
         // .pipe(concat('main.css'))
         .pipe(minifyCss())
         .pipe(gulp.dest('dist/css'))
         .pipe(notify({message: 'MinifyCss Complete.'}));
+    } else {
+      gulp.src('src/css/**/*.css')
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        // final product
+        .pipe(concat('main.css'))
+        .pipe(minifyCss())
+        .pipe(gulp.dest('dist/css'))
+        .pipe(notify({message: 'MinifyCss Complete.'}));
+    }
 });
 
 gulp.task('less', function () {
@@ -128,4 +150,14 @@ gulp.task('watch', function () {
 
 });
 
-gulp.task('default', ['server', 'watch']);
+// Set Product Status
+gulp.task('setProduct', function () {
+   gulp.product = true;
+});
+
+// Product
+gulp.task('product', ['setProduct', 'watch']);
+
+// @TODO when it runs server, livereload doesnot work correctly.
+// gulp.task('default', ['server', 'watch']);
+gulp.task('default', ['watch']);
