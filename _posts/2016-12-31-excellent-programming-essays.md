@@ -10,6 +10,9 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 2月
+* 2016-02-08
+    * [Ubuntu14.04安装ionic FrameWork](http://iove86.sinaapp.com/ionic/ubuntu14-04-install-ionic-framework.html)
+    * [Ubuntu 15.04开发Ionic之环境配置](https://segmentfault.com/a/1190000003809277)
 * 2016-02-01
     * [介绍一些适用于 Web 开发者的 Atom 编辑器插件](https://linux.cn/article-6871-1.html)
     * [Remarkjs: 使用 Markdown 做幻灯片](http://www.webrube.com/markdown-remarkjs-web_rube/3585)
