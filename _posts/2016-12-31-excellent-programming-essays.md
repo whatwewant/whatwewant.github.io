@@ -10,6 +10,8 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 2月
+* 2016-02-13
+    * [分享一个 HTTPS A+ 的 nginx 配置](https://www.textarea.com/zhicheng/fenxiang-yige-https-a-di-nginx-peizhi-320/)
 * 2016-02-08
     * [Ubuntu14.04安装ionic FrameWork](http://iove86.sinaapp.com/ionic/ubuntu14-04-install-ionic-framework.html)
     * [Ubuntu 15.04开发Ionic之环境配置](https://segmentfault.com/a/1190000003809277)
