@@ -43,7 +43,7 @@ DOMAIN_KEY=${DOMAIN}.key
 DOMAIN_CRT=${DOMAIN}.crt
 DOMAIN_CRT_UNSIGNED=${DOMAIN}.unsigned.crt
 DOMAIN_CSR=${DOMAIN}.csr
-DOMAIN_SSL_DIR=${DOMAIN_DIR}/SSL_CONF
+DOMAIN_SSL_DIR=/etc/letsenscript/${DOMAIN}
 
 #1 创建临时配置目录, 并切换目录
 [[ ! -d "$CONF_DIR" ]] && \
