@@ -108,14 +108,15 @@ cat $DOMAIN_CRT_UNSIGNED lets-encrypt-x1-cross-signed.pem > $DOMAIN_CRT
 echo -e "\e[01;32mNew cert: $DOMAIN_CRT has been generated\e[0m"
 
 #7 Move DOMAIN key and signed crt to DOMAIN_SSL_DIR
+echo "创建证书目录: "
 [[ ! -d $DOMAIN_SSL_DIR ]] && \
-    mkdir -p $DOMAIN_SSL_DIR || \
+    sudo mkdir -p $DOMAIN_SSL_DIR || \
     (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
 echo ""
 echo "Move $DOMAIN_CRT to $DOMAIN_SSL_DIR"
-mv $DOMAIN_CRT $DOMAIN_SSL_DIR
+sudo mv $DOMAIN_CRT $DOMAIN_SSL_DIR
 echo "Move $DOMAIN_KEY to $DOMAIN_SSL_DIR"
-mv $DOMAIN_KEY $DOMAIN_SSL_DIR
+sudo mv $DOMAIN_KEY $DOMAIN_SSL_DIR
 echo ""
 
 # Tips
