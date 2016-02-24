@@ -10,6 +10,9 @@ tags: [collections]
 {% include JB/setup %}
 
 ### 2月
+* 2016-02-24
+    * [Nginx HTTPS 配置实践](https://iyaozhen.com/nginx-https-conf.html)
+    * [Nginx HTTPS 配置自动生成](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
 * 2016-02-13
     * [分享一个 HTTPS A+ 的 nginx 配置](https://www.textarea.com/zhicheng/fenxiang-yige-https-a-di-nginx-peizhi-320/)
 * 2016-02-08
