@@ -11,6 +11,7 @@ tags: [collections]
 
 ### 2月
 * 2016-02-24
+    * [淘宝全站HTTPS实践](http://velocity.oreilly.com.cn/2015/index.php?func=session&id=8)
     * [Nginx HTTPS 配置实践](https://iyaozhen.com/nginx-https-conf.html)
     * [Nginx HTTPS 配置自动生成](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
 * 2016-02-13
