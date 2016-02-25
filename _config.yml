@@ -11,8 +11,9 @@ paginate: 10
 encoding: utf-8
 # pygments: true
 # highlighter: pygments
-highlighter: rouge # githu page
-markdown: redcarpet
+highlighter: rouge # github page
+# markdown: redcarpet
+markdown: kramdown # github page
 redcarpet:
   extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data", "tables"]
 
