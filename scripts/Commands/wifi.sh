@@ -48,7 +48,8 @@ Menu () {
 }
 
 getUser () {
-    userInfo=$(create_ap --list-running | grep -i wlan)
+    TO_NETWORK_INTERFACE=$(cat $WIFI_INFO_FILE | grep TO_NIC | awk -F '"' '{print $4}')
+    userInfo=$(create_ap --list-running | grep -i $TO_NETWORK_INTERFACE)
     # [[ "$userInfo" = "" ]] && userCount=0 || \
     #    userCount=$(echo $userInfo | wc -l)
     userCount=0
@@ -157,8 +158,9 @@ run () {
             ps -e | grep -i create_ap >> /dev/null 2>&1
             [[ "$?" != "0" ]] && echo "WIFI State: OFF" || \
                 (
-                    echo "WIFI State: ON" && \
-                    [ ! -f "$WIFI_INFO_FILE" ] && WIFI_INFO_FILE=$wifi_file_name && \
+                    # echo "WIFI State: ON" && \
+                    [ ! -f "$WIFI_INFO_FILE" ] && \
+                        WIFI_INFO_FILE=$wifi_file_name
                     cat $WIFI_INFO_FILE
                 )
             exit 0
