@@ -75,7 +75,7 @@ checkMD5 () {
     local md5sum_1.7.0=017ca65f0101915143b7211977bb5dd2
     local md5sum_1.8.0=3ca4a37931e9fa301964b8ce889da8cb
     local md5sum_1.9.0=487c26cf0470d8869c41a73621847268
-    case $NGINX_VERSION
+    case $NGINX_VERSION in
         1.9.0)
             if [ "$md5sumResult" != "$md5sum_1.9.0" ]; then
                 echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.9.0"
