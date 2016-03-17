@@ -72,25 +72,25 @@ echoError() {
 
 checkMD5 () {
     local md5sumResult=$(md5sum ${NGINX_TAR_GZ} | awk '{print $1}')
-    local md5sum_1.7.0=017ca65f0101915143b7211977bb5dd2
-    local md5sum_1.8.0=3ca4a37931e9fa301964b8ce889da8cb
-    local md5sum_1.9.0=487c26cf0470d8869c41a73621847268
+    local md5sum_1_7_0=017ca65f0101915143b7211977bb5dd2
+    local md5sum_1_8_0=3ca4a37931e9fa301964b8ce889da8cb
+    local md5sum_1_9_0=487c26cf0470d8869c41a73621847268
     case $NGINX_VERSION in
         1.9.0)
-            if [ "$md5sumResult" != "$md5sum_1.9.0" ]; then
-                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.9.0"
+            if [ "$md5sumResult" != "$md5sum_1_9_0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1_9_0"
                 exit -1
             fi
             ;;
         1.8.0)
-            if [ "$md5sumResult" != "$md5sum_1.8.0" ]; then
-                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.8.0"
+            if [ "$md5sumResult" != "$md5sum_1_8_0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1_8_0"
                 exit -1
             fi
             ;;
         1.7.0)
-            if [ "$md5sumResult" != "$md5sum_1.7.0" ]; then
-                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1.7.0"
+            if [ "$md5sumResult" != "$md5sum_1_7_0" ]; then
+                echoError "$NGINX_TAR_GZ_NAME md5sum doest match $md5sum_1_7_0"
                 exit -1
             fi
             ;;
@@ -125,7 +125,7 @@ fi
 
 # tar.gz
 if [ ! -f $NGINX_TAR_GZ ]; then
-    wget http://nginx.org/download/$NGINX_TAR_GZ -O $NGINX_TAR_GZ
+    wget http://nginx.org/download/$NGINX_TAR_GZ_NAME -O $NGINX_TAR_GZ
     wget http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
 fi
 # check md5 for nginx-$NGINX_VERSION.tar.gz file
@@ -133,7 +133,7 @@ checkMD5
 
 
 # src
-tar -zxvf ${PACKAGE_DIR}/nginx.tar.gz -C $SRC_DIR
+tar -zxvf $NGINX_TAR_GZ -C $SRC_DIR
 
 # 建立nginx组
 id nginx >> /dev/null 2>&1
