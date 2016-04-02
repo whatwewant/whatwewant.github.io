@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Excellent Programming Essays"
+title: "值得一读的文章"
 keywords: [""]
 description: "好文章收藏"
 category: "Reading"
