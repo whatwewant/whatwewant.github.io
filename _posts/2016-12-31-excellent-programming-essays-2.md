@@ -19,6 +19,8 @@ tags: [collections]
     * [玩物圈前端技术栈总结（React+Redux）](https://segmentfault.com/a/1190000004660725)
     * [React.js 2016 最佳实践](http://www.alloyteam.com/2016/01/reactjs-best-practices-for-2016/)
     * [2016React大会之React展望](http://www.alloyteam.com/2016/04/reactjs2016-what-lies-ahead/)
+    * [Webpack 使用](https://segmentfault.com/a/1190000004172052)
+    * [RESTful API 设计指南](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
 
 ### 4月
 * 2016-04-02
