@@ -17,6 +17,8 @@ tags: [collections]
     * [Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)
     * [React和Redux开发资源整理](https://abramstyle.com/title/)
     * [玩物圈前端技术栈总结（React+Redux）](https://segmentfault.com/a/1190000004660725)
+    * [React.js 2016 最佳实践](http://www.alloyteam.com/2016/01/reactjs-best-practices-for-2016/)
+    * [2016React大会之React展望](http://www.alloyteam.com/2016/04/reactjs2016-what-lies-ahead/)
 
 ### 4月
 * 2016-04-02
