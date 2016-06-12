@@ -28,6 +28,15 @@ menu() {
     echo ""
     echo "Example: "
     echo "  $0 example.com /var/www \"DNS:exmaple.com,DNS:whaterver.example.com\""
+    echo ""
+    echo "More: "
+    echo "  Take care: DOMAIN/.well-known/acme-challenge/ must can be visited. You can use nginx location config.)"
+    echo "  Nginx server port 80 conf add: "
+    echo "    ..."
+    echo "    location /.well-known {"
+    echo "      alias DOMAIN_DIR/.well-known;"
+    echo "    }"
+    echo ""
 }
 
 if [ ! ${#*} -eq 3 ]; then
@@ -43,7 +52,7 @@ DOMAIN_KEY=${DOMAIN}.key
 DOMAIN_CRT=${DOMAIN}.crt
 DOMAIN_CRT_UNSIGNED=${DOMAIN}.unsigned.crt
 DOMAIN_CSR=${DOMAIN}.csr
-DOMAIN_SSL_DIR=/etc/letsenscript/${DOMAIN}
+DOMAIN_SSL_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}
 
 #1 创建临时配置目录, 并切换目录
 [[ ! -d "$CONF_DIR" ]] && \
