@@ -24,9 +24,11 @@ ACME_TINY=$CONF_DIR/acme_tiny.py
 
 menu() {
     echo "Usage: "
+    echo "  $0 DOAMIN DOMAIN_DIR"
     echo "  $0 DOAMIN DOMAIN_DIR DOMAINS_DNS"
     echo ""
     echo "Example: "
+    echo "  $0 example.com /var/www # DEFAULT: DNS: none/www/static/live"
     echo "  $0 example.com /var/www \"DNS:exmaple.com,DNS:whaterver.example.com\""
     echo ""
     echo "More: "
@@ -39,13 +41,17 @@ menu() {
     echo ""
 }
 
-if [ ! ${#*} -eq 3 ]; then
+if [ ${#*} -lt 2 ] || [ ${#*} -gt 3 ]; then
     menu
     exit -1
 else
     DOMAIN=$1
     DOMAIN_DIR=$2
-    DOMAINS_DNS=$3
+    if [ "$3" != "" ]; then
+        DOMAINS_DNS=$3
+    else
+        DOMAINS_DNS="DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN"
+    fi
 fi
 
 DOMAIN_KEY=${DOMAIN}.key
@@ -266,5 +272,5 @@ echo ""
 
 # Cron 定时更新证书(每月)
 # crontab -e
-# 0 0 1 * * /etc/nginx/certs/letsencrypt_cmd.sh $DOMAIN $DOMAIN_DIR "DNS:$DOMAIN,DNS:www.$DOMAIN" >> /var/log/lets-encrypt.log 2>&1
+# 0 0 1 * * /etc/nginx/certs/letsencrypt_cmd.sh $DOMAIN $DOMAIN_DIR "DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN" >> /var/log/lets-encrypt.log 2>&1
 
