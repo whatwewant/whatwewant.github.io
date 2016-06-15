@@ -178,7 +178,7 @@ server {
 
     location ^~ /.well-known/acme-challenge/ {
         alias       $ACME_CHALLENGE_DIR;
-        try_files   $uri =404;
+        try_files   \$uri =404;
     }
 
     location / {
