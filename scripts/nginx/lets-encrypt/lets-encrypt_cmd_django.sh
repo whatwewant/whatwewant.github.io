@@ -261,8 +261,8 @@ server {
         proxy_set_header        X-Via       Qingdao.Aliyun;
         proxy_set_header        Connection  \"\";
         proxy_set_header        Host        $DOMAIN;
-        proxy_set_header        X-Real_IP   $remote_addr;
-        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Real_IP   \$remote_addr;
+        proxy_set_header        X-Forwarded-For \$proxy_add_x_forwarded_for;
 
         include uwsgi_params;
         uwsgi_pass django;
