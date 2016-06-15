@@ -122,7 +122,7 @@ python $ACME_TINY --account-key $ACCOUNT_KEY --csr $DOMAIN_CSR --acme-dir $ACME_
 
 
 #6 Letsencrypt 中间证书签名申请的证书, 否则手机浏览器不信任
-LETENSCRIPT_SIGNED=lets-encrypt-x1-cross-signed.pem
+LETENSCRIPT_SIGNED=lets-encrypt-x3-cross-signed.pem
 if [ ! -f $LETENSCRIPT_SIGNED ]; then
     wget https://letsencrypt.org/certs/$LETENSCRIPT_SIGNED -O intermediate.pem -o /dev/null
 fi
