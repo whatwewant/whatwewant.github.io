@@ -69,9 +69,10 @@ NGINX_SERVER_CONF=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.nginx.conf
         (echo "Error: #0 创建网站NGINX配置目录失败: $NGINX_SERVER_CONF_DIR" && exit -1))
 
 #1 创建临时配置目录, 并切换目录
-[[ ! -d "$CONF_DIR" ]] && \
-    (mkdir -p $CONF_DIR || \
-      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1))
+[[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
+mkdir -p $CONF_DIR || \
+      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1)
+# Change Develop Dir
 cd $CONF_DIR
 
 #2 产生ACCOUNT_KEY
