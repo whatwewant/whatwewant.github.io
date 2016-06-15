@@ -31,14 +31,14 @@ menu() {
     echo "  $0 example.com /var/www # Defualt DNS: None/www/static/live"
     echo "  $0 example.com /var/www \"DNS:exmaple.com,DNS:whaterver.example.com\""
     echo ""
-    echo "More: "
-    echo "  Take care: DOMAIN/.well-known/acme-challenge/ must can be visited. You can use nginx location config.)"
-    echo "  Nginx server port 80 conf add: "
-    echo "    ..."
-    echo "    location /.well-known {"
-    echo "      alias DOMAIN_DIR/.well-known;"
-    echo "    }"
-    echo ""
+    # echo "More: "
+    # echo "  Take care: DOMAIN/.well-known/acme-challenge/ must can be visited. You can use nginx location config.)"
+    # echo "  Nginx server port 80 conf add: "
+    # echo "    ..."
+    # echo "    location /.well-known {"
+    # echo "      alias DOMAIN_DIR/.well-known;"
+    # echo "    }"
+    # echo ""
 }
 
 if [ ${#*} -lt 2 ] || [ ${#*} -gt 3 ]; then
@@ -53,6 +53,42 @@ else
         DOMAINS_DNS="DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN"
     fi
 fi
+
+echo "
+# Basic Config:
+
+server {
+    server_name www.$DOMAIN $DOMAIN;
+    server_tokens off;
+
+    access_log /dev/null;
+
+    if (\$request_method !~ ^(GET|HEAD|POST|PUT|DELETE)$) {
+        return 444;
+    }
+
+    location ^~ /.well-known/acme-challenge/ {
+        alias       $ACME_CHALLENGE_DIR;
+        try_files   \$uri =404;
+    }
+
+    location / {
+        rewrite     ^/(.*)$ https://$DOMAIN/\$1 permanent;
+    }
+}
+
+#########################
+# Make sure you have the similar config like above !
+#########################
+"
+
+read -p "Are you sure have the similar config ? (y|N): " ANSWER
+while [ "$ANSWER" != "Y" ] || [ "$ANSWER" != "y" ]; do
+    echo ""
+    echo "Invalid Input. Try again. (C-c to quit)"
+    read -p "Are you sure have the similar config ? (y|N): " ANSWER
+done
+
 
 DOMAIN_KEY=${DOMAIN}.key
 DOMAIN_CRT=${DOMAIN}.crt
