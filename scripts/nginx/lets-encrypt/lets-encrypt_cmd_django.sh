@@ -237,7 +237,7 @@ server {
         expires     1d;
     }
 
-    location ^~ /static/ {
+    location ^~ /static {
         root        $DOMAIN_DIR/static;
         add_header  Access-Control-Allow-Origin *;
         expires     max;
