@@ -83,7 +83,13 @@ server {
 "
 
 read -p "Are you sure have the similar config ? (y|N): " ANSWER
-while [ "$ANSWER" != "Y" ] || [ "$ANSWER" != "y" ]; do
+while [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]; do
+
+    if [ "$ANSWER" = "N" ] || [ "$ANSWER" = "n" ]; then
+        echo "You have cancel the action."
+        exit -1
+    fi
+
     echo ""
     echo "Invalid Input. Try again. (C-c to quit)"
     read -p "Are you sure have the similar config ? (y|N): " ANSWER
