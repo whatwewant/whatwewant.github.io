@@ -220,6 +220,12 @@ server {
         return 444;
     }
 
+    # open subdomain
+    # if (\$http_host ~* \"^(.*).$DOMAIN$\") {
+    #     set $domain $1;
+    #     rewrite ^(.*) https://\$domain.$DOMAIN break;
+    # }
+
     location ^~ /.well-known/acme-challenge/ {
         alias       $ACME_CHALLENGE_DIR;
         try_files   \$uri =404;
@@ -266,9 +272,10 @@ server {
         return          444;
     }
 
-    if (\$host != '$DOMAIN') {
-        rewrite ^/(.*)$ https://$DOMAIN/\$1 permanent;
-    }
+    # About Subdomain
+    # if (\$host != '$DOMAIN') {
+    #     rewrite ^/(.*)$ https://$DOMAIN/\$1 permanent;
+    # }
 
     location ~* (robots\\.txt|favicon\\.ico|crossdomain\\.xml|google4c90d18e696bdcf8\\.html|BingSiteAuth\\.xml)\$  {
         root        $DOMAIN_DIR/static;
