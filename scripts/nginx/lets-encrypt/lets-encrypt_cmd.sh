@@ -59,7 +59,7 @@ echo "
 # Basic Config:
 
 server {
-    server_name www.$DOMAIN $DOMAIN;
+    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
     server_tokens off;
 
     access_log /dev/null;
@@ -211,7 +211,7 @@ echo "#################################"
 echo ""
 echo "
 server {
-    server_name www.$DOMAIN $DOMAIN;
+    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
     server_tokens off;
 
     access_log /dev/null;
@@ -238,7 +238,7 @@ server {
 
 server {
     listen 443 ssl;
-    server_name www.$DOMAIN $DOMAIN;
+    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
     charset utf-8;
     client_max_body_size 100M;
     server_tokens off;
