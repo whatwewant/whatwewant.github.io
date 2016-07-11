@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e
+set -e
 
 downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
@@ -46,17 +46,22 @@ CONFIG_OPTIONS="
     --http-proxy-temp-path=${TEMP_PATH}/proxy
     --http-fastcgi-temp-path=${TEMP_PATH}/fastcgi
     --with-poll_module
+    --with-http_v2_module
     --with-http_ssl_module
     --with-http_flv_module
-    --with-http_spdy_module
+    --with-http_mp4_module
     --with-http_gzip_static_module
-    --with-http_ssl_module
+    --with-http_secure_link_module
     --with-http_stub_status_module
     --with-http_realip_module
     --with-pcre-jit
     --with-ipv6
+    --with-file-aio
+    --with-mail
+    --with-mail_ssl_module
     --with-debug
 "
+# --with-http_spdy_module
 # --with-http_image_filter_module
 # --with-poll_module
 # --with-select_module 
