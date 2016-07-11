@@ -125,8 +125,8 @@ fi
 
 # tar.gz
 if [ ! -f $NGINX_TAR_GZ ]; then
-    wget http://nginx.org/download/$NGINX_TAR_GZ_NAME -O $NGINX_TAR_GZ
-    wget http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
+    wget -c http://nginx.org/download/$NGINX_TAR_GZ_NAME -O $NGINX_TAR_GZ
+    wget -c http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
 fi
 # check md5 for nginx-$NGINX_VERSION.tar.gz file
 checkMD5
