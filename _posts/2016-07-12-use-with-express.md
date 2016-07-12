@@ -9,7 +9,7 @@ tags: [nodejs, web, server]
 {% include JB/setup %}
 
 ### @1 项目文件结构
-* ![ExpressProjectBasicFileStructure.png](/images/.ExpressProjectBasicFileStructure.png)
+* ![ExpressProjectBasicFileStructure.png](/images/ExpressProjectBasicFileStructure.png)
 * 解析
   * 1 `app.js`: 项目入口文件
   * 2 `app`: 项目目录
