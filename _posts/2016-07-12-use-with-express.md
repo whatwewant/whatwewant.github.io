@@ -189,3 +189,85 @@ app.use('/birds', birds); // 路径包含 /birds, /birds/about, /birds/*
 ```
 
 ### @7 中间件(Middleware)
+* (1)组成: F(req, res, next)
+  * 1 `req`: HTTP request 对象
+  * 2 `res`: HTTP response 对象
+  * 3 `next`: 下一个中间件(函数)
+* (2)作用:
+  * 1 执行任何代码
+  * 2 改变(修改、增加、删除)request和response对象的的属性
+  * 3 结束 request-response 循环，如`res.end([DATA])`直接响应，不再进入下一个中间件或者处理函数
+  * 4 调用栈中的下一个中间件(next);
+* (3)注意及FAQ:
+  * 如果当前中间件不能结束`请求-响应(request-response)`循环，那么必须调用`next()`来交给下一个中间件；`否则, 请求将会被挂起, 这也是HTTP请求一直没有反应的原因之一`。
+* (4)类型与使用
+  * 类型
+    * 1 `应用级(Application-level)`中间件
+    * 2 `路由级(Router-level)`中间件
+    * 3 `错误处理(Error-handling)`中间件
+    * 4 `內建(Built-in)`中间件
+    * 5 `第三方(Third-party)`中间件
+  * `Application-level`中间件
+    * 1 与`app对象`绑定的中间件叫应用级中间件, 也就是使用`app.use()`和`app.METHOD()`
+    * 2 `next('route')`会忽略剩下的所有中间件，之间到最后的处理函数（区别: next() 会进入下一个中间件）。
+    * 3 FAQ
+      * app.use(PATH, MIDDLEWARE): 只对PATH生效
+      * app.use(MIDDLEWARE): 对所有挂载路径生效
+  * `Router-level`中间件
+    * 1 与`router对象`绑定, 其中router = express.Router(), 也是使用`router.use()`和`router.METHOD()`
+    * 2 其他与应用级中间件一致
+  * `Error-handling`中间件
+    * 形式: function (err, req, res, next) { ... }
+    * next()不是必须执行，可以在这里报错res.end等
+  * `Third-party`中间件一般是应用级或者路由级中间件
+    * 常用
+      * `body-parser`: 解析body
+      * `cookie-parser`: 解析cookie
+      * `express-session`: 保存session
+      * `morgan`: 记录日志Logger
+      * `connect-multiparty`: 解析文件上传
+      * `server-favicon`: 处理favicon
+  * `Built-in`中间件
+    * `express.static(root, [options])`是唯一的內建中间件
+      * root指定的目录是静态文件的根目录
+      * options是可选参数
+  
+```javascript
+// 默认的可选参数
+express.static(path.join(__dirname, 'public'), {
+  // dofiles确定如何对待以`.`开头的文件或目录(也就是是否显示)，
+  // String类型, 可选值ignore, deny, allow，
+  // 其中ignore与deny的区别是，deny以403拒绝请求隐藏文件(以.开头)，ignore会在找不到文件的时候返回404
+  dofiles: 'ignore', 
+  
+  // 开启或禁用Etag生成标志
+  // 关于Etag: http://www.sxt.cn/u/324/blog/2188
+  etag: true,
+  
+  // 设置文件后缀，一般不用
+  extensions: false,
+  
+  // 
+  fallthrough: true,
+  
+  // 索引文件，一般不允许索引
+  index: 'index.html',
+  
+  // 响应头: Last-Modified
+  lastModified: true,
+  
+  // 响应头: Cache-Control (缓存)
+  // 值: 默认是毫秒的数字0, 可以设置
+  //  其他字符串值 '1d' = 86400000, '1h'=3600000, '1m'=60000, '5s'=5000
+  // More: https://www.npmjs.org/package/ms
+  maxAge: 0,
+  
+  // 默认true, 在路径是目录时跳转到/，也就是在路径后面加/
+  redirect: true,
+  
+  // 设置静态文件响应头函数
+  setHeaders: function (req, path, stat) {
+    // res.set('x-timestamp', Date.now());
+  }
+})
+```
