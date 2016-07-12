@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# set -e
+set -e
 
 downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
 
-NGINX_VERSION=1.8.0
+NGINX_VERSION=1.11.2
 NGINX_TAR_GZ_NAME=nginx-${NGINX_VERSION}.tar.gz
 NGINX_TAR_GZ=${PACKAGE_DIR}/${NGINX_TAR_GZ_NAME}
 # NEED CHECK, @TODO
@@ -46,17 +46,22 @@ CONFIG_OPTIONS="
     --http-proxy-temp-path=${TEMP_PATH}/proxy
     --http-fastcgi-temp-path=${TEMP_PATH}/fastcgi
     --with-poll_module
+    --with-http_v2_module
     --with-http_ssl_module
     --with-http_flv_module
-    --with-http_spdy_module
+    --with-http_mp4_module
     --with-http_gzip_static_module
-    --with-http_ssl_module
+    --with-http_secure_link_module
     --with-http_stub_status_module
     --with-http_realip_module
     --with-pcre-jit
     --with-ipv6
+    --with-file-aio
+    --with-mail
+    --with-mail_ssl_module
     --with-debug
 "
+# --with-http_spdy_module
 # --with-http_image_filter_module
 # --with-poll_module
 # --with-select_module 
@@ -125,8 +130,8 @@ fi
 
 # tar.gz
 if [ ! -f $NGINX_TAR_GZ ]; then
-    wget http://nginx.org/download/$NGINX_TAR_GZ_NAME -O $NGINX_TAR_GZ
-    wget http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
+    wget -c http://nginx.org/download/$NGINX_TAR_GZ_NAME -O $NGINX_TAR_GZ
+    wget -c http://nginx.org/download/$NGINX_TAR_GZ_PGP -O $NGINX_TAR_GZ_PGP
 fi
 # check md5 for nginx-$NGINX_VERSION.tar.gz file
 checkMD5
