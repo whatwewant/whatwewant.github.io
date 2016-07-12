@@ -3,13 +3,13 @@ layout: post
 title: "use with express"
 keywords: [""]
 description: ""
-category: ""
-tags: [""]
+category: "nodejs"
+tags: [nodejs, web, server]
 ---
 {% include JB/setup %}
 
-### @1 Express项目文件结构
-* [ExpressProjectBasicFileStructure.png](/images/.ExpressProjectBasicFileStructure.png)
+### @1 项目文件结构
+* [!ExpressProjectBasicFileStructure.png](/images/.ExpressProjectBasicFileStructure.png)
 * 解析
   * 1 `app.js`: 项目入口文件
   * 2 `app`: 项目目录
@@ -26,7 +26,7 @@ tags: [""]
     * `middlewares.js`: 全局中间件
   * 5 `gulp.js` + `package.json`: 项目开发配置文件
   
-### @2  Express 4.x 安装
+### @2 version 4.x 安装
 * 1 安装NPM
 * 2 [使用NVM安装和管理Node](https://github.com/creationix/nvm)
 * 3 安装 express
@@ -70,7 +70,7 @@ app.listen(3000, function () {
   * 安全操作: GET
   * 不安全操作: POST, PUT, DELETE
 
-### @5 Express 基本路由
+### @5 基本路由(Basic Route)
 * `app.METHOD(PATH, HANDLER)`
 
 ```
@@ -95,7 +95,7 @@ app.delete('/user/sama', function (req, res) {
 });
 ```
 
-### @6 Express 高级路由
+### @6 Express 高级路由(Advanced Route)
 * 1 路由方法(METHODS)
   * `app.all(PATH, MIDDLEWARE_HANDLER)`
     * 在对PATH路径的get/post/put/delete等请求前做处理
@@ -209,7 +209,7 @@ app.use('/birds', birds); // 路径包含 /birds, /birds/about, /birds/*
     * 5 `第三方(Third-party)`中间件
   * `Application-level`中间件
     * 1 与`app对象`绑定的中间件叫应用级中间件, 也就是使用`app.use()`和`app.METHOD()`
-    * 2 `next('route')`会忽略剩下的所有中间件，之间到最后的处理函数（区别: next() 会进入下一个中间件）。
+    * 2 `next('route')`会忽略剩下的所有中间件，之间到最后的处理函数（区别: next() 会进入下一个中间件，next(err)会跳到错误处理中间件(如果有)）。
     * 3 FAQ
       * app.use(PATH, MIDDLEWARE): 只对PATH生效
       * app.use(MIDDLEWARE): 对所有挂载路径生效
@@ -270,4 +270,37 @@ express.static(path.join(__dirname, 'public'), {
     // res.set('x-timestamp', Date.now());
   }
 })
+```
+
+### @8 模板引擎(Template Engines)
+* 常见
+  * pug (就是以前的jade, 默认)
+  * mustache
+  * ejs
+* 使用
+  * 1 设置模板引擎: `app.set('view engine', 'pug');`
+  * 2 设置模板根目录: `app.set('views', './app/views');`
+  * 3 渲染模板: `res.render(TEMPLATE_NAME, LOCALS);`, 其中TEMPLATE_NAME为./app/views下的文件, LOCALS为传入模板的文件
+  
+### @9 数据库集成(Database Integeration)
+* 常用
+  * MongoDB -> Mongoose
+  * Mysql
+  * PostgreSQL -> pg-promise
+  * Redis
+  * Neo4j
+* `mongoose`
+  * [DOCUMENT](http://mongoosejs.com/index.html)
+```javascript
+// 安装 mongoose
+// npm install mongoose
+var mongoose = require('mongoose');
+var URL = 'mongodb://localhost/DATABASE_NAME';
+mongoose.connect(URL, function (err, db) {
+  if (err) {
+    console.log('Error: MongoDB connect error, check whether mongo server has been running.');
+    console.log('Error Detail: ', err);
+  }
+});
+
 ```
