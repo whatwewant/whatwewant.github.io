@@ -77,7 +77,7 @@ var Kitten = mongoose.model('Kitten', kittySchema);
 // 现在就可以使用实例方法了
 var fluffy = new Kitten({name: 'fluffy'});
 fluffy.speak(); // "Meow name is fluffy."
-```
+
 
 // Step 7 (增Insert) 通过save方法，将保存实例(document)到数据库
 fluffy.save(function (err, fluffy) {
