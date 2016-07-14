@@ -19,7 +19,7 @@ SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 #     Like: ...
 #           root html; # Here is a relative path, $PREFIX/html
 #           ...
-PREFIX=/var/www/nginx # default /usr/local/nginx
+PREFIX=/usr/local/nginx # default /usr/local/nginx
 BINARY_DIR=/usr/sbin
 CONF_PATH=/etc/nginx
 NGINX_RUN_FILE_PATH=/var/nginx
@@ -155,6 +155,7 @@ cd $SRC_DIR_FINAL
 make
 
 # install
+[[ -f $BINARY_DIR/nginx ]] && sudo rm -rf $BINARY_DIR/nginx
 sudo make install
 
 # why no create $NGINX_RUN_FILE_PATH/tmp
