@@ -39,6 +39,7 @@ Person
 ```
 
 ### 二 查询API(Query)
+
 |Query Builder| Javascript |
 |:------------|:-----------| | |
 | $where(js) | $where |
