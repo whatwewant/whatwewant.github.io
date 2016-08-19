@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Express 项目开发架构汇总"
+title: "Express 项目基础架构及使用文档"
 keywords: [""]
 description: ""
 category: "nodejs"
