@@ -11,6 +11,19 @@ tags: [collections]
 
 ## 2016 年
 
+### 5月
+* 2016-05-13
+    * [ECMAScript 6入门](http://es6.ruanyifeng.com/)
+    * [React 入门教程](http://www.ruanyifeng.com/blog/2015/03/react.html)
+    * [React 测试入门](http://www.ruanyifeng.com/blog/2016/02/react-testing-tutorial.html)
+    * [Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)
+    * [React和Redux开发资源整理](https://abramstyle.com/title/)
+    * [玩物圈前端技术栈总结（React+Redux）](https://segmentfault.com/a/1190000004660725)
+    * [React.js 2016 最佳实践](http://www.alloyteam.com/2016/01/reactjs-best-practices-for-2016/)
+    * [2016React大会之React展望](http://www.alloyteam.com/2016/04/reactjs2016-what-lies-ahead/)
+    * [Webpack 使用](https://segmentfault.com/a/1190000004172052)
+    * [RESTful API 设计指南](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
+
 ### 4 月
 * 2016-04-02
     * [SASS用法指南](http://www.ruanyifeng.com/blog/2012/06/sass.html)
