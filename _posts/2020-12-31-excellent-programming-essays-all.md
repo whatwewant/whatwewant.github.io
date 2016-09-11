@@ -11,6 +11,11 @@ tags: [collections]
 
 ## 2016 年
 
+### 9月
+* [React中一个没人能解释清楚的问题——为什么要使用Virtual DOM](http://www.zcfy.cc/article/the-one-thing-that-no-one-properly-explains-about-react-why-virtual-dom-hashnode-1211.html`)
+* [React.createClass versus extends React.Component](http://www.zcfy.cc/article/react-createclass-versus-extends-react-component-toddmotto-620.html)
+* [2016最受欢迎的16个React应用](http://www.zcfy.cc/article/the-16-most-popular-react-links-so-far-in-2016-929.html)
+
 ### 5月
 * 2016-05-13
     * [ECMAScript 6入门](http://es6.ruanyifeng.com/)
