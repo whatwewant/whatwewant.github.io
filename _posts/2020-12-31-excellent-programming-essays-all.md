@@ -13,6 +13,7 @@ tags: [collections]
 
 ### 9月
 * 2016-09-12
+  * [传统 Ajax 已死，Fetch 永生](https://segmentfault.com/a/1190000003810652)
   * [Redux 简明教程](https://github.com/kenberkeley/redux-simple-tutorial)
   * [Redux 进阶教程](https://github.com/kenberkeley/redux-simple-tutorial/blob/master/redux-advanced-tutorial.md)
 * 2016-09-11
