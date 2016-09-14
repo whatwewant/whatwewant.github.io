@@ -12,8 +12,12 @@ tags: [collections]
 ## 2016 年
 
 ### 9月
-* 2016-09-12
+* 2016-09-13
+  * [react 实现pure render的时候，bind(this)隐患](https://segmentfault.com/a/1190000004295639)
+  * [React Binding Patterns: 5 Approaches for Handling `this`](https://medium.com/@housecor/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56?swoff=true)
+  * [react如何性能达到最大化(前传)，暨react为啥非得使用immutable.js](https://segmentfault.com/a/1190000004290333)
   * [传统 Ajax 已死，Fetch 永生](https://segmentfault.com/a/1190000003810652)
+* 2016-09-12
   * [Redux 简明教程](https://github.com/kenberkeley/redux-simple-tutorial)
   * [Redux 进阶教程](https://github.com/kenberkeley/redux-simple-tutorial/blob/master/redux-advanced-tutorial.md)
 * 2016-09-11
