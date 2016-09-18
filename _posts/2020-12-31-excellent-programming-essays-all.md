@@ -12,6 +12,8 @@ tags: [collections]
 ## 2016 年
 
 ### 9月
+* 2016-09-19
+  * [有哪些值得关注的技术博客（前端篇）](https://zhuanlan.zhihu.com/p/22276837?refer=passer)
 * 2016-09-18
   * [React-Router Tutorial](https://github.com/reactjs/react-router-tutorial)
   * [React-Router Docs](https://github.com/ReactTraining/react-router/tree/master/docs)
