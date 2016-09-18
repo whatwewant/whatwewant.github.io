@@ -12,6 +12,9 @@ tags: [collections]
 ## 2016 年
 
 ### 9月
+* 2016-09-18
+  * [React-Router Tutorial](https://github.com/reactjs/react-router-tutorial)
+  * [React-Router Docs](https://github.com/ReactTraining/react-router/tree/master/docs)
 * 2016-09-13
   * [react 实现pure render的时候，bind(this)隐患](https://segmentfault.com/a/1190000004295639)
   * [React Binding Patterns: 5 Approaches for Handling `this`](https://medium.com/@housecor/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56?swoff=true)
