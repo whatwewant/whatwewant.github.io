@@ -26,6 +26,14 @@ tags: [""]
             * 考虑 inline style + css modules 实现动画
         * v4 PC端UI vs 移动端UI
 
+### Week 2 (2016.09.12 - 2016.09.17)
+* Done
+  * 用React重构首页和列表页UI
+
+* Todo
+  * UI微调, 增加Alert/Confirm
+  * 异步对接数据API(Redux + React-redux + Redux-thunk)
+
 * 3 Willdo
   * @1 熟练Redux数据管理 
   * @2 React动画探索与实现
