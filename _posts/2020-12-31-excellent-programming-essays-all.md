@@ -13,6 +13,7 @@ tags: [collections]
 
 ### 9月
 * 2016-09-19
+  * [大前端工具集 - 聂微东](https://github.com/nieweidong/fetool)
   * [有哪些值得关注的技术博客（前端篇）](https://zhuanlan.zhihu.com/p/22276837?refer=passer)
 * 2016-09-18
   * [React-Router Tutorial](https://github.com/reactjs/react-router-tutorial)
