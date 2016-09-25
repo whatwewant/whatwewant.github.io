@@ -1,8 +1,10 @@
 
 which atom >> /dev/null
 if ! [ $? -eq 0 ]; then 
-  echo "Please install atom first.";
-  exit -1
+  # echo "Please install atom first.";
+  # exit -1
+  echo "Install atom ..."
+  brew cask install atom
 fi
 
 function Install() {
