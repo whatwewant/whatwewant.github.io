@@ -12,3 +12,9 @@ NVM_DIR="$HOME/.nvm"
 # Install Node
 echo "Install Node v6 by using nvm"
 nvm install v6
+
+echo "Loading node ..."
+nvm use v6
+
+echo "切换 NPM 源 ..."
+npm config set registry http://registry.npm.taobao.org
