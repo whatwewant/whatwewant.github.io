@@ -1,0 +1,13 @@
+#!/bin/bash
+
+which zsh >> /dev/null
+if [ "$?" != "0" ]; then
+  echo "Install zsh ..."
+  brew install zsh
+fi
+
+echo "Load zsh ..."
+/bin/zsh
+
+echo "Config oh-my-zsh ..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
