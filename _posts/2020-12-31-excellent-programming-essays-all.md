@@ -12,6 +12,10 @@ tags: [collections]
 ## 2016 年
 
 ### 9月
+* 2016-10-11
+  * [CSS加载 * Demon+CSS](http://projects.lukehaas.me/css-loaders/)
+* 2016-10-10
+  * [API杂谈](http://mp.weixin.qq.com/s?__biz=MzA4ODgwNjk1MQ==&mid=2653788337&idx=1&sn=96f41ec3de2a622e7bb1746f744a1305&mpshare=1&scene=1&srcid=1010HdxRgU6IG22rGIB9Wene#rd)
 * 2016-09-28
   * [设计师是怎样炼成的](http://www.aegeank.com/)
 * 2016-09-19
