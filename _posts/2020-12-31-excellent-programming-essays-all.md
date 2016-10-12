@@ -9,9 +9,13 @@ tags: [collections]
 
 {% include JB/setup %}
 
-## 2016 年
+### 2016 年
 
-### 9月
+#### 10月
+* 2016-10-13
+  * [抛弃变量，编写更加可读的JavaScript代码](http://www.zcfy.cc/article/more-readable-javascript-without-variables-339.html)
+  * [中文技术文档的风格约定](https://github.com/ruanyf/document-style-guide)
+  * [深入React：选择组件类型](http://www.zcfy.cc/article/digging-into-react-choosing-component-styles-656.html)
 * 2016-10-11
   * [CSS加载 * Demon+CSS](http://projects.lukehaas.me/css-loaders/)
   * [理解CSS模块化(CSS Module)](http://www.zcfy.cc/article/understanding-the-css-modules-methodology-1329.html)
@@ -20,6 +24,8 @@ tags: [collections]
   * [W3C vs. WhatWG HTML5 标准 - 差异记录](http://www.zcfy.cc/article/w3c-vs-whatwg-html5-specs-differences-documented-1364.html)
 * 2016-10-10
   * [API杂谈](http://mp.weixin.qq.com/s?__biz=MzA4ODgwNjk1MQ==&mid=2653788337&idx=1&sn=96f41ec3de2a622e7bb1746f744a1305&mpshare=1&scene=1&srcid=1010HdxRgU6IG22rGIB9Wene#rd)
+
+#### 9月
 * 2016-09-28
   * [设计师是怎样炼成的](http://www.aegeank.com/)
 * 2016-09-19
@@ -41,7 +47,7 @@ tags: [collections]
   * [React.createClass versus extends React.Component](http://www.zcfy.cc/article/react-createclass-versus-extends-react-component-toddmotto-620.html)
   * [2016最受欢迎的16个React应用](http://www.zcfy.cc/article/the-16-most-popular-react-links-so-far-in-2016-929.html)
 
-### 5月
+#### 5月
 * 2016-05-13
     * [ECMAScript 6入门](http://es6.ruanyifeng.com/)
     * [React 入门教程](http://www.ruanyifeng.com/blog/2015/03/react.html)
@@ -54,12 +60,12 @@ tags: [collections]
     * [Webpack 使用](https://segmentfault.com/a/1190000004172052)
     * [RESTful API 设计指南](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
 
-### 4 月
+#### 4 月
 * 2016-04-02
     * [SASS用法指南](http://www.ruanyifeng.com/blog/2012/06/sass.html)
     * [Creating-your-own-css-grid-system](http://j4n.co/blog/Creating-your-own-css-grid-system)
 
-### 2 月
+#### 2 月
 * 2016-02-24
     * [淘宝全站HTTPS实践](http://velocity.oreilly.com.cn/2015/index.php?func=session&id=8)
     * [Nginx HTTPS 配置实践](https://iyaozhen.com/nginx-https-conf.html)
@@ -77,9 +83,9 @@ tags: [collections]
     * [几个秒杀PPT的高（zhe）大(teng)上(ren)的幻灯工具](http://www.jianshu.com/p/09a3bbb8b362)
 
 
-## 2015 年
+### 2015 年
 
-### 10 月
+#### 10 月
 * 2015-10-20
     * [用 Python 从零开始写一个简单的解释器](http://python.jobbole.com/82423/)
 * 2015-10-10
@@ -88,7 +94,7 @@ tags: [collections]
     * [八大排序算法的Python实现](http://www.2liang.me/archives/257)
     * [HTTP 协议详解](http://liberize.me/tech/http-protocol.html)
 
-### 9 月
+#### 9 月
 * 2015-09-13
     * [adb 常用命令](http://blog.csdn.net/wanglin_lin/article/details/48165447)
     * [Android 逆向工程工具集](http://top.jobbole.com/24707/)
@@ -104,7 +110,7 @@ tags: [collections]
     * [Python Enhancement Proposals](https://www.python.org/dev/peps/)
         * 强烈建议阅读，包含原理与事件
 
-### 8 月
+#### 8 月
 * 2015-08-31
     * [Online Tools](http://tool.lu/)
     * [一起来写个简单的解释器](http://blog.jobbole.com/88152/)
@@ -113,7 +119,7 @@ tags: [collections]
 * 2015-08-02
     * [Shadowsocks + Redsocks 实现 OpenWRT 路由器自动翻墙](https://cokebar.info/archives/948)
 
-### 7 月
+#### 7 月
 * 2015-07-05
     * [阮一峰](http://www.ruanyifeng.com/blog/)
     * [URL的井号](http://www.ruanyifeng.com/blog/2011/03/url_hash.html)
@@ -121,7 +127,7 @@ tags: [collections]
     * [require() 源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)
     * [JavaScript 教程 by 廖雪峰](http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000)
 
-### 6 月
+#### 6 月
 * 2015-06-19
     * [第一篇：白话tornado源码之一个脚本引发的血案](http://www.cnblogs.com/wupeiqi/p/4375445.html)
 * 2015-06-20
@@ -134,7 +140,7 @@ tags: [collections]
 * 2015-06-24
     * [Github干货系列：Python 免费资源集合](http://top.jobbole.com/4866/)
 
-### 5 月
+#### 5 月
 * 2015-05-01
     * [【译】编写更好的CSS必备的40个工具](http://www.ido321.com/1545.html)
 * 2015-05-21
@@ -143,7 +149,7 @@ tags: [collections]
     * [如何写一个Web服务器](http://lifeofzjs.com/blog/2015/05/16/how-to-write-a-server/)
     * [15个学习 AngularJS 最好的网站](http://segmentfault.com/a/1190000002783199)
 
-### 4 月
+#### 4 月
 * 2015-04-11 [前后端完全分离初探](http://arccode.net/2015/04/08/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%AE%8C%E5%85%A8%E5%88%86%E7%A6%BB%E5%88%9D%E6%8E%A2/)
 * 2015-04-12:
     * [zsh, tmux和vim:文本三剑客](http://www.drbunsen.org/the-text-triumvirate/)
