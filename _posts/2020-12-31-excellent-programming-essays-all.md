@@ -14,6 +14,10 @@ tags: [collections]
 ### 9月
 * 2016-10-11
   * [CSS加载 * Demon+CSS](http://projects.lukehaas.me/css-loaders/)
+  * [理解CSS模块化(CSS Module)](http://www.zcfy.cc/article/understanding-the-css-modules-methodology-1329.html)
+  * [在 2016 年学 JavaScript 是一种什么样的体验？](https://zhuanlan.zhihu.com/p/22782487)
+  * [Google Interview University - 坚持完成这套学习手册，你就可以去 Google 面试了](http://gold.xitu.io/entry/57fc9ea40bd1d00058d170f9/)
+  * [W3C vs. WhatWG HTML5 标准 - 差异记录](http://www.zcfy.cc/article/w3c-vs-whatwg-html5-specs-differences-documented-1364.html)
 * 2016-10-10
   * [API杂谈](http://mp.weixin.qq.com/s?__biz=MzA4ODgwNjk1MQ==&mid=2653788337&idx=1&sn=96f41ec3de2a622e7bb1746f744a1305&mpshare=1&scene=1&srcid=1010HdxRgU6IG22rGIB9Wene#rd)
 * 2016-09-28
