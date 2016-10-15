@@ -12,6 +12,9 @@ tags: [collections]
 ### 2016 年
 
 #### 10月
+* 2016-10-15
+  * [大前端工具集 * 聂微东](http://www.jianshu.com/p/083cc66a11b0/comments/1323960#cool)
+  * [如何跟上最前沿的前端开发](https://uptodate.frontendrescue.org/zh/)
 * 2016-10-13
   * [抛弃变量，编写更加可读的JavaScript代码](http://www.zcfy.cc/article/more-readable-javascript-without-variables-339.html)
   * [中文技术文档的风格约定](https://github.com/ruanyf/document-style-guide)
