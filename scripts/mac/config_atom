@@ -34,14 +34,15 @@ Install emmet \
         highlight-column \
         minimap \
         vim-mode \
-        terminal-plus \
         atom-beautify \
+        platformio-ide-terminal \
         pigments \
         markdown-scroll-sync \
         autocomplete-sass \
         autocomplete-modules \
         docblockr \
         remote-sync
+        # terminal-plus \
 
 echo "正在安装 React 插件 ..."
         # atom-react-autocomplete \
