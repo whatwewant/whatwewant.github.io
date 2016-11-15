@@ -11,6 +11,25 @@ tags: [collections]
 
 ### 2016 年
 
+#### 11月
+* 2016-11-15
+  * [Meta Programming] (https://www.zhihu.com/question/22572900)
+    * [元编程之javascript](http://www.cnblogs.com/liuyanlong/archive/2013/05/27/3102161.html)
+    * [Proxy和Reflect](http://es6.ruanyifeng.com/#docs/proxy)
+  * X系列
+    * 1 [项目结构（Project structuring）](https://blog.risingstack.com/writing-a-javascript-framework-project-structuring://blog.risingstack.com/writing-a-javascript-framework-project-structuring/)
+    * 2 [执行调度（Execution timing）](https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout/
+    * 3 [沙箱求值（Sandboxed code evaluation）](https://blog.risingstack.com/writing-a-javascript-framework-sandboxed-code-evaluation/)
+    * 4 [数据绑定简介](https://blog.risingstack.com/writing-a-javascript-framework-data-binding-dirty-checking/)
+    * 5 [使用 ES6 Proxy 实现数据绑定](http://www.zcfy.cc/article/writing-a-javascript-framework-data-binding-with-es6-proxies-risingstack-1655.html)
+    * 6 自定义元素
+  * 7 客户端路由
+* 2016-11-14
+  * [如何使用Rollup打包JavaScript](http://www.w3cplus.com/javascript/learn-rollup-js.html)
+* 2016-11-08
+  * [Clojure 风格的 JavaScript 并发编程JS-CSP](https://blog.oyanglul.us/javascript/clojure-core.async-essence-in-native-javascript.html)
+  * [消息队列设计精要](https://zhuanlan.zhihu.com/p/21479556)
+
 #### 10月
 * 2016-10-15
   * [大前端工具集 * 聂微东](http://www.jianshu.com/p/083cc66a11b0/comments/1323960#cool)
