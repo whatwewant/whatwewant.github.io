@@ -9,6 +9,8 @@
   {% include JB/analytics-providers/getclicky %}
 {% when "mixpanel" %}
   {% include JB/analytics-providers/mixpanel %}
+{% when "umeng" %}
+  {% include JB/analytics-providers/umeng %}
 {% when "custom" %}
   {% include custom/analytics %}
 {% endcase %}
