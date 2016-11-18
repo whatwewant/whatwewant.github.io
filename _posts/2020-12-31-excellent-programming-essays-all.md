@@ -13,6 +13,7 @@ tags: [collections]
 
 #### 11月
 * 2016-11-17
+  * [前端丨超全面+最流行的「前端速查表」高清版大全](http://www.uisdc.com/frontend-quick-search-sheet)
   * [CSS3滤镜-Filter](http://ghmagical.com/article/page/id/W7Rz2GACEO0t)
   * [流动的数据，使用 RxJS 构造复杂单页应用的数据逻辑](https://github.com/xufei/blog/issues/38)
   * [一入前端深似海，从此红尘是路人系列第八弹之浅析Vue组件开发](https://my.oschina.net/qiangdada/blog/786981)
