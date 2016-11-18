@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+# Source
+[[ ! -d "$HOME/.pip" ]] && mkdir $HOME/.pip
+[[ ! -f "$HOME/.pip/pip.conf" ]] && echo "
+[global]
+timeout = 60
+index-url = http://pypi.douban.com/simple
+trusted-host = pypi.douban.com
+" > $HOME/.pip/pip.conf
+
+# PACKAGES
+pip install ipython
+pip install virtualenv virtualenvwrapper
+pip install requests # grequests
+# pip install django djangorestframework
+# pip install flask
+pip install qduTAportal qdudomportal simplefileserver
+pip install downloadhelper
+pip install speedtest-cli
+pip install BeautifulSoup4
+# mysql cli
+pip install mycli
+# postgres
+pip install pgcli
+# shell
+pip install sh
+
+# virtualenvwrapper
+[[ -f "$HOME/.zshrc" ]] && \
+    Xshrc="$HOME/.zshrc" || \
+    Xshrc="$HOME/.bashrc"
+
+cat $Xshrc | grep -i virtualenvwrapper.sh >> /dev/null 2>&1 || \
+    echo "source /usr/local/bin/virtualenvwrapper.sh" >> $Xshrc
+
+source /usr/local/bin/virtualenvwrapper.sh
+
+workon | grep py3 || mkvirtualenv -p python3 py3
+workon | grep django || mkvirtualenv -p python3 django
+workon | grep flask || mkvirtualenv -p python3 flask
+
+allvirtualenv pip install ipython
+
+workon py3 && pip install requests you-get dockercli
+workon django && pip install django djangorestframework
+workon flask && pip install flask
+# virtualenvwrapper --end

@@ -2,6 +2,7 @@
 
 PACKAGES="
 homebrew
+python
 zsh
 vim
 tmux
