@@ -194,16 +194,40 @@ tags: [svg,front-end]
   * transform属性定义坐标变换
   * 可以嵌套
   * 元素属性可以在`<g>`中定义一次就行, 如fill,stroke,stroke-wdith等
+* 注意
+  * 可以在`<defs>`中定义`<g>`，并赋予id, 在其他`<g>`或者坐标中用`<use xlink="#ID">`使用
 
 
 ## SVG 进阶
 
 ### 六、坐标系统 -- 使用 transform 观察
-* 1 用户坐标系(User Coordinate)
-  * 世界的坐标系
-* 2 自身坐标系(Current Coordinate)
-  * 每个图形元素或者分组独立与生俱来
-* 3 前驱坐标系(Previous Coordinate)
-  * 父容器的坐标系
-* 4 参考坐标系(Reference Coordinate)
-  * 使用其他坐标系来考究自身的情况时使用
+* 1 视野(viewbox)的概念
+* 2 分组的概念(<g>)
+* 3 四个坐标
+  * 1 用户坐标系(User Coordinate)
+    * 世界的坐标系
+  * 2 自身坐标系(Current Coordinate)
+    * 每个图形元素或者分组独立与生俱来
+  * 3 前驱坐标系(Previous Coordinate)
+    * 父容器的坐标系
+  * 4 参考坐标系(Reference Coordinate)
+    * 使用其他坐标系来考究自身的情况时使用
+* 4 坐标变换
+  * 线性变换 -- (MD: 高数和图形变换都还给老师了)
+    * transform属性
+      * 前驱坐标系: 父容器的坐标系
+      * transform属性: 定义前驱坐标系到自身坐标系的线性变换
+      * 语法: rotate(deg) / translate(x, y) / scale(sx, sy) / matrix(a, b, c, d, e, f)
+
+### 七、RGB与HSL
+* 基础
+  * RGB: 用Red, Green, Blue分量来表示颜色
+    * 格式: rgb(r, g, b) 或者 #rrggbb
+    * 取值: 0-255
+    * 优劣: 容易显示器解析，但不符合人类描述颜色的习惯
+  * HSL: 用`颜色(Hue)`、`饱和度(Saturation)`、`亮度(Lightness)`来表示
+    * 格式: `hsl(h, s%, l%)`
+    * 取值范围
+      * `h: [0, 359]`
+      * `s, l: [0, 100]`
+    * 优势符合人类描述颜色的习惯

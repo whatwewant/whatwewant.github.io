@@ -1,13 +1,61 @@
 #!/bin/zsh
-#
+
+. $HOME/.zshrc >> /dev/null
+
+function setItem () {
+  command=$1
+  name=$2
+  value=$3
+  option=""
+
+  if [ "$command" = "yarn" ]; then
+    option="config"
+  fi
+
+  
+  if [ "$command" != "yarn" ]; then
+    echo 'Config '${command}' Source: '${name}
+  fi
+
+  $command $option set $name $value
+} 
+
+# Config Function
+function config () {
+  command=$1
+  which $command >> /dev/null
+  if [ ! $? -eq 0 ]; then
+    echo 'Invalid Command:'${command}
+    return
+  fi
+
+  setItem $command registry https://registry.npm.taobao.org
+  setItem $command disturl https://npm.taobao.org/dist # node-gyp 编译依赖的 node 源镜像
+  setItem $command chromedriver_cdnurl http://cdn.npm.taobao.org/dist/chromedriver # chromedriver 二进制包镜像
+  setItem $command operadriver_cdnurl http://cdn.npm.taobao.org/dist/operadriver # operadriver 二进制包镜像
+  setItem $command phantomjs_cdnurl http://cdn.npm.taobao.org/dist/phantomjs # phantomjs 二进制包镜像
+  setItem $command sass_binary_site http://cdn.npm.taobao.org/dist/node-sass # node-sass 二进制包镜像
+  setItem $command electron_mirror http://cdn.npm.taobao.org/dist/electron/ # electron 二进制包镜像
+
+  # $command cache clean # 清空缓存
+}
+
+
+which nvm >> /dev/null
+if [ $? -eq 0 ]; then
+  echo "You have install nvm."
+  return
+fi
+
 # Install nvm
 echo "Install node version manager ..."
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 
-# Load nvm
+# add nvm env to .zshrc and Load nvm
 echo "Load nvm enviroment ..."
-NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+echo "NVM_DIR=\"$HOME/.nvm\"" >> $HOME/.zshrc
+echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc
+. $HOME/.zshrc
 
 # Install Node
 echo "Install Node v6 by using nvm"
@@ -17,4 +65,6 @@ echo "Loading node ..."
 nvm use v6
 
 echo "切换 NPM 源 ..."
-npm config set registry http://registry.npm.taobao.org
+config npm
+config yarn
+
