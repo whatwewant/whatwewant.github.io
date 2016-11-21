@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "getting started with svg"
+title: "SVG 入门和进阶"
 keywords: [svg,front-end]
 description: ""
 category: "front-end"
