@@ -123,7 +123,7 @@ JB :
   analytics :
     provider : umeng
     umeng : 
-      tracking_id : '1260818395'
+      tracking_id : '1260854123'
     getclicky :
       site_id : 
     mixpanel :

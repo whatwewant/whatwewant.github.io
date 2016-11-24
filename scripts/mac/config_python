@@ -26,6 +26,10 @@ pip install mycli
 pip install pgcli
 # shell
 pip install sh
+# 抓包神器
+pip install mitmproxy
+# 爬虫神器
+pip install pyspider
 
 # virtualenvwrapper
 [[ -f "$HOME/.zshrc" ]] && \
