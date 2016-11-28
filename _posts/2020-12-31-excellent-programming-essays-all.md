@@ -12,6 +12,11 @@ tags: [collections]
 ### 2016 年
 
 #### 11月
+* 2016-11-28
+  * [实现图片懒加载(Lazyload)](http://gold.xitu.io/post/583b10640ce463006ba2a71a)
+  * [使用React、Node.js、MongoDB、Socket.IO开发一个角色投票应用](http://www.kancloud.cn/kancloud/create-voting-app/63983)
+* 2016-11-27
+  * [Web前端从入门菜鸟到实践老司机所需要的资料与指南合集](https://segmentfault.com/a/1190000007611188)
 * 2016-11-18
   * [The Basics of Web Workers](https://www.html5rocks.com/en/tutorials/workers/basics/)
   * [前端丨超全面+最流行的「前端速查表」高清版大全](http://www.uisdc.com/frontend-quick-search-sheet)
