@@ -11,6 +11,10 @@ tags: [collections]
 
 ### 2016 年
 
+#### 12月
+* 2016-12-04
+  * [things-you-can-do-in-a-web-worker](https://github.com/deebloo/things-you-can-do-in-a-web-worker)
+
 #### 11月
 * 2016-11-28
   * [实现图片懒加载(Lazyload)](http://gold.xitu.io/post/583b10640ce463006ba2a71a)
