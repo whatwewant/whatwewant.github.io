@@ -12,6 +12,8 @@ tags: [collections]
 ### 2016 年
 
 #### 12月
+* 2016-12-08
+  * [创建git私有仓库](http://www.liaoxuefeng.com/article/001373894410719a19c79d040c84fd4a7492efc60081be1000)
 * 2016-12-04
   * [things-you-can-do-in-a-web-worker](https://github.com/deebloo/things-you-can-do-in-a-web-worker)
 
