@@ -57,7 +57,7 @@ ZSH_THEME="funky"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git osx z)
-plugins=(git z)
+plugins=(git git-flow-avh z nvm virtualenv virtualenvwrapper tig jsontools emoji)
 
 source $ZSH/oh-my-zsh.sh
 
