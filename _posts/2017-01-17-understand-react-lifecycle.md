@@ -3,7 +3,7 @@ layout: post
 title: "正确掌握React 生命周期(Lifecycle)"
 keywords: [""]
 description: "正确掌握React生命周期"
-category: "FontEnd"
+category: "FrontEnd"
 tags: ["FrontEnd", "React"]
 ---
 
