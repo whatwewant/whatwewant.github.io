@@ -3,7 +3,7 @@ layout: post
 title: "CSS3 基础"
 keywords: [""]
 description: ""
-category: 前端
+category: FrontEnd
 tags: [css, css3]
 ---
 {% include JB/setup %}

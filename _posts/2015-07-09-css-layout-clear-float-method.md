@@ -3,7 +3,7 @@ layout: post
 title: "CSS 布局解决浮动问题"
 keywords: [""]
 description: ""
-category: "前端"
+category: FrontEnd
 tags: ["CSS", 'web-front']
 ---
 {% include JB/setup %}

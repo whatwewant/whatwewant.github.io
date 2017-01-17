@@ -3,7 +3,7 @@ layout: post
 title: "Nginx 禁止未绑定域名(包括IP)范围"
 keywords: [""]
 description: ""
-category: "nginx"
+category: ServerEnd
 tags: ["nginx"]
 ---
 {% include JB/setup %}

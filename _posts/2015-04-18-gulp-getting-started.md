@@ -3,7 +3,7 @@ layout: post
 title: "gulp 入门"
 keywords: [""]
 description: ""
-category: 前端
+category: FrontEnd
 tags: [gulp, 前端, nodejs]
 ---
 {% include JB/setup %}

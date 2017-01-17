@@ -3,7 +3,7 @@ layout: post
 title: "CSS 中的居中"
 keywords: [""]
 description: ""
-category: 前端
+category: FrontEnd
 tags: [CSS]
 ---
 {% include JB/setup %}

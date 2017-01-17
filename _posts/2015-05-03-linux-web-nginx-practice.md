@@ -2,7 +2,7 @@
 layout: post
 title: "linux web nginx practice"
 description: Linux Web Nginx 实践
-category: linux
+category: ServerEnd
 tags: [linux, nginx, web, lnmp]
 ---
 {% include JB/setup %}

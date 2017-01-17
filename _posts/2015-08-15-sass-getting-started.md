@@ -3,7 +3,7 @@ layout: post
 title: "开始用 SASS 代替 CSS"
 keywords: [""]
 description: ""
-category: 前端
+category: FrontEnd
 tags: [css, sass]
 ---
 {% include JB/setup %}

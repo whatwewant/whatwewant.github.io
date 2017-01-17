@@ -3,7 +3,7 @@ layout: post
 title: "SVG 入门和进阶"
 keywords: [svg,front-end]
 description: ""
-category: "front-end"
+category: "FrontEnd"
 tags: [svg,front-end]
 ---
 {% include JB/setup %}
