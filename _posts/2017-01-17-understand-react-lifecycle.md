@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "深入理解 React 生命周期(Lifecycle)"
+title: "正确掌握React 生命周期(Lifecycle)"
 keywords: [""]
 description: "正确掌握React生命周期"
 category: "FontEnd"
