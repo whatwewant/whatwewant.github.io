@@ -125,3 +125,5 @@ export PYTHON_WORK=$PYTHON_WORK_DIR
 export PROGRAM=$PROGRAMFILES_DIR
 export SOFTWARES=$SOFTWARES_DIR
 
+# electron
+export ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/

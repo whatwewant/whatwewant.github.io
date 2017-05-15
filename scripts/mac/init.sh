@@ -2,10 +2,10 @@
 
 PACKAGES="
 homebrew
-python
 zsh
 vim
 tmux
+python
 node
 atom
 "
