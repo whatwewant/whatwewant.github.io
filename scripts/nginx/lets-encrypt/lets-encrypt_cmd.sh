@@ -1,7 +1,7 @@
 # @Author: eason
 # @Date:   2017-05-13T14:49:10+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-04T01:21:06+08:00
+# @Last modified time: 2017-08-04T01:50:37+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -22,11 +22,6 @@ DOMAIN="" # 域名
 DOMAIN_DIR=""
 DOMAINS_DNS="" # 要签名的域名列表
 DOMAINS_DNS_NGINX="" # NGINX CONFIG
-
-CONF_DIR=/tmp/Letsencrypt
-ACCOUNT_KEY=letsencrypt-acount.key
-
-ACME_TINY=$CONF_DIR/acme_tiny.py
 
 # ECC="TRUE" # ECC 证书支持
 
@@ -106,6 +101,12 @@ elif [ "${DOMAINS_DNS}" = "" ]; then
   exit -1
 fi
 
+# CONF_DIR=/tmp/Letsencrypt
+CONF_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}/.tmp
+ACCOUNT_KEY=letsencrypt-acount.key
+
+ACME_TINY=$CONF_DIR/acme_tiny.py
+
 #5.1 ACME Challenge Dir
 ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
 [[ ! -d $ACME_CHALLENGE_DIR ]] && \
@@ -173,9 +174,11 @@ NGINX_SERVER_CONF=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.nginx.conf
         (echo "Error: #0 创建网站NGINX配置目录失败: $NGINX_SERVER_CONF_DIR" && exit -1))
 
 #1 创建临时配置目录, 并切换目录
-[[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
-mkdir -p $CONF_DIR || \
-      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1)
+# [[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
+# mkdir -p $CONF_DIR || \
+#      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1)
+[[ ! -d "$CONF_DIR" ]] && mkdir -p $CONF_DIR
+
 # Change TEMP FILE DIR
 cd $CONF_DIR
 
@@ -202,14 +205,16 @@ if [ ! -f $OPENSSL_CONF ]; then
     OPENSSL_CONF=/etc/pki/tls/openssl.cnf
     if [ ! -f $OPENSSL_CONF ]; then
         echo "Error: #4"
-        echo "  Cannot fount file: $OPENSSL_CONF"
+        echo "  Cannot found file: $OPENSSL_CONF"
         exit -1
     fi
 fi
 
 # Openssl 生成CSR文件
 # echo "openssl req -new -sha256 -key $DOMAIN_KEY -subj \"/\" -reqexts SAN -config <(cat $OPENSSL_CONF <(printf \"[SAN]\nsubjectAltName=$DOMAINS_DNS\")) > $DOMAIN_CSR"
-openssl req -new -sha256 -key $DOMAIN_KEY -subj "/" -reqexts SAN -config <(cat $OPENSSL_CONF <(printf "[SAN]\nsubjectAltName=$DOMAINS_DNS")) > $DOMAIN_CSR
+if [ "${RENEW}" != "TRUE" ]; then
+  openssl req -new -sha256 -key $DOMAIN_KEY -subj "/" -reqexts SAN -config <(cat $OPENSSL_CONF <(printf "[SAN]\nsubjectAltName=$DOMAINS_DNS")) > $DOMAIN_CSR
+fi
 # SAN_SSL_TEXT="$SSL_TEXT\n$SAN_TEXT"
 # SSL_TEXT=$(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com"))
 # # SAN_TEXT=$(echo "[SAN]\nsubjectAltName=${DOMAINS_DNS}")
