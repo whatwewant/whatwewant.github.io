@@ -1,5 +1,9 @@
+# @Author: eason
+# @Date:   2017-05-13T14:49:10+08:00
+# @Last modified by:   eason
+# @Last modified time: 2017-08-04T01:21:06+08:00
 #!/bin/bash
-# 
+#
 # *************************************************
 # File Name    : lets-encrypt_cmd.sh
 # Author       : Cole Smith
@@ -10,10 +14,14 @@
 
 set -e
 
+FORCE="FALSE"
+RENEW="FALSE"
+
 # Key params
-DOMAIN=example.com # 域名
-DOMAIN_DIR=/var/www
-DOMAINS_DNS="DNS:$DOMAIN" # 要签名的域名列表
+DOMAIN="" # 域名
+DOMAIN_DIR=""
+DOMAINS_DNS="" # 要签名的域名列表
+DOMAINS_DNS_NGINX="" # NGINX CONFIG
 
 CONF_DIR=/tmp/Letsencrypt
 ACCOUNT_KEY=letsencrypt-acount.key
@@ -23,13 +31,18 @@ ACME_TINY=$CONF_DIR/acme_tiny.py
 # ECC="TRUE" # ECC 证书支持
 
 menu() {
-    echo "Usage: "
-    echo "  $0 DOAMIN DOMAIN_DIR"
-    echo "  $0 DOAMIN DOMAIN_DIR DOMAINS_DNS"
+    echo "Usage: $0 [option]=value"
+    echo ""
+    echo "OPTION"
+    echo "  -h,--help     help"
+    echo "  --domain      set domain, if value is @, dns is example.com"
+    echo "  --domain-dir  set site dir"
+    echo "  --dns         set sub domain"
+    echo "  -r,--renew    renew let's encrypt."
     echo ""
     echo "Example: "
-    echo "  $0 example.com /var/www # DEFAULT: DNS: none/www/static/live"
-    echo "  $0 example.com /var/www \"DNS:exmaple.com,DNS:whaterver.example.com\""
+    echo "  $0 --domain=example.com --domain-dir=/var/www --dns=@ (DNS: example.com)"
+    echo "  $0 --domain=example.com --domain-dir=/var/www --dns=static --dns=cdn (DNS: example.com, static.example.com, cdn.example.com)"
     echo ""
     # echo "More: "
     # echo "  Take care: DOMAIN/.well-known/acme-challenge/ must can be visited. You can use nginx location config.)"
@@ -41,26 +54,72 @@ menu() {
     # echo ""
 }
 
-if [ ${#*} -lt 2 ] || [ ${#*} -gt 3 ]; then
-    menu
+for ov in $@
+do
+    option=$(echo $ov | cut -d "=" -f 1)
+    value=$(echo $ov | cut -d "=" -f 2)
+    case $option in
+        -h|--help)
+            menu
+            exit 0
+            ;;
+        --domain)
+            DOMAIN=$value
+            ;;
+        --domain-dir)
+            DOMAIN_DIR=$value
+            ;;
+        --dns)
+            if [ "$DOMAIN" = "" ]; then
+              echo "Your should set domain first."
+              exit -1
+            fi
+
+            if [ "$value" = "@" ]; then
+              DOMAINS_DNS="$DOMAINS_DNS,DNS:$DOMAIN"
+              DOMAINS_DNS_NGINX="$DOMAINS_DNS_NGINX $DOMAIN"
+            elif [ "$DOMAINS_DNS" = "" ]; then
+              DOMAINS_DNS="DNS:$value.$DOMAIN"
+              DOMAINS_DNS_NGINX="$value.$DOMAIN"
+            else
+              DOMAINS_DNS="$DOMAINS_DNS,DNS:$value.$DOMAIN"
+              DOMAINS_DNS_NGINX="$DOMAINS_DNS_NGINX $value.$DOMAIN"
+            fi
+            ;;
+        -f|--force)
+            FORCE="TRUE"
+            ;;
+        -r|--renew)
+            RENEW="TRUE"
+            ;;
+    esac
+done
+
+if [ "${DOMAIN}" = "" ]; then
+    echo "You should set domain use '--domain=YOUR_DOMAIN'"
     exit -1
-else
-    DOMAIN=$1
-    DOMAIN_DIR=$2
-    if [ "$3" != "" ]; then
-        DOMAINS_DNS=$3
-    else
-        DOMAINS_DNS="DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN"
-    fi
+elif [ "${DOMAIN_DIR}" = "" ]; then
+  echo "You should set domain-dir use '--domain_dir=YOUR_SITE_DIR'"
+  exit -1
+elif [ "${DOMAINS_DNS}" = "" ]; then
+  echo "You should set dns use '--dns=YOUR_SITE_DNS"
+  exit -1
 fi
 
+#5.1 ACME Challenge Dir
+ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
+[[ ! -d $ACME_CHALLENGE_DIR ]] && \
+    (mkdir -p $ACME_CHALLENGE_DIR || \
+        (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
 
 echo "
 # Basic Config:
 
 server {
-    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
+    listen 80;
+    server_name $DOMAINS_DNS_NGINX;
     server_tokens off;
+    client_max_body_size 100M;
 
     access_log /dev/null;
 
@@ -83,18 +142,20 @@ server {
 #########################
 "
 
-read -p "Are you sure have the similar config ? (y|N): " ANSWER
-while [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]; do
-    
-    if [ "$ANSWER" = "N" ] || [ "$ANSWER" = "n" ]; then
-        echo "You have cancel the action."
-        exit -1
-    fi
+if [ "$FORCE" != "TRUE" ] && [ "$RENEW" != "TRUE" ]; then
+  read -p "Are you sure have the similar config ? (y|N): " ANSWER
+  while [ "$ANSWER" != "Y" ] && [ "$ANSWER" != "y" ]; do
 
-    echo ""
-    echo "Invalid Input. Try again. (C-c to quit)"
-    read -p "Are you sure have the similar config ? (y|N): " ANSWER
-done
+      if [ "$ANSWER" = "N" ] || [ "$ANSWER" = "n" ]; then
+          echo "You have cancel the action."
+          exit -1
+      fi
+
+      echo ""
+      echo "Invalid Input. Try again. (C-c to quit)"
+      read -p "Are you sure have the similar config ? (y|N): " ANSWER
+  done
+fi
 
 
 DOMAIN_KEY=${DOMAIN}.key
@@ -146,7 +207,18 @@ if [ ! -f $OPENSSL_CONF ]; then
     fi
 fi
 
+# Openssl 生成CSR文件
+# echo "openssl req -new -sha256 -key $DOMAIN_KEY -subj \"/\" -reqexts SAN -config <(cat $OPENSSL_CONF <(printf \"[SAN]\nsubjectAltName=$DOMAINS_DNS\")) > $DOMAIN_CSR"
 openssl req -new -sha256 -key $DOMAIN_KEY -subj "/" -reqexts SAN -config <(cat $OPENSSL_CONF <(printf "[SAN]\nsubjectAltName=$DOMAINS_DNS")) > $DOMAIN_CSR
+# SAN_SSL_TEXT="$SSL_TEXT\n$SAN_TEXT"
+# SSL_TEXT=$(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:yoursite.com,DNS:www.yoursite.com"))
+# # SAN_TEXT=$(echo "[SAN]\nsubjectAltName=${DOMAINS_DNS}")
+# # SAN_SSL_TEXT="$SSL_TEXT\n$SAN_TEXT"
+# echo "XSA START"
+# echo $SSL_TEXT
+# echo "XSA END"
+# openssl req -new -sha256 -key $DOMAIN_KEY -subj "/" -reqexts SAN -config <$(echo $SSL_TEXT) > $DOMAIN_CSR
+# echo "XSA HHHHH"
 
 #5 ACME_TINY Script
 if [ ! -f $ACME_TINY ]; then
@@ -154,12 +226,12 @@ if [ ! -f $ACME_TINY ]; then
 fi
 
 #5.1 ACME Challenge Dir
-ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
-[[ ! -d $ACME_CHALLENGE_DIR ]] && \
-    (mkdir -p $ACME_CHALLENGE_DIR || \
-        (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
+# ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
+# [[ ! -d $ACME_CHALLENGE_DIR ]] && \
+#     (mkdir -p $ACME_CHALLENGE_DIR || \
+#         (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
 
-#5.2 ACME TINY Script generate crt without signed 
+#5.2 ACME TINY Script generate crt without signed
 # 签名的CRT
 python $ACME_TINY --account-key $ACCOUNT_KEY --csr $DOMAIN_CSR --acme-dir $ACME_CHALLENGE_DIR > $APPLIED_SIGNED_CTR || \
     (echo -e "Error: #5.2 \n  acme_tiny.py generates $APPLIED_SIGNED_CTR failed." && exit -1)
@@ -167,7 +239,7 @@ python $ACME_TINY --account-key $ACCOUNT_KEY --csr $DOMAIN_CSR --acme-dir $ACME_
 
 #6 Letsencrypt 中间证书签名申请的证书, 否则手机浏览器不信任
 LETENSCRIPT_SIGNED=lets-encrypt-x3-cross-signed.pem
-if [ ! -f $LETENSCRIPT_SIGNED ]; then
+if [ ! -f $LETENSCRIPT_SIGNED ] || [ "$RENEW" = "TRUE" ]; then
     wget https://letsencrypt.org/certs/$LETENSCRIPT_SIGNED -O intermediate.pem -o /dev/null
 fi
 echo "Generame domain crt with lets-encrypt signed ..."
@@ -184,11 +256,11 @@ echo "Generate dhparams.pem for DH ..."
 openssl dhparam -out dhparams.pem 2048
 sudo chmod 600 dhparams.pem
 
-#7 Move DOMAIN key and signed crt to DOMAIN_SSL_DIR
+# 7 Move DOMAIN key and signed crt to DOMAIN_SSL_DIR
 echo "创建证书目录: "
 [[ ! -d $DOMAIN_SSL_DIR ]] && \
-    sudo mkdir -p $DOMAIN_SSL_DIR || \
-    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
+    sudo mkdir -p $DOMAIN_SSL_DIR # || \
+#    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
 echo ""
 echo "Move $DOMAIN_CRT to $DOMAIN_SSL_DIR"
 sudo mv $DOMAIN_CRT $DOMAIN_SSL_DIR
@@ -199,6 +271,12 @@ sudo mv full_chained.pem $DOMAIN_SSL_DIR
 echo "Move dhparams.pem to $DOMAIN_SSL_DIR"
 sudo mv dhparams.pem $DOMAIN_SSL_DIR
 echo ""
+
+# 8 RENEW
+if [ "$RENEW" = "TRUE" ]; then
+  sudo nginx -s reload
+  exit 0
+fi
 
 # Tips
 echo "#################################"
@@ -211,8 +289,10 @@ echo "#################################"
 echo ""
 echo "
 server {
-    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
+    listen 80;
+    server_name $DOMAINS_DNS_NGINX;
     server_tokens off;
+    client_max_body_size 100M;
 
     access_log /dev/null;
 
@@ -252,7 +332,7 @@ server {
     ssl_ciphers 'ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS';
 
     ssl_protocols TLSv1 TLSV1.1 TLSV1.2;
-    
+
     ssl_stapling on;
     ssl_stapling_verify on;
     ssl_trusted_certificate $DOMAIN_SSL_DIR/full_chained.pem;
@@ -265,7 +345,7 @@ server {
 
     resolver            114.114.114.114 valid=300s;
     resolver_timeout    10s;
-    
+
     access_log          $DOMAIN_DIR/.$DOMAIN.log;
 
     if (\$request_method !~ ^(GET|HEAD|POST|OPTIONS|PUT|DELETE)$) {
@@ -283,7 +363,7 @@ server {
     }
 
     location ^~ /static {
-        root        $DOMAIN_DIR/static;
+        alias        $DOMAIN_DIR/static;
         add_header  Access-Control-Allow-Origin *;
         expires     max;
     }
@@ -324,4 +404,3 @@ echo ""
 # Cron 定时更新证书(每月)
 # crontab -e
 # 0 0 1 * * /etc/nginx/certs/letsencrypt_cmd.sh $DOMAIN $DOMAIN_DIR "DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN" >> /var/log/lets-encrypt.log 2>&1
-
