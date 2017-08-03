@@ -1,7 +1,7 @@
 # @Author: eason
 # @Date:   2017-05-13T14:49:10+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-04T01:50:37+08:00
+# @Last modified time: 2017-08-04T02:04:19+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -164,6 +164,7 @@ DOMAIN_CRT=${DOMAIN}.crt
 APPLIED_SIGNED_CTR=${DOMAIN}.signed.crt
 DOMAIN_CSR=${DOMAIN}.csr
 DOMAIN_SSL_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}
+DOMAIN_SSL_DIR_ACME=${DOMAIN_SSL_DIR}/ACME
 #
 NGINX_SERVER_CONF_DIR=${DOMAIN_DIR}/config;
 NGINX_SERVER_CONF=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.nginx.conf
@@ -236,11 +237,27 @@ fi
 #     (mkdir -p $ACME_CHALLENGE_DIR || \
 #         (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
 
+echo "创建证书目录: "
+[[ ! -d $DOMAIN_SSL_DIR ]] && \
+    sudo mkdir -p $DOMAIN_SSL_DIR # || \
+#    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
+[[ ! -d $DOMAIN_SSL_DIR_ACME ]] && sudo mkdir -p $DOMAIN_SSL_DIR_ACME
+
 #5.2 ACME TINY Script generate crt without signed
 # 签名的CRT
-python $ACME_TINY --account-key $ACCOUNT_KEY --csr $DOMAIN_CSR --acme-dir $ACME_CHALLENGE_DIR > $APPLIED_SIGNED_CTR || \
+if [ "$RENEW" != "TRUE" ]; then
+  python $ACME_TINY --account-key $ACCOUNT_KEY --csr $DOMAIN_CSR --acme-dir $ACME_CHALLENGE_DIR > $APPLIED_SIGNED_CTR || \
     (echo -e "Error: #5.2 \n  acme_tiny.py generates $APPLIED_SIGNED_CTR failed." && exit -1)
+else
+  python $ACME_TINY --account-key $DOMAIN_SSL_DIR_ACME/account.key --csr $DOMAIN_SSL_DIR_ACME/domain.csr --acme-dir $ACME_CHALLENGE_DIR > $APPLIED_SIGNED_CTR || \
+    (echo -e "Error: #5.2 \n  acme_tiny.py generates $APPLIED_SIGNED_CTR failed." && exit -1)
+fi
 
+# 5.3 Save account.key and domain.csr
+if [ "$RENEW" != "TRUE" ]; then
+  sudo cp $ACCOUNT_KEY $DOMAIN_SSL_DIR_ACME/account.key
+  sudo cp $DOMAIN_CSR $DOMAIN_SSL_DIR_ACME/domain.csr
+fi
 
 #6 Letsencrypt 中间证书签名申请的证书, 否则手机浏览器不信任
 LETENSCRIPT_SIGNED=lets-encrypt-x3-cross-signed.pem
@@ -262,10 +279,7 @@ openssl dhparam -out dhparams.pem 2048
 sudo chmod 600 dhparams.pem
 
 # 7 Move DOMAIN key and signed crt to DOMAIN_SSL_DIR
-echo "创建证书目录: "
-[[ ! -d $DOMAIN_SSL_DIR ]] && \
-    sudo mkdir -p $DOMAIN_SSL_DIR # || \
-#    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
+
 echo ""
 echo "Move $DOMAIN_CRT to $DOMAIN_SSL_DIR"
 sudo mv $DOMAIN_CRT $DOMAIN_SSL_DIR
