@@ -1,7 +1,7 @@
 # @Author: eason
 # @Date:   2017-08-04T01:23:29+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-15T00:14:45+08:00
+# @Last modified time: 2017-08-15T00:34:40+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -306,14 +306,14 @@ echo "Move dhparams.pem to $DOMAIN_SSL_DIR"
 mv dhparams.pem $DOMAIN_SSL_DIR
 echo ""
 
+# Remove verified conf
+mv $NGINX_SERVER_CONF_BEFORE_VERIFY ${NGINX_SERVER_CONF_BEFORE_VERIFY}.backup
+
 # 8 RENEW
 if [ "$RENEW" = "TRUE" ]; then
   sudo nginx -s reload
   exit 0
 fi
-
-# Remove verified conf
-mv $NGINX_SERVER_CONF_BEFORE_VERIFY ${NGINX_SERVER_CONF_BEFORE_VERIFY}.backup
 
 # Tips
 echo "#################################"
@@ -348,14 +348,14 @@ server {
         try_files   \$uri =404;
     }
 
-    location / {
-        rewrite     ^/(.*)$ https://$DOMAIN/\$1 permanent;
-    }
+    # location / {
+    #     rewrite     ^/(.*)$ https://$DOMAIN/\$1 permanent;
+    # }
 }
 
 server {
     listen 443 ssl;
-    server_name www.$DOMAIN $DOMAIN static.$DOMAIN live.$DOMAIN images.$DOMAIN;
+    server_name $DOMAINS_DNS_NGINX;
     charset utf-8;
     client_max_body_size 100M;
     server_tokens off;
