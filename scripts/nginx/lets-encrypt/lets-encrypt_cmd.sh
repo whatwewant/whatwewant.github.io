@@ -1,7 +1,7 @@
 # @Author: eason
 # @Date:   2017-08-04T01:23:29+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-15T00:00:06+08:00
+# @Last modified time: 2017-08-15T00:14:45+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -111,6 +111,7 @@ DOMAIN_CRT=${DOMAIN}.crt
 APPLIED_SIGNED_CTR=${DOMAIN}.signed.crt
 DOMAIN_CSR=${DOMAIN}.csr
 DOMAIN_SSL_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}
+DOMAIN_SSL_DIR_ACME=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}_ACME
 #
 NGINX_SERVER_CONF_DIR=${DOMAIN_DIR}/config;
 NGINX_SERVER_CONF_BEFORE_VERIFY=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.beforeVerify.nginx.conf
@@ -252,6 +253,9 @@ echo "创建证书目录: "
 [[ ! -d $DOMAIN_SSL_DIR ]] && \
     mkdir -p $DOMAIN_SSL_DIR # || \
 #    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
+echo "创建ACME目录: "
+[[ ! -d $DOMAIN_SSL_DIR_ACME ]] && \
+    mkdir -p $DOMAIN_SSL_DIR_ACME
 
 #5.2 ACME TINY Script generate crt without signed
 # 签名的CRT
