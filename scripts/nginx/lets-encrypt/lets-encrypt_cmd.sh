@@ -1,7 +1,7 @@
 # @Author: eason
-# @Date:   2017-05-13T14:49:10+08:00
+# @Date:   2017-08-04T01:23:29+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-04T02:04:19+08:00
+# @Last modified time: 2017-08-14T23:51:40+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -22,6 +22,11 @@ DOMAIN="" # 域名
 DOMAIN_DIR=""
 DOMAINS_DNS="" # 要签名的域名列表
 DOMAINS_DNS_NGINX="" # NGINX CONFIG
+
+CONF_DIR=/tmp/Letsencrypt
+ACCOUNT_KEY=letsencrypt-acount.key
+
+ACME_TINY=$CONF_DIR/acme_tiny.py
 
 # ECC="TRUE" # ECC 证书支持
 
@@ -101,11 +106,16 @@ elif [ "${DOMAINS_DNS}" = "" ]; then
   exit -1
 fi
 
-# CONF_DIR=/tmp/Letsencrypt
-CONF_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}/.tmp
-ACCOUNT_KEY=letsencrypt-acount.key
-
-ACME_TINY=$CONF_DIR/acme_tiny.py
+DOMAIN_KEY=${DOMAIN}.key
+DOMAIN_CRT=${DOMAIN}.crt
+APPLIED_SIGNED_CTR=${DOMAIN}.signed.crt
+DOMAIN_CSR=${DOMAIN}.csr
+DOMAIN_SSL_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}
+#
+NGINX_SERVER_CONF_DIR=${DOMAIN_DIR}/config;
+NGINX_SERVER_CONF_BEFORE_VERIFY=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.beforeVerify.nginx.conf
+NGINX_SERVER_CONF_REGEXP=${NGINX_SERVER_CONF_DIR}/*.conf
+NGINX_SERVER_CONF=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.nginx.conf
 
 #5.1 ACME Challenge Dir
 ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
@@ -113,7 +123,7 @@ ACME_CHALLENGE_DIR="$DOMAIN_DIR/.well-known/acme-challenge/"
     (mkdir -p $ACME_CHALLENGE_DIR || \
         (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
 
-echo "
+BASE_CONFIG_BEFORE_VERIFY=$(cat <<EOF
 # Basic Config:
 
 server {
@@ -140,8 +150,18 @@ server {
 
 #########################
 # Make sure you have the similar config like above !
+# Include site config to nginx.conf (Default: /etc/nginx/nginx.conf)
+#
+# http {
+#  ...
+#  include $NGINX_SERVER_CONF_REGEXP;
+# }
 #########################
-"
+EOF
+)
+
+#
+echo "$BASE_CONFIG_BEFORE_VERIFY"
 
 if [ "$FORCE" != "TRUE" ] && [ "$RENEW" != "TRUE" ]; then
   read -p "Are you sure have the similar config ? (y|N): " ANSWER
@@ -158,28 +178,18 @@ if [ "$FORCE" != "TRUE" ] && [ "$RENEW" != "TRUE" ]; then
   done
 fi
 
-
-DOMAIN_KEY=${DOMAIN}.key
-DOMAIN_CRT=${DOMAIN}.crt
-APPLIED_SIGNED_CTR=${DOMAIN}.signed.crt
-DOMAIN_CSR=${DOMAIN}.csr
-DOMAIN_SSL_DIR=${DOMAIN_DIR}/.letsencrypt/${DOMAIN}
-DOMAIN_SSL_DIR_ACME=${DOMAIN_SSL_DIR}/ACME
-#
-NGINX_SERVER_CONF_DIR=${DOMAIN_DIR}/config;
-NGINX_SERVER_CONF=${NGINX_SERVER_CONF_DIR}/${DOMAIN}.nginx.conf
-
 # 0 创建 NGINX SERVER CONF DIR
 [[ ! -d "$NGINX_SERVER_CONF_DIR" ]] && \
     (mkdir -p $NGINX_SERVER_CONF_DIR || \
         (echo "Error: #0 创建网站NGINX配置目录失败: $NGINX_SERVER_CONF_DIR" && exit -1))
 
-#1 创建临时配置目录, 并切换目录
-# [[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
-# mkdir -p $CONF_DIR || \
-#      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1)
-[[ ! -d "$CONF_DIR" ]] && mkdir -p $CONF_DIR
+# 0.1 Save config to
+echo "$BASE_CONFIG_BEFORE_VERIFY" > $NGINX_SERVER_CONF_BEFORE_VERIFY
 
+#1 创建临时配置目录, 并切换目录
+[[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
+mkdir -p $CONF_DIR || \
+      (echo "Error: #1 创建目录失败: $CONF_DIR" && exit -1)
 # Change TEMP FILE DIR
 cd $CONF_DIR
 
@@ -206,7 +216,7 @@ if [ ! -f $OPENSSL_CONF ]; then
     OPENSSL_CONF=/etc/pki/tls/openssl.cnf
     if [ ! -f $OPENSSL_CONF ]; then
         echo "Error: #4"
-        echo "  Cannot found file: $OPENSSL_CONF"
+        echo "  Cannot fount file: $OPENSSL_CONF"
         exit -1
     fi
 fi
@@ -237,11 +247,11 @@ fi
 #     (mkdir -p $ACME_CHALLENGE_DIR || \
 #         (echo "Error: #2 创建目录失败 $ACME_CHALLENGE_DIR" && exit -1))
 
+#5.2.2
 echo "创建证书目录: "
 [[ ! -d $DOMAIN_SSL_DIR ]] && \
-    sudo mkdir -p $DOMAIN_SSL_DIR # || \
+    mkdir -p $DOMAIN_SSL_DIR # || \
 #    (echo -e "Error: #7\n  创建目录失败 $DOMAIN_SSL_DIR" && exit -1)
-[[ ! -d $DOMAIN_SSL_DIR_ACME ]] && sudo mkdir -p $DOMAIN_SSL_DIR_ACME
 
 #5.2 ACME TINY Script generate crt without signed
 # 签名的CRT
@@ -255,8 +265,8 @@ fi
 
 # 5.3 Save account.key and domain.csr
 if [ "$RENEW" != "TRUE" ]; then
-  sudo cp $ACCOUNT_KEY $DOMAIN_SSL_DIR_ACME/account.key
-  sudo cp $DOMAIN_CSR $DOMAIN_SSL_DIR_ACME/domain.csr
+  cp $ACCOUNT_KEY $DOMAIN_SSL_DIR_ACME/account.key
+  cp $DOMAIN_CSR $DOMAIN_SSL_DIR_ACME/domain.csr
 fi
 
 #6 Letsencrypt 中间证书签名申请的证书, 否则手机浏览器不信任
@@ -276,19 +286,20 @@ cat intermediate.pem root.pem > full_chained.pem
 # 6.2 DH public server param (Ys) resue
 echo "Generate dhparams.pem for DH ..."
 openssl dhparam -out dhparams.pem 2048
-sudo chmod 600 dhparams.pem
+# sudo chmod 600 dhparams.pem
+chmod 600 dhparams.pem
 
 # 7 Move DOMAIN key and signed crt to DOMAIN_SSL_DIR
-
+# sudo mkdir -p $DOMAIN_SSL_DIR # || \
 echo ""
 echo "Move $DOMAIN_CRT to $DOMAIN_SSL_DIR"
-sudo mv $DOMAIN_CRT $DOMAIN_SSL_DIR
+mv $DOMAIN_CRT $DOMAIN_SSL_DIR
 echo "Move $DOMAIN_KEY to $DOMAIN_SSL_DIR"
-sudo mv $DOMAIN_KEY $DOMAIN_SSL_DIR
+mv $DOMAIN_KEY $DOMAIN_SSL_DIR
 echo "Move full_chained.pem to $DOMAIN_SSL_DIR"
-sudo mv full_chained.pem $DOMAIN_SSL_DIR
+mv full_chained.pem $DOMAIN_SSL_DIR
 echo "Move dhparams.pem to $DOMAIN_SSL_DIR"
-sudo mv dhparams.pem $DOMAIN_SSL_DIR
+mv dhparams.pem $DOMAIN_SSL_DIR
 echo ""
 
 # 8 RENEW
@@ -296,6 +307,9 @@ if [ "$RENEW" = "TRUE" ]; then
   sudo nginx -s reload
   exit 0
 fi
+
+# Remove verified conf
+mv $NGINX_SERVER_CONF_BEFORE_VERIFY > ${NGINX_SERVER_CONF_BEFORE_VERIFY}.backup
 
 # Tips
 echo "#################################"
