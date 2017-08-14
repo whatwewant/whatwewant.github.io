@@ -1,7 +1,7 @@
 # @Author: eason
 # @Date:   2017-08-04T01:23:29+08:00
 # @Last modified by:   eason
-# @Last modified time: 2017-08-14T23:51:40+08:00
+# @Last modified time: 2017-08-15T00:00:06+08:00
 #!/bin/bash
 #
 # *************************************************
@@ -309,7 +309,7 @@ if [ "$RENEW" = "TRUE" ]; then
 fi
 
 # Remove verified conf
-mv $NGINX_SERVER_CONF_BEFORE_VERIFY > ${NGINX_SERVER_CONF_BEFORE_VERIFY}.backup
+mv $NGINX_SERVER_CONF_BEFORE_VERIFY ${NGINX_SERVER_CONF_BEFORE_VERIFY}.backup
 
 # Tips
 echo "#################################"
@@ -434,6 +434,8 @@ echo "      include $NGINX_SERVER_CONF_DIR/*.conf"
 echo "######################################################"
 echo ""
 
+echo "
 # Cron 定时更新证书(每月)
-# crontab -e
-# 0 0 1 * * /etc/nginx/certs/letsencrypt_cmd.sh $DOMAIN $DOMAIN_DIR "DNS:$DOMAIN,DNS:www.$DOMAIN,DNS:static.$DOMAIN,DNS:live.$DOMAIN" >> /var/log/lets-encrypt.log 2>&1
+> crontab -e and add the following:
+0 0 1 * * $PWD/$0 --domain=$DOMAIN --domain-dir=$DOMAIN_DIR --dns=$DOMAINS_DNS >> /var/log/lets-encrypt.log 2>&1
+"
