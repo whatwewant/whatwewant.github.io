@@ -5,8 +5,10 @@ set -e
 downloadTool="sudo apt-get install -y"
 PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
-
 NGINX_VERSION=1.11.2
+
+[[ "$1" != "" ]] && NGINX_VERSION=$0
+
 NGINX_TAR_GZ_NAME=nginx-${NGINX_VERSION}.tar.gz
 NGINX_TAR_GZ=${PACKAGE_DIR}/${NGINX_TAR_GZ_NAME}
 # NEED CHECK, @TODO
@@ -22,6 +24,7 @@ SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 PREFIX=/usr/local/nginx # default /usr/local/nginx
 BINARY_DIR=/usr/sbin
 CONF_PATH=/etc/nginx
+CONF_BACKUP_PATH=/etc/nginx.bak
 NGINX_RUN_FILE_PATH=/var/nginx
 ###################################
 LOG_PATH=${NGINX_RUN_FILE_PATH}/logs
@@ -101,6 +104,13 @@ checkMD5 () {
             ;;
     esac
 }
+
+[[ ! -d ${CONF_BACKUP_PATH} ]] && \
+  sudo mkdir -p ${CONF_BACKUP_PATH}
+
+
+BACKUP_NAME=nginx-$(date +%Y-%m-%d_%H-%M-%S)
+[[ -d ${CONF_PATH } ]] && sudo mv ${CONF_PATH} ${CONF_BACKUP_PATH}/${BACKUP_NAME}
 
 # Update Sources
 sudo apt-get update
