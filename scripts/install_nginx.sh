@@ -2,17 +2,17 @@
 
 set -e
 
-downloadTool="sudo apt-get install -y"
+downloadTool="sudo apt-get install -y --force-yes"
 PACKAGE_DIR=/tmp/src
 SRC_DIR=$PACKAGE_DIR
 NGINX_VERSION=1.11.2
 
-[[ "$1" != "" ]] && NGINX_VERSION=$0
+[[ "$1" != "" ]] && NGINX_VERSION=$1
 
 NGINX_TAR_GZ_NAME=nginx-${NGINX_VERSION}.tar.gz
 NGINX_TAR_GZ=${PACKAGE_DIR}/${NGINX_TAR_GZ_NAME}
 # NEED CHECK, @TODO
-NGINX_TAR_GZ_PGP=${NGINX_TAR_GZ}.asc
+NGINX_TAR_GZ_PGP=${NGINX_TAR_GZ_NAME}.asc
 SRC_DIR_FINAL=$SRC_DIR/nginx-${NGINX_VERSION}
 ##################################
 # BASE PATHS
@@ -105,12 +105,6 @@ checkMD5 () {
     esac
 }
 
-[[ ! -d ${CONF_BACKUP_PATH} ]] && \
-  sudo mkdir -p ${CONF_BACKUP_PATH}
-
-
-BACKUP_NAME=nginx-$(date +%Y-%m-%d_%H-%M-%S)
-[[ -d ${CONF_PATH } ]] && sudo mv ${CONF_PATH} ${CONF_BACKUP_PATH}/${BACKUP_NAME}
 
 # Update Sources
 sudo apt-get update
@@ -146,6 +140,13 @@ fi
 # check md5 for nginx-$NGINX_VERSION.tar.gz file
 checkMD5
 
+
+[[ ! -d ${CONF_BACKUP_PATH} ]] && \
+  sudo mkdir -p ${CONF_BACKUP_PATH}
+
+# BACKUP
+BACKUP_NAME=nginx-$(date +%Y-%m-%d_%H-%M-%S)
+[[ -d ${CONF_PATH} ]] && sudo mv ${CONF_PATH} ${CONF_BACKUP_PATH}/${BACKUP_NAME}
 
 # src
 tar -zxvf $NGINX_TAR_GZ -C $SRC_DIR
