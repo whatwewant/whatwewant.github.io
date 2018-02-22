@@ -22,6 +22,7 @@ DOMAIN="" # 域名
 DOMAIN_DIR=""
 DOMAINS_DNS="" # 要签名的域名列表
 DOMAINS_DNS_NGINX="" # NGINX CONFIG
+DOMAINS_DNS_NGINX_REWRITE=""
 
 CONF_DIR=/tmp/Letsencrypt
 ACCOUNT_KEY=letsencrypt-acount.key
@@ -81,6 +82,7 @@ do
             elif [ "$DOMAINS_DNS" = "" ]; then
               DOMAINS_DNS="DNS:$value.$DOMAIN"
               DOMAINS_DNS_NGINX="$value.$DOMAIN"
+              DOMAINS_DNS_NGINX_REWRITE="$value.$DOMAIN"
             else
               DOMAINS_DNS="$DOMAINS_DNS,DNS:$value.$DOMAIN"
               DOMAINS_DNS_NGINX="$DOMAINS_DNS_NGINX $value.$DOMAIN"
@@ -144,9 +146,9 @@ server {
         try_files   \$uri =404;
     }
 
-    location / {
-        rewrite     ^/(.*)$ https://$DOMAIN/\$1 permanent;
-    }
+    # location / {
+    #    rewrite     ^/(.*)$ https://$DOMAINS_DNS_NGINX_REWRITE/\$1 permanent;
+    # }
 }
 
 #########################
