@@ -345,7 +345,7 @@ server {
     # open subdomain
     # if (\$http_host ~* \"^(.*).$DOMAIN$\") {
     #     set $domain $1;
-    #     rewrite ^(.*) https://\$domain.$DOMAIN break;
+    #     rewrite ^(.*) https://$DOMAINS_DNS_NGINX_REWRITE break;
     # }
 
     location ^~ /.well-known/acme-challenge/ {
@@ -354,7 +354,7 @@ server {
     }
 
     # location / {
-    #     rewrite     ^/(.*)$ https://$DOMAIN/\$1 permanent;
+    #     rewrite     ^/(.*)$ https://$DOMAINS_DNS_NGINX_REWRITE/\$1 permanent;
     # }
 }
 
@@ -427,7 +427,7 @@ server {
 
         proxy_set_header        X-Via       Qingdao.Aliyun;
         proxy_set_header        Connection  \"\";
-        proxy_set_header        Host        $DOMAIN;
+        proxy_set_header        Host        $DOMAINS_DNS_NGINX_REWRITE;
         proxy_set_header        X-Real_IP   \$remote_addr;
         proxy_set_header        X-Forwarded-For \$proxy_add_x_forwarded_for;
 
