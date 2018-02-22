@@ -187,6 +187,9 @@ fi
 # 0.1 Save config to
 echo "$BASE_CONFIG_BEFORE_VERIFY" > $NGINX_SERVER_CONF_BEFORE_VERIFY
 
+# 0.2 Reload nginx conf
+sudo nginx -s reload
+
 #1 创建临时配置目录, 并切换目录
 [[ -d "$CONF_DIR" ]] && rm -rf $CONF_DIR
 mkdir -p $CONF_DIR || \
