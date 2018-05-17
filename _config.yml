@@ -95,6 +95,7 @@ JB :
   work_path: /work.html
   messages_path : /messages.html
   about_path : /about.html
+  resume_path : /resume
 
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.

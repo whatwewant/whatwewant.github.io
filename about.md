@@ -7,4 +7,6 @@ comments: false
 ---
 {% include JB/setup %}
 
-## 个人简介
+### [简历](https://moeover.com/resume)
+
+### [了解我](https://moeover.com/we-chat)
