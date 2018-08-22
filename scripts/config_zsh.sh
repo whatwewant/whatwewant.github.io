@@ -15,7 +15,7 @@ fi
 
 # config zsh
 if [ ! -d "/home/$user/.oh-my-zsh" ]; then
-    git clone https://github.com/whatwewant/oh-my-zsh ~/.oh-my-zsh
+    git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 fi
 
 if [ -f "/home/$user/.zshrc" ]; then

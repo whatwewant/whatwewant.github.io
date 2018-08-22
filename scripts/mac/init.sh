@@ -7,7 +7,6 @@ vim
 tmux
 python
 node
-atom
 "
 
 Install () {

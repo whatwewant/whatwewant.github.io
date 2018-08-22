@@ -30,14 +30,33 @@ function config () {
   fi
 
   setItem $command registry https://registry.npm.taobao.org
-  setItem $command disturl https://npm.taobao.org/dist # node-gyp 编译依赖的 node 源镜像
-  setItem $command chromedriver_cdnurl http://cdn.npm.taobao.org/dist/chromedriver # chromedriver 二进制包镜像
-  setItem $command operadriver_cdnurl http://cdn.npm.taobao.org/dist/operadriver # operadriver 二进制包镜像
-  setItem $command phantomjs_cdnurl http://cdn.npm.taobao.org/dist/phantomjs # phantomjs 二进制包镜像
-  setItem $command sass_binary_site http://cdn.npm.taobao.org/dist/node-sass # node-sass 二进制包镜像
-  setItem $command electron_mirror http://cdn.npm.taobao.org/dist/electron/ # electron 二进制包镜像
+  # setItem $command disturl https://npm.taobao.org/dist # node-gyp 编译依赖的 node 源镜像
+  # setItem $command chromedriver_cdnurl http://cdn.npm.taobao.org/dist/chromedriver # chromedriver 二进制包镜像
+  # setItem $command operadriver_cdnurl http://cdn.npm.taobao.org/dist/operadriver # operadriver 二进制包镜像
+  # setItem $command phantomjs_cdnurl http://cdn.npm.taobao.org/dist/phantomjs # phantomjs 二进制包镜像
+  # setItem $command sass_binary_site http://cdn.npm.taobao.org/dist/node-sass # node-sass 二进制包镜像
+  # setItem $command electron_mirror http://cdn.npm.taobao.org/dist/electron/ # electron 二进制包镜像
 
   # $command cache clean # 清空缓存
+}
+
+function install () {
+  package=$1
+
+  if [ "$1" = "" ]; then
+    exit 0
+  fi
+
+  echo -ne "正在安装: ${packages} ...\r"
+  npm i -g $package # 2&>1 >> /dev/null
+
+  if [ ! $? -eq 0 ]; then 
+    echo -ne "安装 ${package} 失败\r"
+  else
+    echo -ne "安装 ${package} 成功\r"
+  fi
+
+  echo -ne "\n"
 }
 
 
@@ -58,13 +77,17 @@ echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc
 . $HOME/.zshrc
 
 # Install Node
-echo "Install Node v6 by using nvm"
-nvm install v6
+echo "Install Node v10 by using nvm"
+nvm install v10
 
 echo "Loading node ..."
-nvm use v6
+nvm use v10
 
 echo "切换 NPM 源 ..."
 config npm
 config yarn
 
+echo "安装常用软件..."
+install cnpm
+install nrm
+install serve
