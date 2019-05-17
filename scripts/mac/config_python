@@ -1,8 +1,43 @@
 #!/bin/bash
 
-which pip >> /dev/null
+pi=pip
+PYTHON_HOME=`which python`
+
+pkg() {
+  $PYTHON_HOME -c "import $pymod" >/dev/null 2>&1
+  if ! [ $? -eq 0 ]; then
+    echo "detect if $2 installed: YES"
+    return
+  else
+    echo "detect if $2 installed: NO"
+  fi
+
+  echo "install $2"
+  $pi $* >> /dev/null 2>&1
+
+  if ! [ $? -eq 0 ]; then
+    echo "install $2 successfully"
+  else
+    echo "install $2 failed"
+  fi
+}
+
+which pip >> /dev/null 2>&1
 if ! [ $? -eq 0 ]; then
   brew install python
+fi
+
+which pip3 >> /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  echo "PIP: pip3"
+  pi=pip3
+  
+  which python3 >> /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    PYTHON_HOME=`which python3`
+  fi
+else
+  echo "PIP: pip"
 fi
 
 # Source
@@ -15,43 +50,50 @@ trusted-host = pypi.douban.com
 " > $HOME/.pip/pip.conf
 
 # PACKAGES
-pip install ipython
-pip install virtualenv virtualenvwrapper
-pip install requests # grequests
-# pip install django djangorestframework
-# pip install flask
-pip install qduTAportal qdudomportal simplefileserver
-pip install downloadhelper
-pip install speedtest-cli
-pip install BeautifulSoup4
+pkg install ipython
+pkg install virtualenv virtualenvwrapper
+pkg install requests # grequests
+# pkg install django djangorestframework
+# pkg install flask
+pkg install qduTAportal qdudomportal simplefileserver
+pkg install downloadhelper
+pkg install speedtest-cli
+pkg install BeautifulSoup4
 # mysql cli
-pip install mycli
+pkg install mycli
 # postgres
-pip install pgcli
+pkg install pgcli
 # shell
-pip install sh
+pkg install sh
 # 抓包神器
-pip install mitmproxy
+pkg install mitmproxy
 # 爬虫神器
-pip install pyspider
+pkg install pyspider
 
 # virtualenvwrapper
 [[ -f "$HOME/.zshrc" ]] && \
     Xshrc="$HOME/.zshrc" || \
     Xshrc="$HOME/.bashrc"
 
-cat $Xshrc | grep -i virtualenvwrapper.sh >> /dev/null 2>&1 || \
-    echo "source /usr/local/bin/virtualenvwrapper.sh" >> $Xshrc
+echo "current shell: $Xshrc"
 
+cat $Xshrc | grep -i virtualenvwrapper.sh >> /dev/null 2>&1
+if ! [ $? -eq 0 ]; then
+  echo "export VIRTUALENVWRAPPER_PYTHON=${PYTHON_HOME}" >> $Xshrc
+  echo "source /usr/local/bin/virtualenvwrapper.sh" >> $Xshrc
+fi
+
+echo "VIRTUALENVWRAPPER_PYTHON: ${PYTHON_HOME}"
+export VIRTUALENVWRAPPER_PYTHON=${PYTHON_HOME}
 source /usr/local/bin/virtualenvwrapper.sh
 
 workon | grep py3 || mkvirtualenv -p python3 py3
 workon | grep django || mkvirtualenv -p python3 django
 workon | grep flask || mkvirtualenv -p python3 flask
 
-allvirtualenv pip install ipython
+allvirtualenv $pi install ipython 2>&1
 
-workon py3 && pip install requests you-get dockercli
-workon django && pip install django djangorestframework
-workon flask && pip install flask
+workon py3 && $pi install requests you-get
+workon django && $pi install django djangorestframework
+workon flask && $pi install flask
 # virtualenvwrapper --end
