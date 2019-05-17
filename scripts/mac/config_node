@@ -77,11 +77,11 @@ echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc
 . $HOME/.zshrc
 
 # Install Node
-echo "Install Node v10 by using nvm"
-nvm install v10
+echo "Install Node v11 by using nvm"
+nvm install v11
 
 echo "Loading node ..."
-nvm use v10
+nvm use v11
 
 echo "切换 NPM 源 ..."
 config npm
@@ -91,3 +91,5 @@ echo "安装常用软件..."
 install cnpm
 install nrm
 install serve
+install projj
+
