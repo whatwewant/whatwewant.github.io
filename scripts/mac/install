@@ -18,6 +18,13 @@ if ! [ $? -eq 0 ]; then
   echo "Install Git done"
 fi
 
+which wget >> /dev/null 2>&1
+if ! [ $? -eq 0 ]; then
+  echo "Install Wget ..."
+  brew install wget
+  echo "Install Wget done"
+fi
+
 if ! [ -d $REPO_PATH ]; then
   echo "Clone $REPO_NAME ..."
   git clone $REPO_URL $REPO_PATH # >> /dev/null 2>&1
