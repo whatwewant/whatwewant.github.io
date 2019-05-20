@@ -51,11 +51,12 @@ trusted-host = pypi.douban.com
 
 # PACKAGES
 pkg install ipython
-pkg install virtualenv virtualenvwrapper
+pkg install virtualenv
+pkg install virtualenvwrapper
 pkg install requests # grequests
 # pkg install django djangorestframework
 # pkg install flask
-pkg install qduTAportal qdudomportal simplefileserver
+pkg install simplefileserver
 pkg install downloadhelper
 pkg install speedtest-cli
 pkg install BeautifulSoup4
