@@ -1,0 +1,41 @@
+#!/bin/bash
+
+REPO_NAME=whatwewant.github.io
+REPO_URL=https://github.com/whatwewant/$REPO_NAME
+REPO_PATH=/tmp/$REPO_NAME
+
+which brew >> /dev/null 2>&1
+if ! [ $? -eq 0 ]; then
+  echo "Install Homebrew ..."
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo "Install Homebrew done"
+fi
+
+which git >> /dev/null 2>&1
+if ! [ $? -eq 0 ]; then
+  echo "Install Git ..."
+  brew install git
+  echo "Install Git done"
+fi
+
+if ! [ -d $REPO_PATH ]; then
+  echo "Clone $REPO_NAME ..."
+  git clone $REPO_URL $REPO_PATH # >> /dev/null 2>&1
+
+  if ! [ $? -eq 0 ]; then
+    echo "Error: Clone $REPO_NAME FAILED. Clean up and Exit."
+    rm -rf $REPO_PATH >> /dev/null 2>&1
+    exit -1
+  else
+    echo "Clone $REPO_NAME done"
+  fi
+fi
+
+SCRIPT_PATH=$REPO_PATH/scripts/mac
+
+echo "Change Path: ${SCRIPT_PATH}"
+cd $SCRIPT_PATH
+
+echo "Setup ..."
+bash init.sh
+echo "Setup done."

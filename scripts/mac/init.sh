@@ -13,7 +13,7 @@ Install () {
   for e in "$@";
   do
     echo "Config $e ..."
-    ./config_$e
+    bash ./config_$e
     echo "Config $e Done"
     echo ""
   done
