@@ -2,6 +2,9 @@
 
 . $HOME/.zshrc >> /dev/null
 
+NVM_VERSION=v0.38.0
+NODE_VERSION=14
+
 function setItem () {
   command=$1
   name=$2
@@ -63,25 +66,33 @@ function install () {
 which nvm >> /dev/null
 if [ $? -eq 0 ]; then
   echo "You have install nvm."
-  return
+  # return
 fi
 
 # Install nvm
-echo "Install node version manager ..."
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+echo "Install node version manager $NVM_VERSION..."
+# curl -o- https://raw.githubusercontent.com/creationix/nvm/$NVM_VERSION/install.sh | bash
+if [ ! -d "$HOME/.nvm" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | bash
+fi
 
 # add nvm env to .zshrc and Load nvm
 echo "Load nvm enviroment ..."
-echo "NVM_DIR=\"$HOME/.nvm\"" >> $HOME/.zshrc
-echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc
+grep NVM_DIR $HOME/.zshrc 2&> 1 >> /dev/null
+if [ "$?" != "0" ]; then
+  echo "NVM_DIR=\"$HOME/.nvm\"" >> $HOME/.zshrc
+  echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $HOME/.zshrc
+fi
+
 . $HOME/.zshrc
 
 # Install Node
-echo "Install Node v11 by using nvm"
-nvm install v11
+echo "Install Node $NODE_VERSION by using nvm"
+nvm install $NODE_VERSION
 
 echo "Loading node ..."
-nvm use v11
+nvm alias default $NODE_VERSION
+nvm use $NODE_VERSION
 
 echo "切换 NPM 源 ..."
 config npm
